@@ -1,0 +1,23 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Cercles{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 p-5 my-4 ">
+      <div class="bg-body-tertiary p-5 rounded-3">
+        <h1 class="fs-3 fw-bold">Mes cercles</h1>
+        <pre>
+            {{ dump(circles) }}
+        </pre>
+        
+        <pre>
+            {{ dump(otherCircles) }}
+        </pre>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

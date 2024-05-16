@@ -1,0 +1,27 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Mon Placard{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="px-5 py-2 my-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Ajoutez vos objets</h1>
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Catégorie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Perçeuse visseuse sans fil</td>
+                    <td>Outils Bricolage</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+{% endblock %}

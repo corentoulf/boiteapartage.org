@@ -1,0 +1,30 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 p-5 my-4 ">
+      <div class="bg-body-tertiary p-5 rounded-3">
+        <h1 class="fs-3 fw-bold">1. Créez ou rejoignez un cercle</h1>
+        <p class="fs-4">Vous n'appartenez pas encore à un cercle. Vous pouvez en créer un ou en rejoindre un.</p>
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-primary btn-lg" type="button"><i class="bi bi-plus-circle me-1"></i>Créer un cercle</button>
+          <button class="btn btn-outline-primary btn-lg" type="button"><i class="bi bi-person-fill-add me-1"></i>Rejoindre un cercle</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 p-5 my-4 rounded-3">
+      <div class="bg-body-tertiary p-5 rounded-3">
+        <h1 class="fs-3 fw-bold">2. Complétez votre placard</h1>
+        <p class="fs-4">Votre placard semble vide. Ajoutez des éléments pour pouvoir les partager dans vos cercles.</p>
+        <button class="btn btn-primary btn-lg" type="button"><i class="bi bi-plus-circle me-1"></i>Remplir mon placard</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

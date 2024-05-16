@@ -15,6 +15,9 @@
         {% endblock %}
     </head>
     <body>
+        {% block navbar %}{% include 'navbar.html.twig' %}{% endblock %}
+        {% block flash_message %}{% include 'flash_messages.html.twig' %}{% endblock %}
         {% block body %}{% endblock %}
+        {% block footer %}{% include 'footer.html.twig' %}{% endblock %}
     </body>
 </html>
