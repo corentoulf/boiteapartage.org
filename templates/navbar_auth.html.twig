@@ -11,16 +11,16 @@
                         <a class="nav-link" href="{{ path('app_auth_home') }}"><i class="bi bi-house me-1"></i>Accueil</a>
                     </li>
                     <li class="nav-item me-5">
-                        <a class="nav-link" href="{{ path('app_user_object') }}"><i class="bi bi-list-task me-1"></i>Mon placard</a>
+                        <a class="nav-link" href="{{ path('app_item') }}"><i class="bi bi-card-list me-1"></i>Mon placard</a>
                     </li>
                     <li class="nav-item dropdown me-5">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-circle me-1"></i>Cercles
+                            <i class="bi bi-arrow-repeat me-1"></i>Cercles
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{path("app_circle")}}"><i class="bi bi-people me-1"></i>Mes cercles</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-plus-circle me-1"></i>Créer un cercle</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill-add me-1"></i>Rejoindre un cercle</a></li>
+                            <li><a class="dropdown-item" href="{{path("app_circle_create")}}"><i class="bi bi-plus-circle me-1"></i>Créer un cercle</a></li>
+                            <li><a class="dropdown-item" href="{{path("app_circle_join")}}"><i class="bi bi-person-fill-add me-1"></i>Rejoindre un cercle</a></li>
                         </ul>
                     </li>
                     <li class="nav-item me-5">

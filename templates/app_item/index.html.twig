@@ -1,0 +1,42 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Mon Placard{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="px-5 py-2 my-4 bg-body-tertiary rounded-3">
+      <div class="container-fluid py-5">
+        <div class="d-flex align-items-center justify-content-between">
+            <h1 class="display-5 fw-bold">Votre placard</h1>
+            <a class="btn btn-outline-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un élément</a>
+        </div>
+        <div class="mt-4">
+            <div class="col-12 pt-3 pb-2">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="externalFilter">Rechercher un élément</span>
+                        <input type="text" id="filterItemTableInput" class="form-control" placeholder="Visseuse" aria-label="Rechercher un élément" aria-describedby="externalFilter">
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="itemTable">
+                <thead>
+                    <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Catégorie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for userItem in userItems %}  
+                        <tr>
+                            <td>{{userItem.description}}</td>
+                            <td>{{userItem.category}}</td>
+                        </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

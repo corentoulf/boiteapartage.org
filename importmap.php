@@ -16,13 +16,40 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
+    'bootstrap-icons/font/bootstrap-icons.min.css' => [
+        'version' => '1.11.3',
+        'type' => 'css',
     ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    'bootstrap' => [
+        'version' => '5.3.3',
     ],
-    '@hotwired/turbo' => [
-        'version' => '7.3.0',
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
+    'datatables.net-bs5' => [
+        'version' => '2.0.4',
+    ],
+    'datatables.net' => [
+        'version' => '2.0.8',
+    ],
+    'datatables.net-bs5/css/dataTables.bootstrap5.min.css' => [
+        'version' => '2.0.4',
+        'type' => 'css',
+    ],
+    'datatables.net-responsive-bs5' => [
+        'version' => '3.0.2',
+    ],
+    'datatables.net-responsive' => [
+        'version' => '3.0.2',
+    ],
+    'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' => [
+        'version' => '3.0.2',
+        'type' => 'css',
+    ],
+    'datatables.net-select' => [
+        'version' => '2.0.3',
     ],
 ];

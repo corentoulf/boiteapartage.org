@@ -27,6 +27,11 @@ class Item
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
+    public function __toString()
+    {
+        return $this->description . '(' . $this->category . ')';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -25,6 +25,7 @@ class CircleFormType extends AbstractType
                 'label' => 'Nom',
                 'attr' => [
                     'placeholder' => '"Quartier des tourterelles"  /  "Résidence Victor Hugo"',
+                    'required' => true
                 ],
                 'constraints' => [
                     new NotBlank([
@@ -33,7 +34,6 @@ class CircleFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Le nom doit faire au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
                         'max' => 255,
                     ]),
                 ],
@@ -41,6 +41,7 @@ class CircleFormType extends AbstractType
             )
             ->add('address', TextType::class, [
                 'label' => 'Adresse postale du cercle',
+                'required' => false,
                 'help' => 'Cela peut être le nom de la rue ou d\'une des rues du quartier. Laissez vide si le cercle concerne un village',
             ])
             ->add('postcode', TextType::class, [

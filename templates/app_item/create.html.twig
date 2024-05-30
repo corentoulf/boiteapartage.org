@@ -1,0 +1,38 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Ajout au Placard{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <h1 class="fw-bold mb-3">Ajouter un élément au placard</h1>
+        {{ form_errors(form) }}
+        {{ form_start(form) }}
+            {{ form_row(form.description, {
+                label: 'Description',
+                help: 'maximum 255 caractères'
+            }) }}
+            {{ form_row(form.category, {
+                label: 'Catégorie'
+            }) }}
+            <div class="row ">
+                <div class="col d-flex justify-content-end">
+                    {{ form_row(form.submit, {
+                        label: 'Ajouter'
+                    }) }}
+                    <div class="ms-2">
+                    {{ form_row(form.submitAndAdd, {
+                        label: 'Ajouter et ajouter un autre'
+                    }) }}
+                    </div>
+                </div>
+            </div>
+            
+            
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

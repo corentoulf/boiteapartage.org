@@ -31,7 +31,7 @@ class Circle
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $country = null;
 
-    #[ORM\ManyToOne(inversedBy: 'circles')]
+    #[ORM\ManyToOne(inversedBy: 'ownedCircles')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $created_by = null;
 
@@ -43,6 +43,9 @@ class Circle
      */
     #[ORM\OneToMany(targetEntity: UserCircle::class, mappedBy: 'circle')]
     private Collection $userCircles;
+
+    #[ORM\Column(length: 255)]
+    private ?string $short_id = null;
 
 
     public function __construct()
@@ -170,6 +173,18 @@ class Circle
                 $userCircle->setCircle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getShortId(): ?string
+    {
+        return $this->short_id;
+    }
+
+    public function setShortId(string $short_id): static
+    {
+        $this->short_id = $short_id;
 
         return $this;
     }
