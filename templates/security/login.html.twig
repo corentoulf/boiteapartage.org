@@ -12,7 +12,7 @@
 
             {% if app.user %}
                 <div class="mb-3">
-                    Vous êtes connecté en tant que <span class="fw-semibold">{{ app.user.userIdentifier }}</span>
+                    Vous êtes déjà connecté en tant que <span class="fw-semibold">{{ app.user.userIdentifier }}</span>
                 </div>
                 <div class="d-grid gap-2">
                     <a class="btn btn-primary" href="{{ path('app_logout') }}">Déconnexion</a>

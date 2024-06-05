@@ -47,10 +47,17 @@ class Circle
     #[ORM\Column(length: 255)]
     private ?string $short_id = null;
 
+    /**
+     * @var Collection<int, ItemCircle>
+     */
+    #[ORM\OneToMany(targetEntity: ItemCircle::class, mappedBy: 'circle')]
+    private Collection $itemCircles;
+
 
     public function __construct()
     {
         $this->userCircles = new ArrayCollection();
+        $this->itemCircles = new ArrayCollection();
     }
 
     public function __toString()
@@ -185,6 +192,36 @@ class Circle
     public function setShortId(string $short_id): static
     {
         $this->short_id = $short_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemCircle>
+     */
+    public function getItemCircles(): Collection
+    {
+        return $this->itemCircles;
+    }
+
+    public function addItemCircle(ItemCircle $itemCircle): static
+    {
+        if (!$this->itemCircles->contains($itemCircle)) {
+            $this->itemCircles->add($itemCircle);
+            $itemCircle->setCircle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemCircle(ItemCircle $itemCircle): static
+    {
+        if ($this->itemCircles->removeElement($itemCircle)) {
+            // set the owning side to null (unless already changed)
+            if ($itemCircle->getCircle() === $this) {
+                $itemCircle->setCircle(null);
+            }
+        }
 
         return $this;
     }

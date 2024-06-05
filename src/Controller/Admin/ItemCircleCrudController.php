@@ -2,27 +2,26 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Item;
+use App\Entity\ItemCircle;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ItemCrudController extends AbstractCrudController
+class ItemCircleCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Item::class;
+        return ItemCircle::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
-            TextField::new('description'),
-            AssociationField::new('owner'),
-            DateTimeField::new('created_at'),
+            IdField::new('id'),
+            AssociationField::new('item'),
+            AssociationField::new('circle'),
         ];
     }
 }

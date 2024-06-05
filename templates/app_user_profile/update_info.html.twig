@@ -6,7 +6,7 @@
 
 
 <div class="container">
-    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-4 offset-md-4">
+    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
@@ -14,9 +14,34 @@
         {{ form_errors(updateUserInfoForm) }}
 
         {{ form_start(updateUserInfoForm) }}
-            {{ form_row(updateUserInfoForm.email, {
-                label: 'Email'
-            }) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(updateUserInfoForm.firstName, {
+                        label: 'Prénom'
+                    }) }}
+                </div>
+                <div class="col">
+                    {{ form_row(updateUserInfoForm.lastName, {
+                        label: 'Nom'
+                    }) }}
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col">
+                    {{ form_row(updateUserInfoForm.phone, {
+                        label: 'Téléphone',
+                        help: 'Optionnel, pourra servir aux autres utilisateurs pour vous contacter'
+                    }) }}
+                </div>
+                <div class="col">
+                    {{ form_row(updateUserInfoForm.email, {
+                        label: 'Email'
+                    }) }}
+                </div>
+            </div>
+            
+            
 
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Mettre à jour</button>

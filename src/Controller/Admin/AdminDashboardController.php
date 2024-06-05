@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Circle;
 use App\Entity\Item;
 use App\Entity\ItemCategory;
+use App\Entity\ItemCircle;
 use App\Entity\User;
 use App\Entity\UserCircle;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -50,6 +51,7 @@ class AdminDashboardController extends AbstractDashboardController
             MenuItem::linkToRoute('Retourner sur l\'app', 'fa fa-external-link', 'app_auth_home'),
             MenuItem::section('Objets'),
             MenuItem::linkToCrud('Objets', 'fas fa-list', Item::class),
+            MenuItem::linkToCrud('Objets & Cercles', 'fas fa-list', ItemCircle::class),
             MenuItem::linkToCrud('Catégories d\'objets', 'fas fa-list', ItemCategory::class),
             MenuItem::section('Utilisateurs'),
             MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class),

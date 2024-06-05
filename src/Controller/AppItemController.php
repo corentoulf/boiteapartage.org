@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Entity\ItemCircle;
 use App\Form\ItemFormType;
 use DateTime;
 use DateTimeImmutable;
@@ -39,9 +40,21 @@ class AppItemController extends AbstractController
                 : 'app_item';
             $item->setCreatedAt(new DateTimeImmutable('now'));
             $em->persist($item);
+
+            //handle itemCircle
+            //get all circles of the user
+            $userCircles = $user->getUserCircles();
+            foreach ($userCircles as &$userCircle) {
+                $circle = $userCircle->getCircle();
+                $itemCircle = new ItemCircle(); //create itemCircle
+                $itemCircle->setCircle($circle); //populate circle
+                $itemCircle->setItem($item); //populate item
+                $em->persist($itemCircle); //persist
+            }
+
             $em->flush();
 
-            $this->addFlash('success', 'L\'élément a bien été ajouté à votre placard.');
+            $this->addFlash('success', 'L\'objet a bien été ajouté à votre placard.');
             return $this->redirectToRoute($nextAction);
         }
 

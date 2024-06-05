@@ -1,7 +1,7 @@
 <div class="container-fluid d-flex justify-content-end position-absolute">
 {% for label, messages in app.flashes %}
     {% for message in messages %}
-        <div class="col mt-3 me-2 alert d-flex justify-content-between alert-{{ label }} {% if label in ['warning', 'danger'] %}alert-dismissable fade show{% endif %}" role="alert" style="max-width:30%">
+        <div class="col mt-3 me-2 alert d-flex justify-content-between alert-{{ label }} {% if label not in ['success'] %}alert-dismissable fade show{% endif %}" role="alert" style="max-width:30%">
             <p class="m-0 me-2">{{ message }}</p>
             {% if label not in ['success'] %}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>{% endif %}
         </div>

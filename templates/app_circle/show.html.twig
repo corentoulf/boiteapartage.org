@@ -1,26 +1,25 @@
 {% extends 'base_auth.html.twig' %}
 
-{% block title %}Mon Placard{% endblock %}
+{% block title %}Cercles{% endblock %}
 
 {% block body %}
 <div class="container">
     <div class="px-5 py-2 my-4 bg-body-tertiary rounded-3">
       <div class="container-fluid py-5">
         <div class="d-flex align-items-center justify-content-between">
-            <h1 class="display-5 fw-bold">Votre placard</h1>
-            <a class="btn btn-outline-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un élément</a>
+            <h1 class="display-5 fw-bold">Rechercher un objet</h1>
         </div>
-        {% if userItems|length == 0 %}
+        {% if items|length == 0 %}
             <div class="mt-4">
-                <p class="fs-4" >Votre placard est vide. Commencez par <a class=""  href="{{path('app_item_create')}}" role="button">ajouter un élément</a>.</p>
+                <p class="fs-4" >Il n'y a pas encore d'objet partagé dans ce cercle. <a href="{{path('app_item_create')}}">Ajoutez-en un</a> ;)</p>
             </div>
         {% endif %}
-        {% if userItems|length > 0 %}
+        {% if items|length > 0 %}
             <div class="mt-4">
                 <div class="col-12 pt-3 pb-2">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="externalFilter">Rechercher un élément</span>
-                            <input type="text" id="filterItemTableInput" class="form-control" placeholder="Visseuse" aria-label="Rechercher un élément" aria-describedby="externalFilter">
+                            <input type="text" id="filterItemTableInput" class="form-control" placeholder="Visseuse" aria-label="Rechercher un élément" aria-describedby="externalFilter" value="{{app.request.get('q')}}">
                         </div>
                     </div>
                 </div>
@@ -29,13 +28,15 @@
                         <tr>
                         <th scope="col">Nom</th>
                         <th scope="col">Catégorie</th>
+                        <th scope="col">Propriétaire</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for userItem in userItems %}  
+                        {% for item in items %}  
                             <tr>
-                                <td>{{userItem.description}}</td>
-                                <td>{{userItem.category}}</td>
+                                <td>{{item.description}}</td>
+                                <td>{{item.category}}</td>
+                                <td>{{item.owner}}</td>
                             </tr>
                         {% endfor %}
                         
@@ -46,4 +47,9 @@
       </div>
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'searchItem']) }}
+    {% endblock %}
 {% endblock %}

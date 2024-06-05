@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Circle;
+use App\Entity\ItemCircle;
 use App\Entity\UserCircle;
 use App\Form\CircleFormType;
 use DateTime;
@@ -59,6 +60,15 @@ class AppCircleController extends AbstractController
             $userCircle->setCreatedAt(new DateTime('now'));
             $em->persist($userCircle);
 
+            //add all user Items to the new Circle
+            $userItems = $user->getItems();
+            foreach ($userItems as &$userItem) {
+                $itemCircle = new ItemCircle();
+                $itemCircle->setCircle($circle); //populate circle
+                $itemCircle->setItem($userItem); //populate item
+                $em->persist($itemCircle); //persist
+            }
+
             $em->flush();
 
             $this->addFlash('success', 'Le cercle a bien été créé.');
@@ -82,19 +92,19 @@ class AppCircleController extends AbstractController
         return $short_code;
     }
 
-    #[Route('/app/cercle/rejoindre', name: 'app_circle_join')]
-    public function join(Request $request, EntityManagerInterface $em): Response
+    #[Route('/app/cercle/rejoindre/{shortId?}', name: 'app_circle_join')]
+    public function join(Request $request, EntityManagerInterface $em, ?string $shortId): Response
     {
         $user = $this->getUser();
-         // creates a userCircle object and initializes user
-         $userCircle = new UserCircle();
-         $userCircle->setUserId($user);
+        // creates a userCircle object and initializes user
+        $userCircle = new UserCircle();
+        $userCircle->setUserId($user);
 
- 
-         $form = $this->createFormBuilder($userCircle)
-             ->add('circleIdentifier', TextType::class, ['label' => 'Identifiant du cercle', 'mapped' => false])
-             ->add('save', SubmitType::class, ['label' => 'Rejoindre le cercle'])
-             ->getForm();
+
+        $form = $this->createFormBuilder($userCircle)
+            ->add('circleIdentifier', TextType::class, ['label' => 'Identifiant du cercle', 'mapped' => false, 'help' => 'Il s\'agit de l\'dentifiant à 6 caractères présent sur le QR Code'])
+            ->add('save', SubmitType::class, ['label' => 'Rejoindre le cercle'])
+            ->getForm();
         
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -124,7 +134,34 @@ class AppCircleController extends AbstractController
 
         return $this->render('app_circle/join.html.twig', [
             'controller_name' => 'AppCircleController',
-            'form' => $form
+            'form' => $form,
+            'short_id' => $shortId
+        ]);
+    }
+
+    #[Route('/app/cercle/{id}', name: 'app_circle_show')]
+    public function show(Request $request, EntityManagerInterface $em, string $id): Response
+    {
+        $user = $this->getUser();
+        if($id == "all"){
+            //get circles the user belongs to
+            $circlesToFetch = array();
+            $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
+            foreach ($userCircles as $key => $userCircle) {
+                array_push($circlesToFetch, $userCircle->getCircle()->getId());
+            }
+            //get all user circles items
+            $items = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch);
+
+        }
+        else {
+            //get $id circle items
+            $items = $em->getRepository(ItemCircle::class)->findAllInArray(array($id));
+        }
+
+        return $this->render('app_circle/show.html.twig', [
+            'controller_name' => 'AppCircleController',
+            'items' => $items
         ]);
     }
 }

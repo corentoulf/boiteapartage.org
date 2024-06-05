@@ -1,0 +1,34 @@
+<ul class="list-group">
+    {% for userCircle in userCircles %}  
+        <div class="list-group-item d-flex align-items-start" >
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{userCircle.circle.name}}</div>
+                {% if userCircle.circle.address %}{{userCircle.circle.address}}</br>{% endif %}
+                {{userCircle.circle.postcode}} {{userCircle.circle.city}}
+            </div>
+            <div class="d-flex flex-column align-items-end">
+                {# <div class=""><span class="badge text-bg-primary rounded-pill">{{userCircle.circle.userCircles|length}} membre(s)</span></div> #}
+                <a class="mb-2" href="{{path('app_circle_show', {id:userCircle.circle.id})}}" data-bs-toggle="tooltip" data-bs-title="Chercher un objet dans le cercle '{{userCircle.circle.name}}'" data-bs-placement="right"><span class="badge text-bg-primary rounded-pill"><i class="bi bi-search me-2"></i>{{userCircle.circle.itemCircles|length}} objet(s)</span></a>
+                <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#shareCircleModal" data-bs-circle-uri="{{path('app_circle_join')}}" data-bs-circle-name="{{userCircle.circle.name}}" data-bs-circle-short-id="{{userCircle.circle.shortId}}"><i class="bi bi-share-fill me-2"></i>Partager</button>
+            </div>
+        </div>
+    {% endfor %}
+</ul>
+
+<!-- Modal -->
+<div class="modal fade" id="shareCircleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Partager le cercle</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

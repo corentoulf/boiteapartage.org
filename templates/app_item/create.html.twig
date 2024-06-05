@@ -8,8 +8,17 @@
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
-        <h1 class="fw-bold mb-3">Ajouter un élément au placard</h1>
-        {{ form_errors(form) }}
+        <h1 class="fw-bold mb-3">Ajouter un objet à partager</h1>
+        <div
+            class="alert alert-info"
+            role="alert"
+        >
+            <div class="d-flex justify-content-start">
+                <span class="me-3"><i class="bi bi-info-circle"></i></span>
+                <span>Veuillez noter que par défaut, si vous appartenez à plusieurs cercles, <strong>tous les éléments de votre placard seront partagés avec tous vos cercles</strong>.</span>
+            </div>
+        </div>
+                {{ form_errors(form) }}
         {{ form_start(form) }}
             {{ form_row(form.description, {
                 label: 'Description',

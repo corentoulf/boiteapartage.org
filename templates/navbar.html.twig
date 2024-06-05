@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
-  <div class="container d-flex justify-content-between">
+  <div class="container-fluid d-flex justify-content-center">
+        <a class="navbar-brand self-align-start" href="#">
+            <img src="{{asset('img/logo-pizza.svg')}}" alt="La Boîte à Partage" width="50" height="50">
+        </a>
         <a class="navbar-brand fs-2 px-4 fw-bold" href="{{path('app_home')}}">La Boîte à Partage</a>
         <div class="px-4">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,13 +11,13 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item me-5">
-                        <a class="nav-link" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-1"></i>Manifeste</a>
+                        <a class="nav-link {% if app.current_route == 'app_manifeste' %}fw-bold{% endif %}" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-1"></i>Manifeste</a>
                     </li>
                     <li class="nav-item me-5">
-                        <a class="nav-link" href="#"><i class="bi bi-plus-circle me-1"></i>Créer un cercle</a>
+                        <a class="nav-link {% if app.current_route == 'app_register' and registrationPurpose == 'createCircle' %}fw-bold{% endif %}" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"><i class="bi bi-plus-circle me-1"></i>Créer un cercle</a>
                     </li>
                     <li class="nav-item me-5">
-                        <a class="nav-link" href="#"><i class="bi bi-person-fill-add me-1"></i>Rejoindre un cercle</a>
+                        <a class="nav-link {% if app.current_route == 'app_register' and registrationPurpose == 'joinCircle'%}fw-bold{% endif %}" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"><i class="bi bi-person-fill-add me-1"></i>Rejoindre un cercle</a>
                     </li>
                 </ul>
             </div>

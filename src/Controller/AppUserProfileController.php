@@ -28,7 +28,7 @@ class AppUserProfileController extends AbstractController
             'controller_name' => 'AppUserProfileController',
         ]);
     }
-    #[Route('/app/utilisateur/compte/mettre_a_jour', name: 'app_user_update_profile')]
+    #[Route('/app/utilisateur/compte/mettre-a-jour', name: 'app_user_update_profile')]
     public function update_profile(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -67,7 +67,7 @@ class AppUserProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/app/utilisateur/compte/changer_mot_de_passe', name: 'app_user_update_password')]
+    #[Route('/app/utilisateur/compte/changer-mot-de-passe', name: 'app_user_update_password')]
     public function update_password(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
@@ -104,7 +104,7 @@ class AppUserProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/app/utilisateur/compte/supprimer_le_compte', name: 'app_user_delete_account')]
+    #[Route('/app/utilisateur/compte/supprimer-le-compte', name: 'app_user_delete_account')]
     public function delete_account(): Response
     {
         return $this->render('app_user_profile/delete_account.html.twig', [
@@ -112,7 +112,7 @@ class AppUserProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/app/utilisateur/compte/supprimer_le_compte/confirmer', name: 'app_user_delete_account_confirm')]
+    #[Route('/app/utilisateur/compte/supprimer-le-compte/confirmer', name: 'app_user_delete_account_confirm')]
     public function delete_account_confirm(Security $security): Response
     {
         //TODO: delete the user and Its data

@@ -67,6 +67,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'owner')]
     private Collection $items;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $first_name = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $last_name = null;
+
     public function __construct()
     {
         $this->ownedCircles = new ArrayCollection();
@@ -76,7 +82,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString()
     {
-        return $this->email;
+        $nickname = $this->email;
+        if(null !== $this->first_name || null !== $this->last_name){
+            $nickname = $this->first_name . ' ' . $this->last_name;
+        }
+        return $nickname;
     }
 
     public function getId(): ?int
@@ -254,6 +264,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $item->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->first_name;
+    }
+
+    public function setFirstName(?string $first_name): static
+    {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->last_name;
+    }
+
+    public function setLastName(?string $last_name): static
+    {
+        $this->last_name = $last_name;
 
         return $this;
     }

@@ -12,6 +12,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,8 +26,22 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(
+        Request $request, 
+        UserPasswordHasherInterface $userPasswordHasher, 
+        EntityManagerInterface $entityManager
+        ): Response
     {
+        //store purpose in session rather than keeping it in url bar.
+        $registrationPurpose = $request->get('registrationPurpose');
+        if($registrationPurpose){
+            $request->getSession()->set('registrationPurpose', $registrationPurpose);
+            return $this->redirectToRoute('app_register');
+        }
+        
+        //get registrationPurpose from session
+        $registrationPurpose = $request->getSession()->get('registrationPurpose');
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -51,14 +66,12 @@ class RegistrationController extends AbstractController
                     ->subject('Merci de confirmer votre Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-
-            // do anything else you need here, like send an email
-
-            return $this->redirectToRoute('app_manifeste');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'registrationPurpose' => $registrationPurpose
         ]);
     }
 
