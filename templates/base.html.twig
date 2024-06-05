@@ -13,7 +13,7 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
+    <body class="d-flex flex-column justify-content-start" style="min-height:100vh;">
         {% block navbar %}{% include 'navbar.html.twig' %}{% endblock %}
         {% block flash_message %}{% include 'flash_messages.html.twig' %}{% endblock %}
         {% block body %}{% endblock %}
