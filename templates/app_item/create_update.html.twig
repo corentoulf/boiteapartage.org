@@ -3,25 +3,29 @@
 {% block title %}Ajout au Placard{% endblock %}
 
 {% block body %}
+
 <div class="container">
     <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
-        <h1 class="fw-bold mb-3">Ajouter un objet à partager</h1>
+        <h1 class="fw-bold mb-3">{% if updateMode|default(false) %}Mettre à jour un objet{% else %}Ajouter un objet{% endif %}</h1>
         <div
             class="alert alert-info"
             role="alert"
         >
             <div class="d-flex justify-content-start">
                 <span class="me-3"><i class="bi bi-info-circle"></i></span>
-                <span>Veuillez noter que par défaut, si vous appartenez à plusieurs cercles, <strong>tous les éléments de votre placard seront partagés avec tous vos cercles</strong>.</span>
+                <span>Veuillez noter que par défaut, si vous appartenez à plusieurs cercles, <strong>tous les éléments</strong> de votre placard seront partagés avec <strong>tous vos cercles</strong>.</span>
             </div>
         </div>
                 {{ form_errors(form) }}
         {{ form_start(form) }}
             {{ form_row(form.description, {
                 label: 'Description',
+                attr :{
+                    "autofocus":"true"
+                },
                 help: 'maximum 255 caractères'
             }) }}
             {{ form_row(form.category, {
@@ -29,13 +33,9 @@
             }) }}
             <div class="row ">
                 <div class="col d-flex justify-content-end">
-                    {{ form_row(form.submit, {
-                        label: 'Ajouter'
-                    }) }}
+                    {{ form_row(form.submit) }}
                     <div class="ms-2">
-                    {{ form_row(form.submitAndAdd, {
-                        label: 'Ajouter et ajouter un autre'
-                    }) }}
+                    {{ form_row(form.submitAndAdd) }}
                     </div>
                 </div>
             </div>

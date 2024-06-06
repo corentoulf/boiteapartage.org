@@ -51,12 +51,13 @@ class ItemFormType extends AbstractType
                 ],
             ])
             ->add('submit', SubmitType::class, [
-                'label' => "Ajouter au placard"
+                'label' => $options['update_mode'] === true ? "Mettre à jour" : "Ajouter"
             ])
             ->add('submitAndAdd', SubmitType::class, [
                 'label' => "Ajouter au placard et ajouter un autre",
                 'attr' => [
-                    'class' => 'btn-outline-primary'
+                    'class' => 'btn-outline-primary',
+                    'hidden' => $options['update_mode']
                 ]
             ])
             
@@ -68,6 +69,7 @@ class ItemFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Item::class,
+            'update_mode' => false
         ]);
     }
 }

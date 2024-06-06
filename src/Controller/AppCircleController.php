@@ -22,7 +22,7 @@ class AppCircleController extends AbstractController
     {
         $user = $this->getUser();
         $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
-        
+
         return $this->render('app_circle/index.html.twig', [
             'controller_name' => 'AppCircleController',
             'userCircles' => $userCircles,

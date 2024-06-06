@@ -1,7 +1,10 @@
 /* Override some Bootstrap variables */
 $blue:    #52749c;
 $red: #e86252;
- $green: #5fd9aa;
+$green: #5fd9aa;
+.ct-flash-message{
+    margin-top: 108px;
+}
 // $red: #ebb3a9;
 // $cyan:    #ebb3a9;
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';

@@ -1,4 +1,4 @@
-<div class="container-fluid d-flex justify-content-end position-absolute">
+<div id="flashMessageContainer" class="container-fluid d-flex justify-content-end position-absolute ct-flash-message">
 {% for label, messages in app.flashes %}
     {% for message in messages %}
         <div class="col mt-3 me-2 alert d-flex justify-content-between alert-{{ label }} {% if label not in ['success'] %}alert-dismissable fade show{% endif %}" role="alert" style="max-width:30%">

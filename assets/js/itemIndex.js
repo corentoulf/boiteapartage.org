@@ -10,17 +10,17 @@ let itemTable = new DataTable('#itemTable', {
     language: {
         url: 'https://cdn.jsdelivr.net/npm/datatables.net-plugins@2.0.8/i18n/fr-FR.json',
     },
-    select: {
-        info: false,
-        items: 'row'
-    },
+    // select: {
+    //     info: false,
+    //     items: 'row'
+    // },
     pageLength: 20,
     responsive: true,
     columnDefs: [
-        { targets: [1], orderable: true},
+        { targets: [0,1], orderable: true},
         { targets: '_all', orderable: false }
     ],
-    order: [[1, 'asc']]
+    order: [[1, 'asc'], [0,'asc']]
 });
 
 //external input filter
@@ -30,3 +30,6 @@ $('#filterItemTableInput').on('keyup', function () {
 
 //init search input on page load
 itemTable.search($('#filterItemTableInput').val()).draw();
+
+
+

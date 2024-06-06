@@ -41,7 +41,7 @@ class Circle
     /**
      * @var Collection<int, UserCircle>
      */
-    #[ORM\OneToMany(targetEntity: UserCircle::class, mappedBy: 'circle')]
+    #[ORM\OneToMany(targetEntity: UserCircle::class, mappedBy: 'circle', cascade: ['persist'], orphanRemoval: true)]
     private Collection $userCircles;
 
     #[ORM\Column(length: 255)]
@@ -50,7 +50,7 @@ class Circle
     /**
      * @var Collection<int, ItemCircle>
      */
-    #[ORM\OneToMany(targetEntity: ItemCircle::class, mappedBy: 'circle')]
+    #[ORM\OneToMany(targetEntity: ItemCircle::class, mappedBy: 'circle', cascade: ['persist'], orphanRemoval: true)]
     private Collection $itemCircles;
 
 

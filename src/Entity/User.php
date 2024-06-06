@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, UserCircle>
      */
-    #[ORM\OneToMany(targetEntity: UserCircle::class, mappedBy: 'user_id')]
+    #[ORM\OneToMany(targetEntity: UserCircle::class, mappedBy: 'user_id', cascade: ['persist'], orphanRemoval: true)]
     private Collection $userCircles;
 
 

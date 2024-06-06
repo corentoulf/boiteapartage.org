@@ -59,9 +59,55 @@ class AppItemController extends AbstractController
         }
 
 
-        return $this->render('app_item/create.html.twig', [
+        return $this->render('app_item/create_update.html.twig', [
             'controller_name' => 'AppCircleController',
             'form' => $form
         ]);
+    }
+
+    #[Route('/app/placard/{id}/update', name: 'app_item_update', requirements: ['id' => '\d+'])]
+    public function updateItem(Request $request, EntityManagerInterface $em, int $id): Response
+    {
+        $item = $em->getRepository(Item::class)->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException(
+                'L\'objet n\'a pas été trouvé'
+            );
+        }
+
+        $user = $this->getUser();
+        $form = $this->createForm(ItemFormType::class, $item, [
+            'update_mode' => true,
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $em->persist($item);
+            $em->flush();
+            $this->addFlash('success', 'L\'objet a bien été mis à jour');
+            return $this->redirectToRoute('app_item');
+        }
+
+
+        return $this->render('app_item/create_update.html.twig', [
+            'controller_name' => 'AppCircleController',
+            'form' => $form,
+            'updateMode' => true
+        ]);
+    }
+
+    #[Route('/app/placard/{id}/delete', name: 'app_item_delete', requirements: ['id' => '\d+'])]
+    public function deleteItem(Request $request, EntityManagerInterface $em, int $id): Response
+    {
+        $item = $em->getRepository(Item::class)->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException(
+                'L\'objet n\'a pas été trouvé'
+            );
+        }
+        $em->remove($item);
+        $em->flush();
+        $this->addFlash('success', 'L\'objet a bien été supprimé');
+        return $this->redirectToRoute('app_item');
     }
 }

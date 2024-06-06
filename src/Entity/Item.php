@@ -32,7 +32,7 @@ class Item
     /**
      * @var Collection<int, ItemCircle>
      */
-    #[ORM\OneToMany(targetEntity: ItemCircle::class, mappedBy: 'item')]
+    #[ORM\OneToMany(targetEntity: ItemCircle::class, mappedBy: 'item', cascade: ['persist'], orphanRemoval: true)]
     private Collection $itemCircles;
 
     public function __construct()
