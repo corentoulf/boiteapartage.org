@@ -14,16 +14,16 @@
                         <a class="nav-link {% if app.current_route == 'app_auth_home' %}fw-bold{% endif %}" href="{{ path('app_auth_home') }}"><i class="bi bi-house me-1"></i>Accueil</a>
                     </li>
                     <li class="nav-item me-5">
-                        <a class="nav-link {% if app.current_route == 'app_item' %}fw-bold{% endif %}" href="{{ path('app_item') }}"><i class="bi bi-card-list me-1"></i>Mon placard</a>
+                        <a class="nav-link {% if app.current_route|split('_')[1] == 'item' %}fw-bold{% endif %}" href="{{ path('app_item') }}"><i class="bi bi-card-list me-1"></i>Mon placard</a>
                     </li>
                     <li class="nav-item dropdown me-5">
-                        <a class="nav-link dropdown-toggle {% if app.current_route in ['app_circle', 'app_circle_create', 'app_circle_join'] %}fw-bold{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-arrow-repeat me-1"></i>Cercles
+                        <a class="nav-link dropdown-toggle {% if app.current_route|split('_')[1] == 'circle' %}fw-bold{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-archive-fill me-1"></i>Boîtes
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item {% if app.current_route == 'app_circle' %}fw-bold{% endif %}" href="{{path("app_circle")}}"><i class="bi bi-people me-1"></i>Mes cercles</a></li>
-                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_create' %}fw-bold{% endif %}" href="{{path("app_circle_create")}}"><i class="bi bi-plus-circle me-1"></i>Créer un cercle</a></li>
-                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_join' %}fw-bold{% endif %}" href="{{path("app_circle_join")}}"><i class="bi bi-person-fill-add me-1"></i>Rejoindre un cercle</a></li>
+                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_show' %}fw-bold{% endif %}" href="{{path("app_circle_show", {'id' : 'all'})}}"><i class="bi bi-search me-1"></i>Chercher un objet</a></li>
+                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_create' %}fw-bold{% endif %}" href="{{path("app_circle_create")}}"><i class="bi bi-plus-square me-1"></i>Créer une boîte</a></li>
+                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_join' %}fw-bold{% endif %}" href="{{path("app_circle_join")}}"><i class="bi bi-box-arrow-in-up-right me-1"></i>Rejoindre une boîte</a></li>
                         </ul>
                     </li>
                     <li class="nav-item me-5">
@@ -39,6 +39,7 @@
         </div>
         <a class="btn btn-outline-danger  px-4" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-1"></i>Déconnexion</a>
   </div>
+        <small class="fw-lighter px-4 align-self-end">{{app.user.email}}</small>
 </nav>
 
 {% if app.user.isVerified != true %}
@@ -46,7 +47,7 @@
   <div class="container-fluid d-flex g-0 justify-content-center">
     <div class="alert alert-warning rounded-0 w-100 border-0">
         <p class="mb-0 fw-bold">Vous n'avez pas encore confirmé votre email. </br>
-        Merci de confirmer la création de votre compte en cliquant sur le lien reçu dans l'email. Sans cela, vous ne pourrez pas interagir avec votre cercle.</p>
+        Merci de confirmer la création de votre compte en cliquant sur le lien reçu dans l'email. Sans cela, vous ne pourrez pas interagir avec les boîtes.</p>
     </div>
   </div>
 </nav>

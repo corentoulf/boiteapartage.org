@@ -25,7 +25,7 @@
             <label for="password">Mot de passe</label>
             <input type="password" name="_password" id="password" class="form-control mb-1" autocomplete="current-password" required>
             <p class="mb-3 fst-italic "><a class="small" href="{{ path('app_forgot_password_request') }}">Un trou de mémoire ? Cliquez ici !</a></p> 
-            <input type="hidden" name="_target_path" value="{{ path('app_auth_home') }}">
+            {# <input type="hidden" name="_target_path" value="{{ path('app_auth_home') }}"> #}
             <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}"
             >

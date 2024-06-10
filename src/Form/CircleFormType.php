@@ -24,12 +24,12 @@ class CircleFormType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom',
                 'attr' => [
-                    'placeholder' => '"Quartier des tourterelles"  /  "Résidence Victor Hugo"',
+                    'placeholder' => '"Quartier des tourterelles"  /  "Société Gerflor"',
                     'required' => true
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Donnez un nom pour votre cercle',
+                        'message' => 'Donnez un nom pour votre boîte à partage',
                     ]),
                     new Length([
                         'min' => 6,
@@ -40,15 +40,15 @@ class CircleFormType extends AbstractType
             ]
             )
             ->add('address', TextType::class, [
-                'label' => 'Adresse postale du cercle',
+                'label' => 'Adresse postale ',
                 'required' => false,
-                'help' => 'Cela peut être le nom de la rue ou d\'une des rues du quartier. Laissez vide si le cercle concerne un village',
+                'help' => 'Cela peut être le nom de la rue ou d\'une des rues du quartier. Laissez vide si la boîte concerne un village.',
             ])
             ->add('postcode', TextType::class, [
                 'label' => 'Code postal',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez indiquer le code postal du cercle',
+                        'message' => 'Veuillez indiquer le code postal',
                     ]),
                 ]
             ])
@@ -56,7 +56,7 @@ class CircleFormType extends AbstractType
                 'label' => 'Ville',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez indiquer la ville du cercle',
+                        'message' => 'Veuillez indiquer la ville',
                     ]),
                 ]
             ])
@@ -67,14 +67,14 @@ class CircleFormType extends AbstractType
                         'message' => 'Sélectionnez un pays dans la liste',
                     ]),
                     new NotBlank([
-                        'message' => 'Veuillez indiquer le pays du cercle',
+                        'message' => 'Veuillez indiquer le pays',
                     ]),
                 ],
                 'preferred_choices' => ['FR'],
             ]
             )
             ->add('submit', SubmitType::class, [
-                'label' => "Créer un cercle"
+                'label' => "Créer une boîte"
             ])
             
 

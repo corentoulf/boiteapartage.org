@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{# {% block title %}Hello HomeController!{% endblock %} #}
+{% block title %}
+    {% if registrationPurpose == 'createCircle' %}Créer une boîte à partage
+    {% elseif registrationPurpose == 'joinCircle' %}Rejoindre une boîte à partage
+    {% elseif registrationPurpose == 'joinCircleId' %}Rejoindre "{{registrationCircleId.name}}"
+    {% else %}Inscription
+    {% endif %}
+{% endblock %}
 
 {% block body %}
 
@@ -18,7 +24,20 @@
                 <a class="btn btn-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'application</a>
             </div>
         {% else %}
-        <h1 class="fw-bold mb-3">Inscription</h1>
+        {% if registrationPurpose == 'createCircle' %}
+            <h1 class="fw-bold mb-3">Créer une boîte à partage</h1>
+            <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour créer une boîte.</p>
+        {% elseif registrationPurpose == 'joinCircle' %}
+            <h1 class="fw-bold mb-3">Rejoindre une boîte à partage</h1>
+            <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour rejoindre une boîte.</p>
+        {% elseif registrationPurpose == 'joinCircleId' %}
+            <h1 class="fw-bold mb-3">Rejoindre la boîte à partage "{{registrationCircleId.name}}"</h1>
+            <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour rejoindre la boîte.</p>
+        {% else %}
+            <h1 class="fw-bold mb-3">Inscription</h1>
+            <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour rejoindre la communauté des boîtes à partage.</p>
+        {% endif %}
+        
         {{ form_errors(registrationForm) }}
 
         {{ form_start(registrationForm) }}
@@ -37,7 +56,8 @@
             <div class="row">
                 <div class="col">
                     {{ form_row(registrationForm.email, {
-                        label: 'Email *'
+                        label: 'Email *',
+                        type: "email"
                     }) }}
                 </div>
                 <div class="col">

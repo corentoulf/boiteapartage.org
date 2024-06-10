@@ -1,6 +1,6 @@
 {% extends 'base_auth.html.twig' %}
 
-{% block title %}Cercles{% endblock %}
+{% block title %}Rejoindre une boîte{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -8,8 +8,7 @@
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
-        <h1 class="fw-bold mb-3">{% if short_id %}{{short_id}}{% endif %}
-         Rejoindre un cercle</h1>
+        <h1 class="fw-bold mb-3">Rejoindre une boîte à partage</h1>
         {{ form_errors(form) }}
         {{ form_start(form) }}
         {{ form_end(form) }}

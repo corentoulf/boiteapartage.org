@@ -1,6 +1,6 @@
 {% extends 'base_auth.html.twig' %}
 
-{% block title %}Cercles{% endblock %}
+{% block title %}Recherche Boîtes à partage{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -11,14 +11,14 @@
         </div>
         {% if items|length == 0 %}
             <div class="mt-4">
-                <p class="fs-4" >Il n'y a pas encore d'objet partagé dans ce cercle. <a href="{{path('app_item_create')}}">Ajoutez-en un</a> ;)</p>
+                <p class="fs-4" >Il n'y a pas encore d'objet dans cette boîte. <a href="{{path('app_item_create')}}">Ajoutez-en un</a> maintenant.</p>
             </div>
         {% endif %}
         {% if items|length > 0 %}
             <div class="mt-4">
                 <div class="col-12 pt-3 pb-2">
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="externalFilter">Rechercher un élément</span>
+                            <span class="input-group-text" id="externalFilter">Rechercher un objet</span>
                             <input type="text" id="filterItemTableInput" class="form-control" placeholder="Visseuse" aria-label="Rechercher un élément" aria-describedby="externalFilter" value="{{app.request.get('q')}}">
                         </div>
                     </div>

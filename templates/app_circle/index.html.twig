@@ -1,17 +1,23 @@
 {% extends 'base_auth.html.twig' %}
 
-{% block title %}Cercles{% endblock %}
+{% block title %}Boîtes à partage{% endblock %}
 
 {% block body %}
 <div class="container">
   <div class="row">
     <div class="col-md-6 p-5 my-4 ">
       <div class="bg-body-tertiary p-5 rounded-3">
-        <h1 class="fs-3 fw-bold mb-4">Mes cercles</h1>
+        <h1 class="fs-3 fw-bold mb-4">Boîtes à partage</h1>
         {{ include('app_circle/circle_list_component.html.twig') }}
       </div>
     </div>
   </div>
-
+<button>Share</button>
+<p class="result"></p>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'shareCircle']) }}
+    {% endblock %}
 {% endblock %}

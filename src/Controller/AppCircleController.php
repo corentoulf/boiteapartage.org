@@ -9,6 +9,7 @@ use App\Form\CircleFormType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AppCircleController extends AbstractController
 {
-    #[Route('/app/cercle', name: 'app_circle')]
+
+    #[Route('/app/boite', name: 'app_circle')]
     public function index(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
@@ -31,7 +33,7 @@ class AppCircleController extends AbstractController
 
     
 
-    #[Route('/app/cercle/nouveau', name: 'app_circle_create')]
+    #[Route('/app/boite/nouveau', name: 'app_circle_create')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $circle = new Circle();
@@ -71,7 +73,7 @@ class AppCircleController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('success', 'Le cercle a bien été créé.');
+            $this->addFlash('success', 'La boîte a bien été créé.');
             return $this->redirectToRoute('app_circle');
         }
 
@@ -92,8 +94,8 @@ class AppCircleController extends AbstractController
         return $short_code;
     }
 
-    #[Route('/app/cercle/rejoindre/{shortId?}', name: 'app_circle_join')]
-    public function join(Request $request, EntityManagerInterface $em, ?string $shortId): Response
+    #[Route('/app/boite/rejoindre', name: 'app_circle_join')]
+    public function join(Request $request, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         // creates a userCircle object and initializes user
@@ -102,8 +104,14 @@ class AppCircleController extends AbstractController
 
 
         $form = $this->createFormBuilder($userCircle)
-            ->add('circleIdentifier', TextType::class, ['label' => 'Identifiant du cercle', 'mapped' => false, 'help' => 'Il s\'agit de l\'dentifiant à 6 caractères présent sur le QR Code'])
-            ->add('save', SubmitType::class, ['label' => 'Rejoindre le cercle'])
+            ->add('circleIdentifier', TextType::class, [
+                'label' => 'Identifiant de la boîte',
+                'mapped' => false, 
+                'attr' => [
+                    'placeholder' => 'AA11BB',
+                ],
+                'help' => 'Il s\'agit de l\'dentifiant à 6 caractères présent sur le QR Code'])
+            ->add('save', SubmitType::class, ['label' => 'Rejoindre la boîte'])
             ->getForm();
         
         $form->handleRequest($request);
@@ -119,15 +127,15 @@ class AppCircleController extends AbstractController
                     $userCircle->setCreatedAt(new DateTime('now'));
                     $em->persist($userCircle);
                     $em->flush();
-                    $this->addFlash('success', 'Vous avez bien rejoint le cercle !');
+                    $this->addFlash('success', 'Vous avez bien rejoint la boîte !');
                     return $this->redirectToRoute('app_circle');
                 }
                 else {
-                    $this->addFlash('info', 'Vous faites déjà partie de ce cercle, vous n\'avez pas besoin de le rejoindre de nouveau.');
+                    $this->addFlash('warning', 'Vous faites déjà partie de cette boîte, vous n\'avez pas besoin de le rejoindre de nouveau.');
                 }
             }
             else {
-                $this->addFlash('danger', 'Nous n\'avons pas trouvé de cercle avec cet identifiant. Êtes-vous sûr d\'avoir bien entré l\'identifiant ?');
+                $this->addFlash('danger', 'Nous n\'avons pas trouvé de boîte avec cet identifiant. Êtes-vous sûr d\'avoir bien entré l\'identifiant ?');
             }
 
         }
@@ -135,11 +143,50 @@ class AppCircleController extends AbstractController
         return $this->render('app_circle/join.html.twig', [
             'controller_name' => 'AppCircleController',
             'form' => $form,
-            'short_id' => $shortId
+            // 'short_id' => $shortId
         ]);
     }
 
-    #[Route('/app/cercle/{id}', name: 'app_circle_show')]
+    #[Route('/rejoindre-{shortId}', name: 'app_circle_join_identified')]
+    public function joinIdentified(Request $request, EntityManagerInterface $em, string $shortId, Security $security): Response
+    {
+        //check if circle exists
+        $circle = $em->getRepository(Circle::class)->findOneBy(['short_id' => $shortId]);
+        if(null === $circle){
+            throw $this->createNotFoundException(
+                'Nous n\'avons pas trouvé la boîte associée à cet identifiant.'
+            );
+        }
+        //if circle exists and user is auth => auto-join user to circle
+        $user = $this->getUser();
+        if ($security->isGranted('ROLE_USER')) {
+            //check if user is not already in the circle
+            $existingUserInCircle = $em->getRepository(UserCircle::class)->findByUserAndCircleId($user, $circle);
+            if(null == $existingUserInCircle){
+                // creates a userCircle object and initializes user
+                $userCircle = new UserCircle();
+                $userCircle->setUserId($user);
+                $userCircle->setCircle($circle);
+                $userCircle->setCreatedAt(new DateTime('now'));
+                $em->persist($userCircle);
+                $em->flush();
+                $this->addFlash('success', 'Vous avez bien rejoint la boîte !');
+                return $this->redirectToRoute('app_auth_home');
+            }
+            else {
+                $this->addFlash('warning', 'Vous faites déjà partie de cette boîte !');
+                return $this->redirectToRoute('app_auth_home');
+            }
+        }
+        else {
+            //user is not yet registered
+            $session = $request->getSession();
+            $session->set('registrationPurpose', 'joinCircleId');
+            $session->set('registrationCircleId', $circle->getId());
+            return $this->redirectToRoute('app_register');
+        }
+    }
+    #[Route('/app/boite/{id}', name: 'app_circle_show')]
     public function show(Request $request, EntityManagerInterface $em, string $id): Response
     {
         $user = $this->getUser();

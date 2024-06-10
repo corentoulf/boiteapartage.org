@@ -84,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $nickname = $this->email;
         if(null !== $this->first_name || null !== $this->last_name){
-            $nickname = $this->first_name . ' ' . $this->last_name;
+            $nickname = $this->first_name . ' ' . $this->last_name . ' ('. $this->email .')';
         }
         return $nickname;
     }

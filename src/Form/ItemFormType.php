@@ -33,7 +33,7 @@ class ItemFormType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Donnez un nom pour votre cercle',
+                        'message' => 'Donnez un nom pour votre objet',
                     ]),
                     new Length([
                         'min' => 6,

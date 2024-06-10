@@ -8,19 +8,19 @@
       <div class="container-fluid py-5">
         <div class="d-flex align-items-center justify-content-between">
             <h1 class="display-5 fw-bold">Votre placard</h1>
-            <a class="btn btn-outline-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un élément</a>
+            <a class="btn btn-outline-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un objet</a>
         </div>
         {% if userItems|length == 0 %}
             <div class="mt-4">
-                <p class="fs-4" >Votre placard est vide. Commencez par <a class=""  href="{{path('app_item_create')}}" role="button">ajouter un élément</a>.</p>
+                <p class="fs-4" >Votre placard est vide. Commencez par <a class=""  href="{{path('app_item_create')}}" role="button">ajouter un objet</a>.</p>
             </div>
         {% endif %}
         {% if userItems|length > 0 %}
             <div class="mt-4">
                 <div class="col-12 pt-3 pb-2">
                         <div class="input-group mb-3">
-                            <span class="input-group-text" id="externalFilter">Rechercher un élément</span>
-                            <input type="text" id="filterItemTableInput" class="form-control" placeholder="Visseuse" aria-label="Rechercher un élément" aria-describedby="externalFilter">
+                            <span class="input-group-text" id="externalFilter">Rechercher un objet</span>
+                            <input type="text" id="filterItemTableInput" class="form-control" placeholder="Visseuse" aria-label="Rechercher un objet" aria-describedby="externalFilter">
                         </div>
                     </div>
                 </div>

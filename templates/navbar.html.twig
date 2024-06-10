@@ -11,13 +11,13 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item me-5">
+                        <a class="nav-link {% if app.current_route|split('_')[1] == 'register' and registrationPurpose == 'createCircle' %}fw-bold{% endif %}" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"><i class="bi bi-plus-square me-1"></i>Créer une boîte</a>
+                    </li>
+                    <li class="nav-item me-5">
+                        <a class="nav-link {% if app.current_route|split('_')[1] == 'register' and registrationPurpose in ['joinCircle','joinCircleId'] %}fw-bold{% endif %}" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"><i class="bi bi-box-arrow-in-up-right me-1"></i>Rejoindre une boîte</a>
+                    </li>
+                    <li class="nav-item me-5">
                         <a class="nav-link {% if app.current_route == 'app_manifeste' %}fw-bold{% endif %}" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-1"></i>Manifeste</a>
-                    </li>
-                    <li class="nav-item me-5">
-                        <a class="nav-link {% if app.current_route == 'app_register' and registrationPurpose == 'createCircle' %}fw-bold{% endif %}" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"><i class="bi bi-plus-circle me-1"></i>Créer un cercle</a>
-                    </li>
-                    <li class="nav-item me-5">
-                        <a class="nav-link {% if app.current_route == 'app_register' and registrationPurpose == 'joinCircle'%}fw-bold{% endif %}" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"><i class="bi bi-person-fill-add me-1"></i>Rejoindre un cercle</a>
                     </li>
                 </ul>
             </div>

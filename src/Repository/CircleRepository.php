@@ -19,13 +19,13 @@ class CircleRepository extends ServiceEntityRepository
     //    /**
     //     * @return Circle[] Returns an array of Circle objects
     //     */
-    //    public function findByExampleField($value): array
+    //    public function findByUserAndCircleId($userId, $circleId): array
     //    {
     //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
+    //            ->andWhere('c.user_id = :user')
+    //            ->andWhere('c.circle_id = :circle')
+    //            ->setParameter('user', $userId)
+    //            ->setParameter('circle', $circleId)
     //            ->getQuery()
     //            ->getResult()
     //        ;

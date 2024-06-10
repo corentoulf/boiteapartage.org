@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Circle;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Stmt\Switch_;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -29,7 +32,8 @@ class RegistrationController extends AbstractController
     public function register(
         Request $request, 
         UserPasswordHasherInterface $userPasswordHasher, 
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $em,
+        Security $security
         ): Response
     {
         //store purpose in session rather than keeping it in url bar.
@@ -41,7 +45,12 @@ class RegistrationController extends AbstractController
         
         //get registrationPurpose from session
         $registrationPurpose = $request->getSession()->get('registrationPurpose');
-
+        //if purpose is to join a specific circle, catch information about it
+        $circle = null;
+        if($registrationPurpose == "joinCircleId"){
+            $circleToJoinId = $request->getSession()->get('registrationCircleId');
+            $circle = $em->getRepository(Circle::class)->findOneBy(['id' => $circleToJoinId]);
+        }
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -55,8 +64,8 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setCreatedAt(new DateTime('now'));
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $em->persist($user);
+            $em->flush();
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -66,12 +75,32 @@ class RegistrationController extends AbstractController
                     ->subject('Merci de confirmer votre Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            return $this->redirectToRoute('app_login');
+
+            // auto-log-in the user redirect to what he wanted to do (registrationPurpose)
+            switch ($registrationPurpose) {
+                case 'createCircle':
+                    $security->login($user, 'form_login');
+                    return $this->redirectToRoute('app_circle_create');
+                    break;
+                case 'joinCircle':
+                    $security->login($user, 'form_login');
+                    return $this->redirectToRoute('app_circle_join');
+                    break;
+                case 'joinCircleId':
+                    $security->login($user, 'form_login');
+                    return $this->redirectToRoute('app_circle_join_identified', ['shortId' => $circle->getShortId()]);
+                    break;
+                            
+                default:
+                    return $security->login($user, 'form_login'); //default success login path
+                    break;
+            }
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
-            'registrationPurpose' => $registrationPurpose
+            'registrationPurpose' => $registrationPurpose,
+            'registrationCircleId' => $circle
         ]);
     }
 

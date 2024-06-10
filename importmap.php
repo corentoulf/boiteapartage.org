@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/itemIndex.js',
         'entrypoint' => true,
     ],
+    'shareCircle' => [
+        'path' => './assets/js/shareCircle.js',
+        'entrypoint' => true,
+    ],
     'bootstrap-icons/font/bootstrap-icons.min.css' => [
         'version' => '1.11.3',
         'type' => 'css',
