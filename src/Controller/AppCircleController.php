@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class AppCircleController extends AbstractController
 {
@@ -121,14 +122,14 @@ class AppCircleController extends AbstractController
             $circle = $em->getRepository(Circle::class)->findOneBy(['short_id' => $circleToFind]);
             if(null !== $circle){
                 //check if user is not already in the circle
-                $existingUserInCircle = $em->getRepository(UserCircle::class)->findOneBy(['user_id' => $user]);
+                $existingUserInCircle = $em->getRepository(UserCircle::class)->findByUserAndCircleId($user, $circle);
                 if(null == $existingUserInCircle){
                     $userCircle->setCircle($circle);
                     $userCircle->setCreatedAt(new DateTime('now'));
                     $em->persist($userCircle);
                     $em->flush();
-                    $this->addFlash('success', 'Vous avez bien rejoint la boîte !');
-                    return $this->redirectToRoute('app_circle');
+                    $this->addFlash('success','Vous avez bien rejoint la boîte "'.$circle->getName().'"!');
+                    return $this->redirectToRoute('app_auth_home');
                 }
                 else {
                     $this->addFlash('warning', 'Vous faites déjà partie de cette boîte, vous n\'avez pas besoin de le rejoindre de nouveau.');
@@ -186,25 +187,33 @@ class AppCircleController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
     }
-    #[Route('/app/boite/{id}', name: 'app_circle_show')]
-    public function show(Request $request, EntityManagerInterface $em, string $id): Response
+    #[Route('/app/boite/{circle}', name: 'app_circle_show', requirements: ['circle' => '\d+'])]
+    #[IsGranted('browse', 'circle', 'Vous n\'avez pas le droit de consulter cette boîte. Avez-vous vérifié votre email et partagé 5 objets ?')]
+    public function showOne(Request $request, EntityManagerInterface $em, Circle $circle): Response
     {
-        $user = $this->getUser();
-        if($id == "all"){
-            //get circles the user belongs to
-            $circlesToFetch = array();
-            $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
-            foreach ($userCircles as $key => $userCircle) {
-                array_push($circlesToFetch, $userCircle->getCircle()->getId());
-            }
-            //get all user circles items
-            $items = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch);
+        //fetch items that are in the $circle
+        $items = $em->getRepository(ItemCircle::class)->findAllInArray(array($circle));
 
+        return $this->render('app_circle/show.html.twig', [
+            'controller_name' => 'AppCircleController',
+            'items' => $items
+        ]);
+    }
+    #[Route('/app/boite/all', name: 'app_circle_show_all')]
+    #[IsGranted('browseAll', null, 'Vous n\'avez pas le droit de consulter les boîtes. Avez-vous vérifié votre email et partagé 5 objets ?')]
+    public function showAll(Request $request, EntityManagerInterface $em): Response
+    {
+
+        $user = $this->getUser();
+        $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
+
+        //get circles the user belongs to
+        $circlesToFetch = array();
+        foreach ($userCircles as $key => $userCircle) {
+            array_push($circlesToFetch, $userCircle->getCircle()->getId());
         }
-        else {
-            //get $id circle items
-            $items = $em->getRepository(ItemCircle::class)->findAllInArray(array($id));
-        }
+        //get all user circles items
+        $items = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch);
 
         return $this->render('app_circle/show.html.twig', [
             'controller_name' => 'AppCircleController',

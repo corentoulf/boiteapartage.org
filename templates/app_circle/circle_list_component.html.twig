@@ -1,6 +1,6 @@
 <ul class="list-group">
     {% for userCircle in userCircles %}  
-        <div class="list-group-item d-flex align-items-start" >
+        <div class="list-group-item d-flex align-items-center" >
             <div class="ms-2 me-auto">
                 <div class="fw-bold">{{userCircle.circle.name}}</div>
             </div>
@@ -11,11 +11,31 @@
                 data-bs-target="#shareCircleModal" 
                 data-circle-uri="{{url('app_circle_join_identified', {shortId : userCircle.circle.shortId})}}" 
                 data-circle-name="{{userCircle.circle.name}}" 
-                {# data-bs-circle-short-id="{{userCircle.circle.shortId}} #}
-              "><i class="bi bi-share-fill me-2"></i>Partager</button>
-              <a class="btn btn-sm btn-primary" href="{{path('app_circle_show', {id:userCircle.circle.id})}}" data-bs-toggle="tooltip" data-bs-title="Chercher un objet dans la boîte à partage : '{{userCircle.circle.name}}'" data-bs-placement="right"><i class="bi bi-search"></i></a>
+              >
+              <i class="bi bi-share-fill me-2"></i>Partager</button>
+              {% if is_granted('browse', userCircle.circle) %}
+              <a 
+                class="btn btn-sm btn-primary" 
+                href="{{path('app_circle_show', {circle:userCircle.circle.id})}}" 
+                data-bs-toggle="tooltip" 
+                data-bs-title="Chercher un objet dans la boîte à partage : '{{userCircle.circle.name}}'" 
+                data-bs-placement="right"
+              >
+              <i class="bi bi-search"></i></a>
+              {% else %}
+              <div
+                class="d-inline-block"
+                data-bs-toggle="tooltip" 
+                data-bs-title="Pour chercher un objet dans un cercle vous devez valider votre email et ajouter au moins 5 objets dans votre placard." 
+                data-bs-placement="right"
+              >
+                <a class="btn btn-sm btn-primary disabled">
+                <i class="bi bi-search"></i>
+                </a>
+              </div>
+              {% endif %}
+
             </div>
-                {# <div class=""><span class="badge text-bg-primary rounded-pill">{{userCircle.circle.userCircles|length}} membre(s)</span></div> #}
         </div>
     {% endfor %}
 </ul>

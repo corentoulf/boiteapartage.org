@@ -10,6 +10,16 @@
     {# Search part #}
     <div class="col-12 px-5 my-4 ">
     {% if userCircles|length > 0 %}
+      {% if not is_granted('browse', userCircles[0].circle) %}
+        <div class="bg-body-tertiary p-5 rounded-3">
+          <h1 class="fs-3 fw-bold mb-3">Chercher un objet</h1>
+          <p class="alert alert-warning">Pour chercher un objet dans une boîte vous devez <strong>valider votre email</strong> et ajouter au moins <strong>5 objets</strong> dans votre placard.</p>
+          <div class="input-group mb-3">
+            <input class="form-control form-control-lg" disabled type="text" placeholder="Moule à financier" aria-label="input search" id="searchTermsInput">
+            <button class="btn btn-primary disabled" type="button">Chercher</button>
+          </div>
+        </div>
+      {% else %}
       <div class="bg-body-tertiary p-5 rounded-3">
         <h1 class="fs-3 fw-bold mb-3">Chercher un objet</h1>
         <form id="homeSearchForm">
@@ -17,24 +27,25 @@
             {% if userCircles|length >1 %}
               <label class="input-group-text" for="inputGroupSelect02">Sélectionnez une boîte</label>
               <select class="form-select" id="circleChoiceSelect">
-                <option value="all" selected>Toutes boîtes confondues</option>
+                <option value="all" selected>Toutes les boîtes</option>
                 {% for userCircle in userCircles %}  
                   <option value="{{userCircle.circle.id}}">{{userCircle.circle.name}}</option>
                 {% endfor %}
               </select>
               <input class="form-control form-control-lg" type="text" placeholder="Moule à cake" aria-label="input search" id="searchTermsInput">
-              <input type="hidden" id="targetPathInput" value="{{path('app_circle_show', {id: 'all'})}}">
+              <input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
               <button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
             {%else%}
               {% set userCircle = userCircles[0] %}
               <input class="form-control form-control-lg" type="text" placeholder="Moule à financier" aria-label="input search" id="searchTermsInput">
               <input type="hidden" id="circleChoiceSelect" value="{{userCircle.circle.id}}">
-              <input type="hidden" id="targetPathInput" value="{{path('app_circle_show', {id: 'all'})}}">
+              <input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
               <button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
             {% endif %}
           </div>
         </form>
       </div>
+      {% endif %}
     {% endif %}
     </div>
     {# Circles part #}

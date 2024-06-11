@@ -5,6 +5,17 @@ $red: #e86252;
 .ct-flash-message{
     margin-top: 108px;
 }
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4.5,
+);
+
 // $red: #ebb3a9;
 $cyan:    #ebb3a9;
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
