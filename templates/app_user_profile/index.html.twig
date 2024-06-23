@@ -4,16 +4,16 @@
 
 {% block body %}
 <div class="container">
-    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
+    <div class="p-5 my-4   col-md-6 offset-md-3">
         <h1 class="fw-bold mb-3">Compte</h1>
 
         <p>Email : {{ app.user.email }}</p>
         <hr>
         <div class="row">
-            <a href="{{ path('app_user_update_profile') }}" class="btn btn-primary mb-3">
+            <a href="{{ path('app_user_update_profile') }}" class="btn btn-outline-primary mb-3">
                 <i class="bi bi-pencil me-2"></i>Modifier mes informations
             </a>
-            <a href="{{ path('app_user_update_password') }}" class="btn btn-primary mb-3">
+            <a href="{{ path('app_user_update_password') }}" class="btn btn-outline-primary mb-3">
                 <i class="bi bi-key me-2"></i>Modifier mon mot de passe
             </a>
         </div>

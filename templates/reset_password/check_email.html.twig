@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container">
-    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
+    <div class="p-5 my-4   col-md-6 offset-md-3">
         <p>
             Si un compte correspond à votre email, un email vient de lui être envoyé avec un lien de réinitialisation du mot de passe.
             Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.

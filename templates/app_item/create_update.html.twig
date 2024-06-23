@@ -5,13 +5,13 @@
 {% block body %}
 
 <div class="container">
-    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
+    <div class="p-5 my-4   col-md-6 offset-md-3">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
         <h1 class="fw-bold mb-3">{% if updateMode|default(false) %}Mettre à jour un objet{% else %}Ajouter un objet{% endif %}</h1>
         <div
-            class="alert alert-info"
+            class="alert alert-warning"
             role="alert"
         >
             <div class="d-flex justify-content-start">

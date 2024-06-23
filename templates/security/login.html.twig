@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container">
-    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-4 offset-md-4">
+    <div class="p-5 my-4   col-md-4 offset-md-4">
         <form class="form" method="post">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -15,7 +15,7 @@
                     Vous êtes déjà connecté en tant que <span class="fw-semibold">{{ app.user.userIdentifier }}</span>
                 </div>
                 <div class="d-grid gap-2">
-                    <a class="btn btn-primary" href="{{ path('app_logout') }}">Déconnexion</a>
+                    <a class="btn btn-outline-primary" href="{{ path('app_logout') }}">Déconnexion</a>
                 </div>
             {% else %}
 
@@ -37,7 +37,7 @@
                 </div>
 
             <div class="d-grid gap-2">
-                <button class="btn btn-lg btn-primary mb-3" type="submit">
+                <button class="btn btn-lg btn-outline-primary mb-3" type="submit">
                     Connexion
                 </button>
             </div>

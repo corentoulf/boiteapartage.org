@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="container">
-    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
+    <div class="p-5 my-4   col-md-6 offset-md-3">
         {% for flash_error in app.flashes('reset_password_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
@@ -17,7 +17,7 @@
             </small>
         </div>
 
-        <button class="btn btn-primary">Envoyer l'email de réinitialisation</button>
+        <button class="btn btn-outline-primary">Envoyer l'email de réinitialisation</button>
         {{ form_end(requestForm) }}
     </div>
 </div>

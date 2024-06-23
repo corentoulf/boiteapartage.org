@@ -26,7 +26,7 @@ $('.btn-share-circle').on('click', function(e){
         let modalTitle = `Inviter des personnes à partager dans la boîte "${circleName}"`;
         let modalContent = `
             <p>Pour inviter des personnes à rejoindre cette boîte à partage, envoyez-leur le lien suivant :</p>
-            <div class="alert alert-success alert-static  d-flex justify-content-center" role="alert">
+            <div class="alert alert-warning alert-static  d-flex justify-content-center" role="alert">
                 <span class="fw-bold">${circleJoinUri}</span>
                 <a href="#" class="text-success ms-3" id="copyCircleJoinUri" data-circle-uri="${circleJoinUri}" data-bs-toggle="tooltip" data-bs-title="Copier le lien"><i class="bi bi-copy me-2"></i>Copier</a>
             </div>
@@ -61,48 +61,3 @@ $('.btn-share-circle').on('click', function(e){
     }
 
 })
-
-
-// const shareCircleModal = document.getElementById('shareCircleModal')
-// if (shareCircleModal) {
-    
-//     // If necessary, you could initiate an Ajax request here
-//     // and then do the updating in a callback.
-
-//     // Update the modal's content.
-//     const modalTitle = shareCircleModal.querySelector('.modal-title')
-//     const modalBodyInput = shareCircleModal.querySelector('.modal-body')
-
-//     modalTitle.textContent = `Inviter des personnes à partager dans la boîte "${circleName}"`
-//     modalBodyInput.innerHTML = `
-//         <p>Pour inviter des personnes à rejoindre cette boîte à partage, envoyez-leur le lien suivant :</p>
-//         <div class="alert alert-success alert-static  d-flex justify-content-center" role="alert">
-//             <span class="fw-bold">${circleJoinUri}</span>
-//             <a href="#" class="text-success ms-3" id="copyCircleJoinUri" data-circle-uri="${circleJoinUri}" data-bs-toggle="tooltip" data-bs-title="Copier le lien"><i class="bi bi-copy me-2"></i>Copier</a>
-//         </div>
-//         <p>Où invitez-les à scanner le QR Code ci-dessous :</p>
-//         <div class="text-center" id="qrcode-container">
-//             <div id="qrcode"></div>
-//         </div>
-//         `;
-//     //create qrcode and add to modal
-//     $('#qrcode').qrcode({width: 128,height: 128,text: `${circleJoinUri}`});
-//     const bootstrapTooltips = $('[data-bs-toggle="tooltip"]').toArray();
-//     bootstrapTooltips.forEach(el => new Tooltip(el, {
-//         container: 'body'
-//     }))
-
-//     //share btn copy to clipboard
-//     $('#copyCircleJoinUri').on('click', function(e){
-//         e.preventDefault();
-//         const tt = Tooltip.getOrCreateInstance('#copyCircleJoinUri')
-//         tt.setContent({ '.tooltip-inner': 'Copié !' })
-//         setTimeout(() => {
-//             tt.setContent({ '.tooltip-inner': 'Copier le lien' })
-//         }, "5000");
-//         let text = $(this).data('circle-uri')
-//         copyToClipboard(text) //TODO find a way to acess a function globally
-
-//     })
-//   })
-// }

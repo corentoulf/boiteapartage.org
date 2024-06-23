@@ -3,20 +3,125 @@
 {# {% block title %}Hello HomeController!{% endblock %} #}
 
 {% block body %}
+<section class="py-5">
+<div class="container py-2 py-lg-5">
+  <div class="d-none d-lg-flex display-4 justify-content-center py-2 py-lg-5">
+    <div ><span class="ct-underline-highlight-info">Prêtez.</span></div>
+    <div class="px-5"><span class="ct-underline-highlight-warning">Empruntez.</span></div>
+    <div ><span class="ct-underline-highlight-success">Sereinement.</span></div>
+  </div>
+  <div class="d-flex d-lg-none display-4 justify-content-center py-2 py-lg-5 row text-center">
+    <div class="col-12 py-3"><span class="ct-underline-highlight-info">Prêtez.</span></div>
+    <div class="col-12 py-3"><span class="ct-underline-highlight-warning">Empruntez.</span></div>
+    <div class="col-12 py-3" ><span class="ct-underline-highlight-success">Sereinement.</span></div>
+  </div>
+  <div class="pt-5 display-5 text-center text-info">
+    <div class="py-2 py-lg-5">
+      <a class="btn btn-primary btn-lg shadow" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-1"></i>Lire notre manifeste</span></a>
+    </div>
+  </div>
+</div>
+</section>
+{# Timeline : how the system works #}
+<!-- Timeline 4 - Bootstrap Brain Component -->
+<section class="bsb-timeline-4 py-3 py-md-5 py-xl-8">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10 col-md-12 col-xl-10 col-xxl-9">
 
+        <ul class="timeline">
+          <li class="timeline-item left">
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <div class="d-inline-flex flex-column mt-n2">
+                  <a class="btn btn-warning fw-light btn-lg shadow" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-plus-circle me-2"></i>Créer une boîte</a>
+                </div>
+              </div>
+              <div class="timeline-content timeline-indicator">
+                <div class="card border-0">
+                  <div class="card-body p-xl-4">
+                    <h2 class="card-title mb-2">Lancez le mouvement</h2>
+                    <h6 class="card-subtitle text-secondary mb-3">Créez une boîte à partage</h6>
+                    <p class="card-text m-0">Que ce soit dans votre immeuble, votre entreprise, votre association ou votre quartier, créez une boîte à partage et invitez des personnes à la rejoindre.Renseignez les objets qui pourraient être utiles aux autres et cherchez ceux dont vous avez besoin.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="timeline-item right">
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <a href="#" class="btn btn-info">
+                <div class="d-inline-flex flex-column">
+                  <span>Released on 18 Jan 2018</span>
+                </div>
+                </a>
+              </div>
+              <div class="timeline-content timeline-indicator">
+                <div class="card border-0 shadow">
+                  <div class="card-body p-xl-4">
+                    <h2 class="card-title mb-2">Bootstrap 4</h2>
+                    <h6 class="card-subtitle text-secondary mb-3">No Active Support</h6>
+                    <p class="card-text m-0">Get started with Bootstrap, the world’s most popular framework for building responsive, mobile-first sites, with jsDelivr and a template starter page. Bootstrap 4 has no active support.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="timeline-item left">
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <div class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                  <span>Released on 19 Aug 2013</span>
+                </div>
+              </div>
+              <div class="timeline-content timeline-indicator">
+                <div class="card border-0 shadow">
+                  <div class="card-body p-xl-4">
+                    <h2 class="card-title mb-2">Bootstrap 3</h2>
+                    <h6 class="card-subtitle text-secondary mb-3">No Active Support</h6>
+                    <p class="card-text m-0">Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web. Bootstrap 3 has no active support.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="timeline-item right">
+            <div class="timeline-body">
+              <div class="timeline-meta">
+                <div class="d-inline-flex flex-column px-2 py-1 text-success-emphasis bg-success-subtle border border-success-subtle rounded-2 text-md-end">
+                  <span>Released on 31 Jan 2012</span>
+                </div>
+              </div>
+              <div class="timeline-content timeline-indicator">
+                <div class="card border-0 shadow">
+                  <div class="card-body p-xl-4">
+                    <h2 class="card-title mb-2">Bootstrap 2</h2>
+                    <h6 class="card-subtitle text-secondary mb-3">No Active Support</h6>
+                    <p class="card-text m-0">Sleek, intuitive, and powerful front-end framework for faster and easier web development. Bootstrap 2 is no longer officially supported.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="container">
-
-    <div class="p-5 my-4 bg-body-tertiary rounded-3">
+    <div class="p-5 my-4  ">
       <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">Lancez le mouvement</h1>
         <p class="col-md-8 fs-4">Que ce soit dans votre immeuble, votre entreprise, votre association ou votre quartier, créez une boîte à partage et invitez des personnes à la rejoindre.</br>
         Renseignez les objets qui pourraient être utiles aux autres et cherchez ceux dont vous avez besoin.</p>
-        <a href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}" class="btn btn-primary btn-lg" type="button"><i class="bi bi-plus-circle me-2"></i>Créer une boîte</a>
+        `<a href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}" class="btn btn-warning btn-lg shadow" type="button"><i class="bi bi-plus-circle me-2"></i>Créer une boîte</a>
       </div>
     </div>
 
-    <div class="p-5 my-4 bg-body-tertiary rounded-3">
+    <div class="p-5 my-4  ">
       <div class="container-fluid text-end py-5">
         <div class="row">
           <div class="col-md-4 text-center">
@@ -25,7 +130,7 @@
           <div class="col-md-8">
             <h1 class="display-5 fw-bold">Rejoindre une boîte</h1>
             <p class="fs-4">Vous avez vu une affiche dans le hall de votre immeuble ou dans votre entreprise et vous souhaitez ajouter vos objets dans une boîte à partage existante ?</p>
-            <a href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}" class="btn btn-primary btn-lg" type="button"><i class="bi bi-person-fill-add me-2"></i>Rejoindre une boîte</a>
+            <a href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}" class="btn btn-warning btn-lg shadow" type="button"><i class="bi bi-person-fill-add me-2"></i>Rejoindre une boîte</a>
           </div>
         </div>
       </div>

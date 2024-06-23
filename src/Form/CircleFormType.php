@@ -15,11 +15,19 @@ use Symfony\Component\Validator\Constraints\Country;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
+
+
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class CircleFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // $filesystem = new Filesystem();
+        // $jsonCities = $filesystem->readFile('/some/path/to/file.txt');
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom',
@@ -59,6 +67,10 @@ class CircleFormType extends AbstractType
                         'message' => 'Veuillez indiquer la ville',
                     ]),
                 ]
+            ])
+            ->add('json_city', ChoiceType::class, [
+                'label' => 'json cicty',
+                'mapped' => false
             ])
             ->add('country', CountryType::class, [
                 'label' => 'Pays',

@@ -12,7 +12,7 @@
 
 
 <div class="container">
-    <div class="p-5 my-4 bg-body-tertiary rounded-3 col-md-6 offset-md-3">
+    <div class="p-5 my-4   col-md-6 offset-md-3">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
@@ -21,7 +21,7 @@
                 Vous êtes déjà connecté en tant que <span class="fw-semibold">{{ app.user.userIdentifier }}</span>
             </div>
             <div class="d-grid gap-2">
-                <a class="btn btn-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'application</a>
+                <a class="btn btn-outline-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'application</a>
             </div>
         {% else %}
         {% if registrationPurpose == 'createCircle' %}
@@ -75,7 +75,7 @@
                 label: 'Accepter les conditions d\'utilisation'
             }) }}
 
-            <button type="submit" class="btn btn-primary">S'inscrire</button>
+            <button type="submit" class="btn btn-outline-primary">S'inscrire</button>
         {{ form_end(registrationForm) }}
         {% endif %}
     </div>

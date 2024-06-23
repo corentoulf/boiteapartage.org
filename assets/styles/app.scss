@@ -1,23 +1,143 @@
-/* Override some Bootstrap variables */
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../vendor/twbs/bootstrap/scss/_functions.scss";
+
+// 2. Include any default variable overrides here
+@page { size: auto;  margin: 0mm; }
+//colors
 $blue:    #52749c;
-$red: #e86252;
-// $green: #129c57;
-.ct-flash-message{
-    margin-top: 108px;
-}
+
+
+$green: #417F6B;
+$vivid-green: #5EBE9F;
+$red: #f35959;
+$pale-red: #ff9292;
+$sienna: #DB6D52;
+$yellow: #fbffa2;
+//#fbffa2   #f6ff45;
+
+$fan: #ffdcd6;
+
+
+//main color-class
+$primary: $blue;
+$danger: $red;
+$warning: $yellow;
+$info: $sienna;
+$success: $vivid-green;
+
+//Roundness
+$enable-rounded: false;
+// $btn-border-radius:           3px;
+// $btn-border-radius-sm:        3px;
+// $btn-border-radius-lg:        3px;
+//buttons
+//shadows
+// $enable-shadows : true;
+
+
+$btn-border-width: 0.1rem;
+
+
+
 $spacer: 1rem;
 $spacers: (
-  0: 0,
-  1: $spacer * .25,
-  2: $spacer * .5,
-  3: $spacer,
-  4: $spacer * 1.5,
-  5: $spacer * 3,
-  6: $spacer * 4.5,
+0: 0,
+1: $spacer * .25,
+2: $spacer * .5,
+3: $spacer,
+4: $spacer * 1.5,
+5: $spacer * 3,
+6: $spacer * 4.5,
 );
 
-// $red: #ebb3a9;
-$cyan:    #ebb3a9;
-@import '../../vendor/twbs/bootstrap/scss/bootstrap';
-@page { size: auto;  margin: 0mm; }
-// $red: #FB4040;
+// 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+@import "../../vendor/twbs/bootstrap/scss/_variables.scss";
+@import "../../vendor/twbs/bootstrap/scss/_variables-dark.scss";
+
+// 4. Include any default map overrides here
+// $nav-link-hover-color:              var(--#{$prefix}link-hover-color);
+$box-shadow:                  0.3rem 0.3rem 0rem rgba($black, 1);
+// $box-shadow-sm:               0 .125rem .25rem rgba($green, .075);
+$box-shadow-lg:               0.3rem 0.3rem 0rem rgb($dark, 1);
+// $box-shadow-inset:            inset 0 1px 2px rgba($green, .075);
+
+$btn-hover-bg-shade-amount:       15%;
+$btn-hover-bg-tint-amount:        15%;
+$btn-hover-border-shade-amount:   20%;
+$btn-hover-border-tint-amount:    10%;
+
+
+
+// 5. Include remainder of required parts
+@import "../../vendor/twbs/bootstrap/scss/_maps.scss";
+@import "../../vendor/twbs/bootstrap/scss/_mixins.scss";
+@import "../../vendor/twbs/bootstrap/scss/_root.scss";
+
+// 6. Optionally include any other parts as needed
+@import "../../vendor/twbs/bootstrap/scss/_utilities.scss";
+
+@import "../../vendor/twbs/bootstrap/scss/_alert.scss";
+@import "../../vendor/twbs/bootstrap/scss/_badge.scss";
+@import "../../vendor/twbs/bootstrap/scss/_button-group.scss";
+@import "../../vendor/twbs/bootstrap/scss/_buttons.scss";
+@import "../../vendor/twbs/bootstrap/scss/_card.scss";
+@import "../../vendor/twbs/bootstrap/scss/_close.scss";
+@import "../../vendor/twbs/bootstrap/scss/_dropdown.scss";
+@import "../../vendor/twbs/bootstrap/scss/_forms.scss";
+@import "../../vendor/twbs/bootstrap/scss/_list-group.scss";
+@import "../../vendor/twbs/bootstrap/scss/_modal.scss";
+@import "../../vendor/twbs/bootstrap/scss/_nav.scss";
+@import "../../vendor/twbs/bootstrap/scss/_navbar.scss";
+@import "../../vendor/twbs/bootstrap/scss/_offcanvas.scss";
+@import "../../vendor/twbs/bootstrap/scss/_pagination.scss";
+@import "../../vendor/twbs/bootstrap/scss/_placeholders.scss";
+@import "../../vendor/twbs/bootstrap/scss/_popover.scss";
+@import "../../vendor/twbs/bootstrap/scss/_tables.scss";
+@import "../../vendor/twbs/bootstrap/scss/_toasts.scss";
+@import "../../vendor/twbs/bootstrap/scss/_tooltip.scss";
+@import "../../vendor/twbs/bootstrap/scss/_transitions.scss";
+
+@import "../../vendor/twbs/bootstrap/scss/_reboot.scss";
+@import "../../vendor/twbs/bootstrap/scss/_type.scss";
+@import "../../vendor/twbs/bootstrap/scss/_images.scss";
+@import "../../vendor/twbs/bootstrap/scss/_containers.scss";
+@import "../../vendor/twbs/bootstrap/scss/_grid.scss";
+@import "../../vendor/twbs/bootstrap/scss/_helpers.scss";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "../../vendor/twbs/bootstrap/scss/utilities/_api.scss";
+
+// 8. Add additional custom code here
+
+
+
+
+// Custom classes independant from Bootstrap
+.ct-flash-message{
+  margin-top: 108px;
+}
+
+.ct-bg-card{
+  background-color: $fan;
+}
+
+
+@import "./timeline";
+
+
+
+.ct-underline-highlight-warning {
+  box-shadow:  0rem .5rem 0 0rem $warning;
+}
+.ct-underline-highlight-info {
+  box-shadow:  0rem .5rem 0 0rem $info
+}
+.ct-underline-highlight-success {
+  box-shadow:  0rem .5rem 0 0rem $success
+}
+.ct-underline-highlight-danger {
+  box-shadow:  0rem .5rem 0 0rem $danger
+}
+.ct-underline-highlight-dark {
+  box-shadow:  0rem .5rem 0 0rem $black
+}
