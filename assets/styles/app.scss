@@ -7,12 +7,11 @@
 $blue:    #52749c;
 
 
-$green: #417F6B;
-$vivid-green: #5EBE9F;
-$red: #f35959;
+$green: #88C189; //backup plus clair => #7AC67B
+$vivid-green: #148076;
+$red: #FF8D8D;
 $pale-red: #ff9292;
-$sienna: #DB6D52;
-$yellow: #fbffa2;
+$orange: #FFBE3D;
 //#fbffa2   #f6ff45;
 
 $fan: #ffdcd6;
@@ -21,9 +20,9 @@ $fan: #ffdcd6;
 //main color-class
 $primary: $blue;
 $danger: $red;
-$warning: $yellow;
-$info: $sienna;
-$success: $vivid-green;
+$warning: $orange;
+$info: $vivid-green;
+$success: $green;
 
 //Roundness
 $enable-rounded: false;
@@ -128,6 +127,9 @@ $btn-hover-border-tint-amount:    10%;
 
 .ct-underline-highlight-warning {
   box-shadow:  0rem .5rem 0 0rem $warning;
+}
+.ct-underline-highlight-primary {
+  box-shadow:  0rem .3rem 0 0rem $primary;
 }
 .ct-underline-highlight-info {
   box-shadow:  0rem .5rem 0 0rem $info

@@ -1,79 +1,81 @@
-<nav class="navbar navbar-expand-lg py-4 justify-content-center">
-    <div class="container d-flex justify-content-between align-items-center px-5 py-3 border-bottom">
-        {# brand #}
-        <a class="navbar-brand d-flex align-items-center" >
-            <img src="{{asset('img/logo-pizza-square.svg')}}" alt="La Boîte à Partage" width="50" height="50">
-            <span class="navbar-brand fs-2 fw-bold ms-3">Boîte à Partage</span>
-        </a>
-        {# Menu #}
-        <div class="">
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item me-4 {% if app.current_route == 'app_auth_home' %}fw-bold{% endif %}">
-                        <a class="nav-link pt-0 text-center" href="{{ path('app_auth_home') }}">
-                            <i class="bi bi-house fs-4 "></i></br>
-                            <span>Accueil</span>
-                        </a>
-                    </li>
-                    <li class="nav-item me-4 d-flex flex-column align-items-center {% if app.current_route|split('_')[1] == 'item' %}fw-bold{% endif %}">
-                        <a class="nav-link pt-0 text-center" href="{{ path('app_item') }}">
-                            <i class="bi bi-card-list fs-4"></i></br>
-                            Placard
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown me-4 d-flex flex-column align-items-center {% if app.current_route|split('_')[1] == 'circle' %}fw-bold{% endif %}">
-                        
-                        <a class="nav-link pt-0 dropdown-toggle text-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-archive-fill fs-4"></i></br>
-                            Boîtes
-                        </a>
-                        <ul class="dropdown-menu">
-                            {% if is_granted('browseAll') %}
-                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_show_all' %}fw-bold{% endif %}" href="{{path("app_circle_show_all")}}"><i class="bi bi-search me-1"></i>Chercher un objet</a></li>
-                            {% else %}
-                            <li><a class="disabled dropdown-item {% if app.current_route == 'app_circle_show_all' %}fw-bold{% endif %}" aria-disabled="true" ><i class="bi bi-search me-1"></i>Chercher un objet</a></li>
-                            {% endif %}
-                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_create' %}fw-bold{% endif %}" href="{{path("app_circle_create")}}"><i class="bi bi-plus-square me-1"></i>Créer une boîte</a></li>
-                            <li><a class="dropdown-item {% if app.current_route == 'app_circle_join' %}fw-bold{% endif %}" href="{{path("app_circle_join")}}"><i class="bi bi-box-arrow-in-up-right me-1"></i>Rejoindre une boîte</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item me-4 d-flex flex-column align-items-center {% if app.current_route == 'app_user_profile' %}fw-bold{% endif %}">
-                        <a class="nav-link pt-0 text-center" href="{{ path('app_user_profile') }}">
-                            <i class="bi bi-person-circle fs-4"></i></br>
-                            Compte</br>
-                        </a>
-                    </li>
-                    {% if is_granted("ROLE_ADMIN") %}
-                        <li class="nav-item me-4 d-flex flex-column align-items-center">
-                            <a class="nav-link pt-0 text-center" href="{{ path('app_admin') }}">
-                                <i class="bi bi-gear-fill fs-4"></i></br>
-                                Admin
+<div class="container py-2">
+    <nav class="navbar navbar-expand-lg py-2 py-lg-4 justify-content-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            {# brand #}
+            <a class="navbar-brand d-flex align-items-center" >
+                <img src="{{asset('img/logo-circle-blue.svg')}}" alt="La Boîte à Partage" width="50" height="50">
+                <span class="navbar-brand fs-2 fw-bold ms-3">Boîte à Partage</span>
+            </a>
+            {# Menu #}
+            <div class="">
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item me-4 {% if app.current_route == 'app_auth_home' %}fw-bold{% endif %}">
+                            <a class="nav-link pt-0 text-center" href="{{ path('app_auth_home') }}">
+                                <i class="bi bi-house fs-4 "></i></br>
+                                <span>Accueil</span>
                             </a>
                         </li>
-                    {% endif %}
-                    <li class="nav-item me-4 d-flex flex-column align-items-center d-lg-none">
-                        <a class="btn btn-outline-danger px-4" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-1"></i>Déconnexion</a>
-                    </li>
-                </ul>
+                        <li class="nav-item me-4 d-flex flex-column align-items-center {% if app.current_route|split('_')[1] == 'item' %}fw-bold{% endif %}">
+                            <a class="nav-link pt-0 text-center" href="{{ path('app_item') }}">
+                                <i class="bi bi-card-list fs-4"></i></br>
+                                Placard
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown me-4 d-flex flex-column align-items-center {% if app.current_route|split('_')[1] == 'circle' %}fw-bold{% endif %}">
+                            
+                            <a class="nav-link pt-0 dropdown-toggle text-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-archive-fill fs-4"></i></br>
+                                Boîtes
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if is_granted('browseAll') %}
+                                <li><a class="dropdown-item {% if app.current_route == 'app_circle_show_all' %}fw-bold{% endif %}" href="{{path("app_circle_show_all")}}"><i class="bi bi-search me-1"></i>Chercher un objet</a></li>
+                                {% else %}
+                                <li><a class="disabled dropdown-item {% if app.current_route == 'app_circle_show_all' %}fw-bold{% endif %}" aria-disabled="true" ><i class="bi bi-search me-1"></i>Chercher un objet</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item {% if app.current_route == 'app_circle_create' %}fw-bold{% endif %}" href="{{path("app_circle_create")}}"><i class="bi bi-plus-square me-1"></i>Créer une boîte</a></li>
+                                <li><a class="dropdown-item {% if app.current_route == 'app_circle_join' %}fw-bold{% endif %}" href="{{path("app_circle_join")}}"><i class="bi bi-box-arrow-in-up-right me-1"></i>Rejoindre une boîte</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item me-4 d-flex flex-column align-items-center {% if app.current_route == 'app_user_profile' %}fw-bold{% endif %}">
+                            <a class="nav-link pt-0 text-center" href="{{ path('app_user_profile') }}">
+                                <i class="bi bi-person-circle fs-4"></i></br>
+                                Compte</br>
+                            </a>
+                        </li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li class="nav-item me-4 d-flex flex-column align-items-center">
+                                <a class="nav-link pt-0 text-center" href="{{ path('app_admin') }}">
+                                    <i class="bi bi-gear-fill fs-4"></i></br>
+                                    Admin
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item me-4 d-flex flex-column align-items-center d-lg-none">
+                            <a class="btn btn-outline-danger px-4" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-1"></i>Déconnexion</a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {# <span class="navbar-toggler-icon"></span> #}
             </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            {# <span class="navbar-toggler-icon"></span> #}
+            {# Deconnexion #}
+            <a class="btn btn-outline-danger px-4 d-none d-lg-inline-block" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-1"></i>Déconnexion</a>
         </div>
-        {# Deconnexion #}
-        <a class="btn btn-outline-danger px-4 d-none d-lg-inline-block" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-1"></i>Déconnexion</a>
-    </div>
-    {# <small class="fw-lighter px-4 align-self-end">{{app.user.email}}</small> #}
-</nav>
+        {# <small class="fw-lighter px-4 align-self-end">{{app.user.email}}</small> #}
+    </nav>
 
-{% if app.user.isVerified != true %}
-<nav class="bg-warning-light navbar navbar-expand-lg p-0">
-  <div class="container-fluid d-flex g-0 justify-content-center">
-    <div class="alert alert-warning rounded-0 w-100 border-0">
-        <p class="mb-0 fw-bold">Vous n'avez pas encore confirmé votre email. </br>
-        Merci de confirmer la création de votre compte en cliquant sur le lien reçu dans l'email. Sans cela, vous ne pourrez pas consulter les boîtes.</p>
-    </div>
-  </div>
-</nav>
-{% endif %}
+    {% if app.user.isVerified != true %}
+    <nav class="bg-warning-light navbar navbar-expand-lg p-0">
+        <div class="container-fluid d-flex g-0 justify-content-center">
+            <div class="alert alert-warning rounded-0 w-100 border-0">
+                <p class="mb-0 fw-bold">Vous n'avez pas encore confirmé votre email. </br>
+                Merci de confirmer la création de votre compte en cliquant sur le lien reçu dans l'email. Sans cela, vous ne pourrez pas consulter les boîtes.</p>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+</div>

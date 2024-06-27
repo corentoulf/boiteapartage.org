@@ -68,3 +68,7 @@ setTimeout(() => {
         this.remove()
     })
 }, "5000");
+
+
+import './js/script.js';
+import './js/sw.js';
