@@ -64,4 +64,13 @@ return [
     'datatables.net-select' => [
         'version' => '2.0.3',
     ],
+    'jspdf' => [
+        'version' => '2.5.1',
+    ],
+    '@babel/runtime/helpers/typeof' => [
+        'version' => '7.23.9',
+    ],
+    'fflate' => [
+        'version' => '0.4.8',
+    ],
 ];

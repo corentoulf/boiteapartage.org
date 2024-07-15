@@ -1,5 +1,8 @@
-<div class="w-100 p-3 d-flex justify-content-center align-items-center mt-auto">
-        <a class="text-end d-none" id="installApp"  href="#">Installer l'application</a>
-        <a class="mx-3 text-dark" href="https://github.com/corentoulf/boiteapartage.org" target="_blank"><i class="bi bi-github" style="font-size: 2rem"></i></a>
-        <span class="text-start">Créé par <a href="https://linkedin.com/in/corentinthiercelin" target="_blank">Corentin Thiercelin</a></span>
+<div class="w-100 p-3 d-flex justify-content-center align-items-center mt-auto ">
+    <a class="text-end d-none mx-5" id="installApp" href="#">Installer l'application</a>
+    {% if app.user %}<a class="mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_user_profile')}}">Mon Compte</a>{% endif %}
+    <a class="mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_inspirations')}}">Inspirations</a>
+    <a class="mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_manifeste')}}">Manifeste</a>
+    <a class="mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="https://github.com/corentoulf/boiteapartage.org" target="_blank"><i class="bi bi-github me-2"></i>Sources</a>
+    <a class="mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="https://linkedin.com/in/corentinthiercelin" target="_blank" >Contact</a>
 </div>

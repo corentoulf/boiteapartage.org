@@ -33,4 +33,20 @@ class HomeController extends AbstractController
             'userItems' => $userItems
         ]);
     }
+
+    #[Route('/manifeste', name: 'app_manifeste')]
+    public function manifeste(): Response
+    {
+        return $this->render('home/manifeste.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
+
+    #[Route('/inspirations', name: 'app_inspirations')]
+    public function inspirations(): Response
+    {
+        return $this->render('home/inspirations.html.twig', [
+            'controller_name' => 'HomeController',
+        ]);
+    }
 }

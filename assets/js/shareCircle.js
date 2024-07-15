@@ -2,6 +2,17 @@ import '../vendor/jquery_qrcode_js/jquery-qrcode.min.js';
 import {copyToClipboard} from './function.js'
 import {Modal} from 'bootstrap';
 
+import { jsPDF } from "jspdf";
+
+const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><style>.cls-1{fill:#52749c;stroke:#456482;stroke-width:10px;}.cls-1,.cls-2{stroke-miterlimit:10;}.cls-2{fill:#ebb3a9;stroke:#fff;stroke-width:12.05px;}.cls-3{fill:#e86252;}</style></defs><title>Fichier 11</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_7_-_copie" data-name="Calque 7 - copie"><circle class="cls-1" cx="100" cy="100" r="95"/><g id="part-pizza"><path class="cls-2" d="M62.09,145.22l91.24-45.35a.83.83,0,0,0,.16-1.38h0A140.37,140.37,0,0,0,91.07,46.12h0a.83.83,0,0,0-1.32.4L60.93,144.24A.83.83,0,0,0,62.09,145.22Z"/><circle class="cls-3" cx="101.13" cy="75.18" r="7.5"/><circle class="cls-3" cx="119.86" cy="93.54" r="5.55"/><circle class="cls-3" cx="93.63" cy="108.33" r="7.14"/></g></g></g></svg>`;
+// Generate A4 PDF leaflet
+const doc = new jsPDF();
+console.log(doc.getFontList())
+doc.addSvgAsImage(logoSvg, 120, 50, 30, 30)
+doc.setFont('Helvetica', 'Bold')
+doc.text("Hello world!", 10, 10);
+// doc.save('test.pdf');
+
 //modal short id sharing system
 $('.btn-share-circle').on('click', function(e){
     // Extract info from data-bs-* attributes
@@ -23,7 +34,7 @@ $('.btn-share-circle').on('click', function(e){
         const targetModal = $(this).data('bs-target')
         var $targetModal = $(targetModal) 
         // $('#shareCircleModal').find('.modal-title')
-        let modalTitle = `Inviter des personnes à partager dans la boîte "${circleName}"`;
+        let modalTitle = `Inviter des personnes à rejoindre la boîte "${circleName}"`;
         let modalContent = `
             <p>Pour inviter des personnes à rejoindre cette boîte à partage, envoyez-leur le lien suivant :</p>
             <div class="alert alert-warning alert-static  d-flex justify-content-center" role="alert">

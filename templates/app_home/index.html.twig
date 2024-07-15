@@ -1,111 +1,128 @@
 {% extends 'base_auth.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
 {% block body %}
 
-<div class="container-fluid">
-  <div class="row"> 
-    <div class="col-12 col-lg-4 order-2 order-lg-1">
+	<div class="container">
+		<div class="row">
+			{# Search part #}
+			<div class="col-12">
+				<div class="p-2 px-lg-5 py-lg-3">
+					<h1 class="fs-3 fw-bold mb-3">Chercher un objet</h1>
+					{% if userCircles|length > 0 %}
+						{% if is_granted('browse', userCircles[0].circle) %}
+							<form id="homeSearchForm">
+								<div class="input-group mb-3">
+									{% if userCircles|length >1 %}
+										<label class="input-group-text" for="inputGroupSelect02">Sélectionnez une boîte</label>
+										<select class="form-select" id="circleChoiceSelect">
+											<option value="all" selected>Toutes les boîtes</option>
+											{% for userCircle in userCircles %}
+												<option value="{{userCircle.circle.id}}">{{userCircle.circle.name}}</option>
+											{% endfor %}
+										</select>
+										<input class="form-control form-control-lg" type="text" placeholder="Moule à cake" aria-label="input search" id="searchTermsInput">
+										<input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
+										<button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
+										{%else%}
+										{% set userCircle = userCircles[0] %}
+										<input class="form-control form-control-lg" type="text" placeholder="Moule à financier" aria-label="input search" id="searchTermsInput">
+										<input type="hidden" id="circleChoiceSelect" value="{{userCircle.circle.id}}">
+										<input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
+										<button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
+									{% endif %}
+								</div>
+							</form>
+						{% else %}
+							<div class="alert alert-warning">
+								Pour chercher un objet dans une boîte vous devez :</br>
+                <ul>
+                  {% if app.user.isVerified != true %}
+                    <li>
+                      Valider votre email
+                    </li>
+                  {% endif %}
+                  <li>
+                    Ajouter au moins
+                    <strong>5 objets</strong>
+                    dans
+                    <a href="{{path('app_item_create')}}">votre placard</a>
+                  </li>
+                </ul>
+              </div>
+					{% endif %}
+				{% else %}
+					{# User doesn't belong to a circle yet => Invite to create or join one #}
+					<div class="alert alert-warning">
+						Pour chercher un objet dans une boîte vous devez :</br>
+            <ul>
+              {% if app.user.isVerified != true %}
+                <li>
+                  Valider votre email
+                </li>
+              {% endif %}
+              <li>
+                <a href="{{path('app_circle_create')}}">Créer une boîte</a>
+                ou en
+                <a href="{{path('app_circle_join')}}">
+                  Rejoindre une</a>
+              </li>
+              <li>
+                Ajouter au moins
+                <strong>5 objets</strong>
+                dans
+                <a href="{{path('app_item_create')}}">votre placard</a>
+              </li>
+            </ul>
+          </div>
+			  {% endif %}
+        </div>
+      </div>
       {# Circles part #}
-      <div class="">
-        <div class=" p-5 ">
-          <h1 class="fs-3 fw-bold mb-3">{% if userCircles|length != 0 %}Vos {%endif%}Boîtes à partage</h1>
+      <div class="col-12 col-lg-6">
+        <div class="p-2 px-lg-5 py-lg-3">
+          <h1 class="fs-3 fw-bold mb-3">Vos Boîtes</h1>
           {% if userCircles|length == 0 %}
-            <p class="fs-4">Vous n'avez pas encore rejoint de boîte à partage. Vous pouvez en créer une ou en rejoindre une.</p>
-            <div class="d-flex justify-content-between">
-              <a href="{{path('app_circle_create')}}" path class="btn btn-outline-primary btn-lg" type="button"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
-              <a href="{{path('app_circle_join')}}" class="btn btn-outline-primary btn-lg" type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre une boîte</a>
-            </div>
-          {% else %}
+            <p class="">Vous n'avez pas encore rejoint de boîte à partage. Vous pouvez en créer une ou en rejoindre une.</p>
+          {% endif %}
+          <div class="mb-3">
+            <a href="{{path('app_circle_create')}}" class="link-primary me-2" type="button">
+              <i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
+            <a href="{{path('app_circle_join')}}" class="link-primary" type="button">
+              <i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre une boîte</a>
+          </div>
+          {% if userCircles|length > 0 %}
             {{ include('app_circle/circle_list_component.html.twig') }}
           {% endif %}
         </div>
       </div>
-      {# Object part #}
-      <div class="">
-        <div class=" p-5 ">
-          <h1 class="fs-3 fw-bold">Votre Placard</h1>
+      <div class="col-12 col-lg-6">
+        {# Object part #}
+        <div class="p-2 px-lg-5 py-lg-3">
+          <h1 class="fs-3 fw-bold mb-3">Votre Placard</h1>
           {% if userItems|length == 0 %}
-            <p class="fs-4">Votre placard semble vide. Ajoutez des éléments pour pouvoir les partager dans les boîtes.</p>
+            <p class="">Votre placard semble bien vide. Ajoutez des éléments pour pouvoir les partager dans les boîtes.</p>
             <div class="d-flex justify-content-between">
-              <a href="{{path('app_item_create')}}" class="btn btn-outline-primary btn-lg" type="button"><i class="bi bi-plus-square-fill me-2"></i>Ajouter un premier élément</a>
+              <a href="{{path('app_item_create')}}" class="link-primary">
+                <i class="bi bi-plus-square me-2"></i>Ajouter un premier objet</a>
             </div>
           {% else %}
-            <p class="fs-4">Votre placard comporte <a href="{{path('app_item')}}">{{userItems|length}} élément(s)</a>.</p>
+            <p class="fs-4">Votre placard comporte
+              <a href="{{path('app_item')}}">{{userItems|length}}
+                élément(s)</a>.</p>
             <div class="d-flex justify-content-between">
-              <a href="{{path('app_item_create')}}" class="btn btn-outline-primary btn-lg" type="button"><i class="bi bi-plus-square-fill me-2"></i>Ajouter des objets</a>
+              <a href="{{path('app_item_create')}}" class="btn btn-outline-primary btn-lg" type="button">
+                <i class="bi bi-plus-square-fill me-2"></i>Ajouter des objets</a>
             </div>
           {% endif %}
-          
-          
-          
         </div>
       </div>
-    </div>
-    {# Search part #}
-    <div class="col-12 col-lg-8 order-1 order-lg-2">
-      {% if userCircles|length > 0 %}
-        {% if not is_granted('browse', userCircles[0].circle) %}
-          <div class=" p-5 ">
-            <h1 class="fs-3 fw-bold mb-3">Chercher un objet</h1>
-            <div class="input-group mb-3">
-              <input class="form-control form-control-lg" disabled type="text" placeholder="Moule à financier" aria-label="input search" id="searchTermsInput">
-              <button class="btn btn-primary disabled" type="button">Chercher</button>
-            </div>
-            <p class="alert alert-warning">Pour chercher un objet dans une boîte vous devez <strong>valider votre email</strong> et ajouter au moins <strong>5 objets</strong> dans votre placard.</p>
-          </div>
-        {% else %}
-        <div class=" p-5 ">
-          <h1 class="fs-3 fw-bold mb-3">Chercher un objet</h1>
-          <form id="homeSearchForm">
-            <div class="input-group mb-3">
-              {% if userCircles|length >1 %}
-                <label class="input-group-text" for="inputGroupSelect02">Sélectionnez une boîte</label>
-                <select class="form-select" id="circleChoiceSelect">
-                  <option value="all" selected>Toutes les boîtes</option>
-                  {% for userCircle in userCircles %}  
-                    <option value="{{userCircle.circle.id}}">{{userCircle.circle.name}}</option>
-                  {% endfor %}
-                </select>
-                <input class="form-control form-control-lg" type="text" placeholder="Moule à cake" aria-label="input search" id="searchTermsInput">
-                <input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
-                <button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
-              {%else%}
-                {% set userCircle = userCircles[0] %}
-                <input class="form-control form-control-lg" type="text" placeholder="Moule à financier" aria-label="input search" id="searchTermsInput">
-                <input type="hidden" id="circleChoiceSelect" value="{{userCircle.circle.id}}">
-                <input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
-                <button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
-              {% endif %}
-            </div>
-          </form>
-        </div>
-        {% endif %}
-      {% endif %}
-      </div>
-    </div>
-  </div>  
+		</div>
 </div>
-{# <hr> #}
-<div class="container-fluid">
-  <div class="container">
-    <div class="row">
 
-    </div>
-    {# <div class="bg-success" style="height:50px;">Success</div>
-    <div class="bg-danger" style="height:50px;">Danger</div>
-    <div class="bg-warning" style="height:50px;">Warning</div>
-    <div class="bg-info" style="height:50px;">Info</div>
-    <div class="" style="height:50px;"></div>
-    <div class="bg-primary" style="height:50px;">Primary</div>
-    <div class="bg-body-secondary" style="height:50px;">Secondary</div>
-    <div class="" style="height:50px;">Tertiary</div> #}
-  </div>
-</div>
-{% endblock %}
-{% block javascripts %}
-    {% block importmap %}
-     {{ importmap(['app','shareCircle']) }}
-    {% endblock %}
-{% endblock %}
+{% endblock %}{% block javascripts %}
+{% block importmap %}
+	{{ importmap(['app','shareCircle']) }}
+{% endblock %}{% endblock %}

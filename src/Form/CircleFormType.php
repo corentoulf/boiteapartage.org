@@ -50,7 +50,7 @@ class CircleFormType extends AbstractType
             ->add('address', TextType::class, [
                 'label' => 'Adresse postale ',
                 'required' => false,
-                'help' => 'Cela peut être le nom de la rue ou d\'une des rues du quartier. Laissez vide si la boîte concerne un village.',
+                'help' => 'Cela peut être le nom de la rue ou d\'une des rues du quartier. Laissez vide si la boîte concerne tout un village.',
             ])
             ->add('postcode', TextType::class, [
                 'label' => 'Code postal',

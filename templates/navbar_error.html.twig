@@ -5,9 +5,9 @@
             <span class="navbar-brand fs-2 fw-bold ms-3">Boîte à Partage</span>
         </a>
         {% if app.user %}
-            <a class="btn btn-outline-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'App</a>
+            <a class="btn btn-highlight shadow" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'App</a>
         {% else %}
-            <a class="btn btn-outline-primary" href="{{ path('app_login') }}"><i class="bi bi-person-circle me-1"></i>Connexion</a>
+            <a class="btn btn-highlight shadow" href="{{ path('app_login') }}"><i class="bi bi-person-circle me-1"></i>Connexion</a>
         {% endif %}
         
   </div>
