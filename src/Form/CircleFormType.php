@@ -2,25 +2,19 @@
 
 namespace App\Form;
 
+use App\Config\CircleType;
 use App\Entity\Circle;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Country;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Path;
-
-
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 
 class CircleFormType extends AbstractType
 {
@@ -29,10 +23,23 @@ class CircleFormType extends AbstractType
         // $filesystem = new Filesystem();
         // $jsonCities = $filesystem->readFile('/some/path/to/file.txt');
         $builder
+            ->add('circle_type', ChoiceType::class, [
+                'label' => 'Cette boîte à partage est pour :',
+                'choices' => [
+                    'Une Résidence ou un immeuble' => 'building',
+                    'Un quartier' => 'district',
+                    'Un hameau ou un village' => 'village',
+                    'Une entreprise' => 'company',
+                    'Une association' => 'association',
+                    'Autre' => 'other'
+                ],
+                'required' => true,
+            ])
             ->add('name', TextType::class, [
                 'label' => 'Nom',
+                'help' => 'Exemples : Résidence du Val Claret •  Quartier du Vaugrenier • Société AMG • ASI VOLLEY-BALL',
                 'attr' => [
-                    'placeholder' => '"Quartier des tourterelles"  /  "Société Gerflor"',
+                    // 'placeholder' => 'Entrez un nom pour la boîte à partage',
                     'required' => true
                 ],
                 'constraints' => [

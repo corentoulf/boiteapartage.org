@@ -53,6 +53,9 @@ class Circle
     #[ORM\OneToMany(targetEntity: ItemCircle::class, mappedBy: 'circle', cascade: ['persist'], orphanRemoval: true)]
     private Collection $itemCircles;
 
+    #[ORM\Column(length: 255, nullable: false)]
+    private ?string $circle_type = null;
+
 
     public function __construct()
     {
@@ -222,6 +225,18 @@ class Circle
                 $itemCircle->setCircle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCircleType(): ?string
+    {
+        return $this->circle_type;
+    }
+
+    public function setCircleType(?string $circle_type): static
+    {
+        $this->circle_type = $circle_type;
 
         return $this;
     }

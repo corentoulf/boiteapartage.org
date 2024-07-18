@@ -25,7 +25,10 @@ class HomeController extends AbstractController
 
         $user = $this->getUser();
         $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
-        $userItems = $em->getRepository(Item::class)->findBy(['owner' => $user->getId()]);
+        $userItems = $em->getRepository(Item::class)->findBy(
+            ['owner' => $user->getId()],
+            ['id' => 'DESC']
+        );
 
         return $this->render('app_home/index.html.twig', [
             'controller_name' => 'HomeController',

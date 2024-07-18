@@ -18,9 +18,9 @@
     <body class="d-flex flex-column justify-content-start" style="min-height:100vh;">
         {% block navbar %}{% include 'navbar.html.twig' %}{% endblock %}
         {% block flash_message %}{% include 'flash_messages.html.twig' %}{% endblock %}
-        {% if app.current_route != "app_home" %}
+        {# {% if app.current_route != "app_home" %}
             {% block fil_ariane %}{% include 'fil_ariane.html.twig' %}{% endblock %}
-        {% endif %}
+        {% endif %} #}
         
         {% block body %}{% endblock %}
         {% block footer %}{% include 'footer.html.twig' %}{% endblock %}

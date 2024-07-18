@@ -55,7 +55,20 @@ class AppItemController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'L\'objet a bien été ajouté à votre placard.');
-            return $this->redirectToRoute($nextAction);
+
+            if($nextAction === 'app_item_create'){
+                $previousCategory = $item->getCategory();
+                $item = new Item();
+                $item->setCategory($previousCategory);
+                $form = $this->createForm(ItemFormType::class, $item);
+
+                return $this->render('app_item/create_update.html.twig', [
+                    'controller_name' => 'AppCircleController',
+                    'form' => $form
+                ]);
+            } else {
+                return $this->redirectToRoute($nextAction);
+            }
         }
 
 

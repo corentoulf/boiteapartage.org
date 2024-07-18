@@ -1,0 +1,7 @@
+<ul class="list-group list-group-flush my-2">
+  {% for userItem in userItems|slice(0,limit) %}
+    <li class="list-group-item">{{userItem.description}}</li>
+  {% else %}
+      <li class="list-group-item">Votre placard est vide</li>
+  {% endfor %}
+</ul>

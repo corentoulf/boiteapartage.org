@@ -50,15 +50,7 @@ $("#homeSearchForm").on('submit', function(e){
     var targetPath = $('#targetPathInput').val();
     var circleChoice = $('#circleChoiceSelect').val();
     var searchTerms = $('#searchTermsInput').val();
-    if(circleChoice == "all"){
-        targetPath = encodeURI(targetPath + '?q=' + searchTerms) //add search terms and encode
-    }
-    else {
-        let uriArr = targetPath.split('/')
-        uriArr.pop() //remove "/all"
-        uriArr.push(circleChoice) //add selected circle ID
-        targetPath = encodeURI(uriArr.join('/') + '?q=' + searchTerms) //add search terms and encode
-    }
+    targetPath = encodeURI(targetPath + '?q=' + searchTerms) //add search terms and encode
     window.location.replace(targetPath);
 })
 

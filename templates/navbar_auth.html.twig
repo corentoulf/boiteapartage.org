@@ -4,17 +4,18 @@
             {# brand #}
             <a class="navbar-brand d-flex align-items-center" >
                 <img src="{{asset('img/logo-circle-blue.svg')}}" alt="La Boîte à Partage" width="50" height="50">
-                <span class="navbar-brand fs-2 fw-bold ms-3">Boîte à Partage</span>
+                <span class="navbar-brand fs-2 fw-bold ms-3 d-none d-lg-inline-block">Boîte à Partage</span>
+                <span class="navbar-brand fs-2 fw-bold ms-3 d-lg-none">B.à.P</span>
             </a>
             <div>
                 {# Admin Dashboard #}
                 {% if is_granted("ROLE_ADMIN") %}
-                    <a class="btn btn-highlight shadow px-4 d-none d-lg-inline-block me-3" href="{{ path('app_admin') }}">
+                    <a class="btn btn-highlight shadow px-4 me-3" href="{{ path('app_admin') }}">
                         <i class="bi bi-gear-fill me-2"></i>Admin
                     </a>
                 {% endif %}
                 {# Deconnexion #}
-                <a class="btn btn-outline-dark shadow px-4 d-none d-lg-inline-block me-3" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a>
+                <a class="btn btn-outline-dark shadow ps-4" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a>
             </div>
         </div>
         {# <small class="fw-lighter px-4 align-self-end">{{app.user.email}}</small> #}
