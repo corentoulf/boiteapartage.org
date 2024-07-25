@@ -1,14 +1,17 @@
 /*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
+* Welcome to your app's main JavaScript file!
+*
+* This file will be included onto the page via the importmap() Twig function,
+* which should already be in your base.html.twig.
+*/
 
 import $ from 'jquery';
-import jquery from 'jquery';
+// import jquery from 'jquery';;
 window.$ = $;
-window.jquery = jquery;
+window.jquery = $;
+window.jQuery = $;
+
+
 import './vendor/bootstrap-icons/font/bootstrap-icons.min.css';
 //a priori useless
 // import './vendor/@popperjs/core/core.index.js';
@@ -59,8 +62,8 @@ setTimeout(() => {
     $('.alert-success:not(.alert-static)').fadeOut(500, function(){
         this.remove()
     })
-}, "5000");
+}, "3000");
 
-
-import './js/script.js';
-import './js/sw.js';
+//PWA app concerns
+// import './js/script.js';
+// import './js/sw.js';

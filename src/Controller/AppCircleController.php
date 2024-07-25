@@ -6,6 +6,7 @@ use App\Entity\Circle;
 use App\Entity\ItemCircle;
 use App\Entity\UserCircle;
 use App\Form\CircleFormType;
+use App\Model\Commune;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,7 +40,10 @@ class AppCircleController extends AbstractController
     {
         $circle = new Circle();
         $user = $this->getUser();
+
+
         $form = $this->createForm(CircleFormType::class, $circle);
+
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,13 +79,13 @@ class AppCircleController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'La boîte a bien été créé.');
-            return $this->redirectToRoute('app_circle');
+            return $this->redirectToRoute('app_auth_home');
         }
 
 
         return $this->render('app_circle/create.html.twig', [
             'controller_name' => 'AppCircleController',
-            'form' => $form
+            'form' => $form,
         ]);
     }
 

@@ -92,6 +92,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "../../vendor/twbs/bootstrap/scss/_utilities.scss";
 
 @import "../../vendor/twbs/bootstrap/scss/_alert.scss";
+@import "../../vendor/twbs/bootstrap/scss/_accordion.scss";
 @import "../../vendor/twbs/bootstrap/scss/_badge.scss";
 @import "../../vendor/twbs/bootstrap/scss/_button-group.scss";
 @import "../../vendor/twbs/bootstrap/scss/_buttons.scss";

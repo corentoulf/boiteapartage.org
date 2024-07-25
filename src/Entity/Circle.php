@@ -56,6 +56,18 @@ class Circle
     #[ORM\Column(length: 255, nullable: false)]
     private ?string $circle_type = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $insee_code = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lat = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lng = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $AddressLabel = null;
+
 
     public function __construct()
     {
@@ -237,6 +249,54 @@ class Circle
     public function setCircleType(?string $circle_type): static
     {
         $this->circle_type = $circle_type;
+
+        return $this;
+    }
+
+    public function getInseeCode(): ?string
+    {
+        return $this->insee_code;
+    }
+
+    public function setInseeCode(?string $insee_code): static
+    {
+        $this->insee_code = $insee_code;
+
+        return $this;
+    }
+
+    public function getLat(): ?string
+    {
+        return $this->lat;
+    }
+
+    public function setLat(?string $lat): static
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLng(): ?string
+    {
+        return $this->lng;
+    }
+
+    public function setLng(?string $lng): static
+    {
+        $this->lng = $lng;
+
+        return $this;
+    }
+
+    public function getAddressLabel(): ?string
+    {
+        return $this->AddressLabel;
+    }
+
+    public function setAddressLabel(string $AddressLabel): static
+    {
+        $this->AddressLabel = $AddressLabel;
 
         return $this;
     }

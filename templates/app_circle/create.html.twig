@@ -4,7 +4,8 @@
 
 {% block body %}
 <div class="container">
-    <div class="p-2 p-lg-5 my-1 my-lg-4   col-md-6 offset-md-3">
+    <div class="p-2 p-lg-5 my-1 my-lg-4 col-md-6 offset-md-3">
+    
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
@@ -14,4 +15,9 @@
         {{ form_end(form) }}
     </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'select']) }}
+    {% endblock %}
 {% endblock %}

@@ -28,6 +28,10 @@ return [
         'path' => './assets/js/shareCircle.js',
         'entrypoint' => true,
     ],
+    'select' => [
+        'path' => './assets/js/select.js',
+        'entrypoint' => true,
+    ],
     'bootstrap-icons/font/bootstrap-icons.min.css' => [
         'version' => '1.11.3',
         'type' => 'css',
@@ -72,5 +76,30 @@ return [
     ],
     'fflate' => [
         'version' => '0.4.8',
+    ],
+    'select2' => [
+        'version' => '4.1.0-rc.0',
+    ],
+    'select2/dist/css/select2.min.css' => [
+        'version' => '4.1.0-rc.0',
+        'type' => 'css',
+    ],
+    'raf' => [
+        'version' => '3.4.1',
+    ],
+    'rgbcolor' => [
+        'version' => '1.0.1',
+    ],
+    'svg-pathdata' => [
+        'version' => '6.0.3',
+    ],
+    'stackblur-canvas' => [
+        'version' => '2.7.0',
+    ],
+    'performance-now' => [
+        'version' => '2.1.0',
+    ],
+    'jquery.qrcode' => [
+        'version' => '1.0.3',
     ],
 ];
