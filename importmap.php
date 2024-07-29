@@ -28,6 +28,10 @@ return [
         'path' => './assets/js/shareCircle.js',
         'entrypoint' => true,
     ],
+    'generateFlyer' => [
+        'path' => './assets/js/generateFlyer.js',
+        'entrypoint' => true,
+    ],
     'select' => [
         'path' => './assets/js/select.js',
         'entrypoint' => true,

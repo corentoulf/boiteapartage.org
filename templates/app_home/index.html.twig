@@ -101,26 +101,7 @@
                 <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item')}}"><i class="bi bi-eye me-2"></i>Voir tout</a>
               {% endif %}
             </div>
-        </div>
-
-
-
-
-          {# {% if userItems|length == 0 %}
-            <p class="">Votre placard est vide. Ajoutez des objets pour pouvoir les partager dans les boîtes.</p>
-            <div class="d-flex justify-content-between">
-              <a href="{{path('app_item_create')}}" class="link-primary">
-                <i class="bi bi-plus-square me-2"></i>Ajouter un premier objet</a>
-            </div>
-          {% else %}
-            <p class="">Votre placard comporte
-              <a href="{{path('app_item')}}">{{userItems|length}}
-                objet(s)</a>.</p>
-            <div class="d-flex justify-content-between">
-              <a href="{{path('app_item_create')}}" >
-                <i class="bi bi-plus-square-fill me-2"></i>Ajouter des objets</a>
-            </div>
-          {% endif %} #}
+          </div>
         </div>
       </div>
 		</div>
@@ -128,5 +109,5 @@
 
 {% endblock %}{% block javascripts %}
 {% block importmap %}
-	{{ importmap(['app','shareCircle']) }}
+	{{ importmap(['app','shareCircle','generateFlyer']) }}
 {% endblock %}{% endblock %}
