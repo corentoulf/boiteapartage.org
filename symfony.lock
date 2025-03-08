@@ -1,4 +1,7 @@
 {
+    "craue/formflow-bundle": {
+        "version": "3.7.0"
+    },
     "doctrine/annotations": {
         "version": "2.0",
         "recipe": {

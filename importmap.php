@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/itemIndex.js',
         'entrypoint' => true,
     ],
+    'itemAdd' => [
+        'path' => './assets/js/itemAdd.js',
+        'entrypoint' => true,
+    ],
     'shareCircle' => [
         'path' => './assets/js/shareCircle.js',
         'entrypoint' => true,
@@ -105,5 +109,11 @@ return [
     ],
     'jquery.qrcode' => [
         'version' => '1.0.3',
+    ],
+    'quagga' => [
+        'version' => '0.12.1',
+    ],
+    'axios' => [
+        'version' => '1.8.2',
     ],
 ];

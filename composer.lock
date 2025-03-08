@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b3899b8d175416baee9a09e52181203",
+    "content-hash": "bdfe81d18761740394dd0b4f4dd51246",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -184,6 +184,98 @@
                 }
             ],
             "time": "2023-08-31T09:50:34+00:00"
+        },
+        {
+            "name": "craue/formflow-bundle",
+            "version": "3.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/craue/CraueFormFlowBundle.git",
+                "reference": "8fea7ced6145451a5ccca2e8d4d87c74e6d42b56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/craue/CraueFormFlowBundle/zipball/8fea7ced6145451a5ccca2e8d4d87c74e6d42b56",
+                "reference": "8fea7ced6145451a5ccca2e8d4d87c74e6d42b56",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8",
+                "symfony/config": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/dependency-injection": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/event-dispatcher": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/form": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/http-foundation": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/http-kernel": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/options-resolver": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/security-core": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/translation": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/validator": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/yaml": "^4.4 || ^5.4 || ^6.3 || ^7.0"
+            },
+            "conflict": {
+                "doctrine/dbal": "<2.10"
+            },
+            "require-dev": {
+                "craue/translations-tests": "^1.1",
+                "doctrine/collections": "^1.8 || ^2.1",
+                "doctrine/common": "^2.9 || ^3.0",
+                "doctrine/dbal": "^2.10 || ^3.0",
+                "doctrine/doctrine-bundle": "^1.10 || ^2.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-strict-rules": "^1.1",
+                "phpstan/phpstan-symfony": "^1.1",
+                "phpunit/phpunit": "^9.5",
+                "symfony/browser-kit": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/css-selector": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/mime": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/phpunit-bridge": "^7.0",
+                "symfony/security-bundle": "^4.4 || ^5.4 || ^6.3 || ^7.0",
+                "symfony/twig-bundle": "^4.4 || ^5.4 || ^6.3 || ^7.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Craue\\FormFlowBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Raue",
+                    "email": "christian.raue@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/craue/CraueFormFlowBundle/contributors"
+                }
+            ],
+            "description": "Multi-step forms for your Symfony project.",
+            "homepage": "https://github.com/craue/CraueFormFlowBundle",
+            "keywords": [
+                "form",
+                "step",
+                "symfony",
+                "wizard"
+            ],
+            "support": {
+                "issues": "https://github.com/craue/CraueFormFlowBundle/issues",
+                "source": "https://github.com/craue/CraueFormFlowBundle/tree/3.7.0"
+            },
+            "time": "2024-01-11T01:03:17+00:00"
         },
         {
             "name": "datatables.net/datatables.net",

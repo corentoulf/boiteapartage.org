@@ -9,7 +9,9 @@ $('.btn-share-circle').on('click', function(e){
     const circleName = $(this).data('circle-name')
     const circleJoinUri = $(this).data('circle-uri')
     //share with device sharing system if possible
-    if (navigator.share) { 
+    if (navigator.userAgentData.mobile) { 
+
+        console.log('sharing for mobile')
         let data = {
             url:circleJoinUri,
             title:`Rejoint la boîte à partage "${circleName}"`,

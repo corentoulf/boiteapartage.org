@@ -55,9 +55,33 @@ $('.btn-generate-flyer').on('click', function(e){
     // </object>
     // const blob = flyer.output("bloburl", 'flyer-boite-a-partage-'+flyerVar.circleShortId);
     // $('.flyerPreview').attr('data', blob)
-    $('.btn-download-flyer').on('click', function(e){
-        flyer.save('flyer-boite-a-partage-'+flyerVar.circleShortId)
-    })
+    $('.btn-download-flyer').attr('href', flyer.output('bloburl'));
+    $('.btn-download-flyer').attr('download', 'flyer-boite-a-partage-'+flyerVar.circleShortId);
+    // $('.btn-download-flyer').on('click', function(e){
+    //     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    //     {
+    //         var flyerBlobUrl = flyer.output('bloburl', );
+    //         // var file = new Blob([response.data], { type: 'application/pdf' });
+    //         // var fileURL = URL.createObjectURL(file);
+
+    //         // create <a> tag dinamically
+    //         var fileLink = document.createElement('a');
+    //         fileLink.href = flyerBlobUrl;
+
+    //         // it forces the name of the downloaded file
+    //         fileLink.download = 'pdf_name';
+
+    //         // triggers the click event
+    //         fileLink.click();
+
+
+    //         window.open(flyerBlobUrl);
+    //     }
+    //     else
+    //     {
+    //         flyer.save('flyer-boite-a-partage-'+flyerVar.circleShortId)
+    //     }
+    // })
     const myModal = new Modal(targetModal, {}).show()
 
 })

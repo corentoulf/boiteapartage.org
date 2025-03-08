@@ -160,3 +160,14 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 .ct-underline-highlight-dark {
   box-shadow:  0rem .5rem 0 0rem $black
 }
+
+
+.card-button:hover{
+  background-color: $primary;
+  color: $light;
+}
+
+.videoBarcodeScanner{
+  width: 100%;
+  height: auto;
+}

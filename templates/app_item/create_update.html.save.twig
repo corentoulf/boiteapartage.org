@@ -19,7 +19,7 @@
                 <span>Veuillez noter que par défaut, si vous avez rejoint plusieurs boîtes, <strong>tous les éléments</strong> de votre placard seront partagés dans <strong>toutes vos boîtes</strong>.</span>
             </div>
         </div>
-        {{ form_errors(form) }}
+                {{ form_errors(form) }}
         {{ form_start(form) }}
             {{ form_row(form.description, {
                 label: 'Description',
@@ -33,12 +33,15 @@
             }) }}
             <div class="row ">
                 <div class="col d-flex justify-content-end">
-                    {{ form_row(form.submitAndAdd) }}
+                    {{ form_row(form.submit) }}
                     <div class="ms-2">
-                        {{ form_row(form.submit) }}
+                    {{ form_row(form.submitAndAdd) }}
                     </div>
                 </div>
             </div>
+            
+            
         {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}
