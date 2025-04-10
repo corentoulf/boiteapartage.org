@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Boîte à Partage{% endblock %}</title>
+        <link rel="icon" href="{{ asset('img/logo-bleu-petard.svg') }}">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap(['app']) }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="d-flex flex-column justify-content-start" style="min-height:100vh;">
+        {% block navbar %}{% include 'navbar_error.html.twig' %}{% endblock %}
+        {% block flash_message %}{% include 'flash_messages.html.twig' %}{% endblock %}
+        {% block body %}{% endblock %}
+        {% block footer %}{% include 'footer.html.twig' %}{% endblock %}
+    </body>
+</html>

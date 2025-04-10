@@ -3,10 +3,202 @@
 {# {% block title %}Hello HomeController!{% endblock %} #}
 
 {% block body %}
+<section class="py-3 py-lg-5">
+  <div class="container py-2 text-center d-lg-none">
+    <image class="img-fluid" width="100" src="{{asset('img/logo-bleu-petard.svg')}}" style="max-height:50px;">
+  </div>
+  <div class="container py-2 py-lg-6">
+    <div class="d-none d-lg-flex display-4 justify-content-center py-2 pt-lg-2 pb-lg-3">
+      <div ><span class="act-underline-highlight-warning">Partager.</span></div>
+      <div class="px-5"><span class="act-underline-highlight-info">Explorer.</span></div>
+      <div ><span class="act-underline-highlight-success">Découvrir.</span></div>
+    </div>
+    <div class="d-lg-none display-4 pt-2 pb-1 row text-center">
+      <span class="act-underline-highlight-warning">Partager. Explorer. Découvrir.</span>
+    </div>
+    <div class="d-flex justify-content-center py-2">
+      <h4 class="px-2 py-1 text-secondary text-center">
+        <i class="d-none bi bi-arrow-repeat me-2"></i>Faire circuler nos biens, pour plus de sobriété.
+      </h4>
+    </div>
+    <div class="text-center text-info mt-2 mt-lg-5">
+      <div class="col-12 col-lg-4 offset-lg-4 px-4 d-grid mt-4 mt-lg-0">
+        <a class="btn btn-lg btn-primary" href="{{path('app_register', {'registrationPurpose': 'default'})}}"><i class="bi bi-plus-square me-2"></i>Créer une boîte</span></a>
+      </div>
+      <div class="row py-3 d-none">
+        <div class="col-12 col-lg-3 offset-lg-3 px-4 d-grid gap-2">
+          <a class="btn btn-outline-dark border-0" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-2"></i>Lire notre manifeste</span></a>
+        </div>
+      </div>
+      {# <div class="row mt-5">
+        <div class="col-8 offset-2">
+          <a href="#timeline" class="link-dark display-2"><i class="bi bi-chevron-compact-down me-1"></i></a>
+        </div>
+      </div> #}
+    </div>
+  </div>
+</section>
+{# Timeline : how the system works #}
+<!-- Timeline 4 - Bootstrap Brain Component -->
+<section class="bsb-timeline-4 py-3 py-md-5 py-xl-8">
+  <div class="container">
+    <div class="row justify-content-center">
+      {# Big screen timeline #}
+      <ul class="timeline d-none d-lg-block" id="timeline">
+        <li class="timeline-item left">
+          <div class="timeline-body">
+            <div class="timeline-content timeline-indicator">
+              <div class="card border-0">
+                <div class="card-body d-flex justify-content-center flex-column p-lg-4">
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="display-6 me-3">
+                      <i class="bi bi-play-circle"></i> 
+                    </div>
+                    <div>
+                      <h2 class="card-title mb-2">Lancez le mouvement</h2>
+                      <h6 class="card-subtitle text-secondary">Et insufflez un vent de sobriété autour de vous</h6>
+                    </div>
+                  </div>
+                  <p class="card-text m-0 mb-3">
+                    <a class="" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}">Démarrez une boîte à partage</a> dans votre immeuble, votre quartier ou votre entreprise et permettez le prêt d'objets au sein de votre <b>entourage proche</b>.
+                  </p>
+                  <p>Créer une boîte c'est créer un cercle qui réunit des personnes désireuses de mettre en commun leurs objets plutôt que d'en accumuler de nouveaux.</p>
+                  <a class="btn btn-primary me-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item right">
+          <div class="timeline-body">
+            <div class="timeline-content timeline-indicator">
+              <div class="card border-0">
+                <div class="card-body plg-4">
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="display-6 me-3">
+                      <i class="bi bi-list-task"></i> 
+                    </div>
+                    <div>
+                      <h2 class="card-title mb-2">Complétez votre placard</h2>
+                      <h6 class="card-subtitle text-secondary">Inspirez vos proches à emprunter plutôt qu'à acheter</h6>
+                    </div>
+                  </div>
+                  <p class="card-text m-0">Renseignez tous les objets que vous pensez pouvoir <b>être utile aux autres</b> sur votre compte. Que ce soit pour bricoler, jardiner, jouer, faire de la cuisine ou pour toute autre activité que vous pratiquez.</br>
+                  Il n'y a pas d'objet inutile (sauf si vous possédez un <a href="https://www.youtube.com/watch?v=5lutHF5HhVA" target="_rel">Juicero</a> bien sûr...).</p>
+                  <div class="justify-content-center d-flex">
+                    <image class="img-fluid  mt-4 p-2 shadow-sm" width="600" src="{{asset('img/placard.png')}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item left">
+          <div class="timeline-body">
+            <div class="timeline-content timeline-indicator">
+              <div class="card border-0">
+                <div class="card-body plg-4">
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="display-6 me-3">
+                      <i class="bi bi-megaphone "></i> 
+                    </div>
+                    <div>
+                      <h2 class="card-title mb-2">Diffusez la boîte</h2>
+                      <h6 class="card-subtitle text-secondary">Invitez-les à faire comme vous</h6>
+                    </div>
+                  </div>
+                  <p class="card-text m-0 mb-2">Parce que la <b>confiance est plus forte</b> lorsqu'on est invité et encore plus lorsque c'est par son entourage proche, les boîtes fonctionnent sur invitation.</br>
+                  Une fois la boîte créée, partagez-là facilement aux personnes concernées (à vos collègues d'entreprise, à vos voisins, aux membres de votre association, etc..)</p>
+                  <p  class="mb-3">Vous avez été invité à rejoindre une boîte ou vous avez vu un prospectus dans votre immeuble ou votre entreprise ?</p>
+                  <a class="btn btn-primary" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
 
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item right">
+          <div class="timeline-body">
+            <div class="timeline-content timeline-indicator">
+              <div class="card border-0">
+                <div class="card-body plg-4">
+                  <div class="d-flex align-items-center mb-3">
+                    <div class="display-6 me-3">
+                      <i class="bi bi-arrow-repeat"></i> 
+                    </div>
+                    <div>
+                      <h2 class="card-title mb-2">Prêtez, empruntez</h2>
+                      <h6 class="card-subtitle text-secondary">Se dépanner, s'inspirer, expérimenter</h6>
+                    </div>
+                  </div>
+                  <p class="card-text m-0">Une fois que votre boîte à partage est bien remplie, cherchez facilement un objet, inspirez-vous et contactez facilement son propriétaire.</p>
+                  <div class="justify-content-center d-none">
+                    <image class="img-fluid  mt-4 p-2 shadow-sm" width="600" src="{{asset('img/placard.png')}}">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      {# Small screens regular div #}
+      <div class="d-block d-lg-none">
+        <div class="card border-0 mb-3">
+          <div class="card-body d-flex justify-content-center flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="display-6 me-3">
+                <i class="bi bi-play-circle"></i> 
+              </div>
+              <div>
+                <h2 class="card-title mb-2">Lancez le mouvement</h2>
+                <h6 class="card-subtitle text-secondary">Et insufflez un vent de sobriété autour de vous</h6>
+              </div>
+            </div>
+            <p class="card-text m-0 mb-3">
+              <a class="" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}">Démarrez une boîte à partage</a> dans votre immeuble, votre quartier ou votre entreprise et permettez le prêt d'objets au sein de votre <b>entourage proche</b>.
+            </p>
+            <p>Créer une boîte c'est créer un cercle qui réunit des personnes désireuses de mettre en commun leurs objets plutôt que d'en accumuler de nouveaux.</p>
+            <a class="btn btn-primary mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
+          </div>
+        </div>
+        <div class="card border-0 mb-3">
+          <div class="card-body plg-4">
+            <div class="d-flex align-items-center mb-3">
+              <div class="display-6 me-3">
+                <i class="bi bi-list-task"></i> 
+              </div>
+              <div>
+                <h2 class="card-title mb-2">Complétez votre placard</h2>
+                <h6 class="card-subtitle text-secondary">Inspirez vos proches à emprunter plutôt qu'à acheter</h6>
+              </div>
+            </div>
+            <p class="card-text m-0">Renseignez tous les objets que vous pensez pouvoir <b>être utile aux autres</b> sur votre compte. Que ce soit pour bricoler, jardiner, jouer, faire de la cuisine ou pour toute autre activité que vous pratiquez.</br>
+            Il n'y a pas d'objet inutile (sauf si vous possédez un <a href="https://www.youtube.com/watch?v=5lutHF5HhVA" target="_rel">Juicero</a> bien sûr...).</p>
+            <div class="justify-content-center d-flex">
+              <image class="img-fluid  mt-4 p-2 shadow-sm" width="600" src="{{asset('img/placard.png')}}">
+            </div>
+          </div>
+        </div>
+        <div class="card border-0">
+          <div class="card-body d-flex justify-content-center flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <div class="display-6 me-3">
+                <i class="bi bi-megaphone "></i> 
+              </div>
+              <div>
+                <h2 class="card-title mb-2">Diffusez la boîte</h2>
+                <h6 class="card-subtitle text-secondary">Invitez-les à faire comme vous</h6>
+              </div>
+            </div>
+            <p class="card-text m-0 mb-2">Parce que la <b>confiance est plus forte</b> lorsqu'on est invité et encore plus lorsque c'est par son entourage proche, les boîtes fonctionnent sur invitation.</br>
+            Une fois la boîte créée, partagez-là facilement aux personnes concernées (à vos collègues d'entreprise, à vos voisins, aux membres de votre association, etc..)</p>
+            <p  class="">Vous avez été invité à rejoindre une boîte ou vous avez vu un prospectus dans votre immeuble ou votre entreprise ?</p>
+            <a class="btn btn-primary mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
 
-<div class="container">
-    <h1 class="mt-4">Boîte à Partage</h1>
-    <p>Prêtez, dépannez, dans votre cercle.</p>
-</div>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

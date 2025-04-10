@@ -1,4 +1,223 @@
-/* Override some Bootstrap variables */
-/* $red: #FB4040; */
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../vendor/twbs/bootstrap/scss/_functions.scss";
 
-@import '../../vendor/twbs/bootstrap/scss/bootstrap';
+// 2. Include any default variable overrides here
+@page { size: auto;  margin: 0mm; }
+
+//colors
+// $blue:    #4e5b84;
+// $green: #88C189; //backup plus clair => #7AC67B
+// $vivid-green: #148076;
+// $red: #FF8D8D;
+// $yellow: #ffef61;
+// $pale-red: #ff9292;
+// $orange: #FFBE3D;
+// //#fbffa2   #f6ff45;
+
+// $fan: #ffdcd6;
+
+// $bg: $blue;
+
+//main color-class
+$primary: #1e2eba;//#0b7395;
+$secondary: #16228c;
+$info: #326574;
+// $success: #2ca182;
+// $warning: #ffd166;
+// $danger: #ef476f;
+
+// $grey: #8491a1;
+// $dark-grey: #606b79;
+// $highlight: $yellow;
+// //#23665b;
+// $highlight: #ffdcd6;
+
+
+
+
+
+//font
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+
+
+$font-family-base: "Lexend";
+
+/* Roundness */
+$enable-rounded: true;
+// $btn-border-radius:           3px;
+// $btn-border-radius-sm:        3px;
+// $btn-border-radius-lg:        3px;
+//buttons
+/* shadows */
+// $enable-shadows : true;
+
+$btn-border-width: 0.05rem;
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4.5,
+);
+
+// 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+@import "../../vendor/twbs/bootstrap/scss/_variables.scss";
+@import "../../vendor/twbs/bootstrap/scss/_variables-dark.scss";
+
+// // 4. Include any default map overrides here
+// $box-shadow-sm:               0 0.5rem 1rem rgba($black, 0.15);
+// $box-shadow:                  0.2rem 0.2rem 0rem rgba($black, 1);
+// $box-shadow-lg:               0.3rem 0.3rem 0rem rgb($dark, 1);
+
+$btn-hover-bg-shade-amount:       15%;
+$btn-hover-bg-tint-amount:        15%;
+$btn-hover-border-shade-amount:   20%;
+$btn-hover-border-tint-amount:    10%;
+
+//Colors map
+// $custom-colors: (
+//   "highlight": $highlight,
+//   "grey": $grey
+// );
+// // Merge the maps
+// $theme-colors: map-merge($theme-colors, $custom-colors);
+
+// 5. Include remainder of required parts
+@import "../../vendor/twbs/bootstrap/scss/_maps.scss";
+
+@import "../../vendor/twbs/bootstrap/scss/_mixins.scss";
+@import "../../vendor/twbs/bootstrap/scss/_root.scss";
+
+// 6. Optionally include any other parts as needed
+@import "../../vendor/twbs/bootstrap/scss/_utilities.scss";
+
+@import "../../vendor/twbs/bootstrap/scss/_alert.scss";
+@import "../../vendor/twbs/bootstrap/scss/_accordion.scss";
+@import "../../vendor/twbs/bootstrap/scss/_badge.scss";
+@import "../../vendor/twbs/bootstrap/scss/_button-group.scss";
+@import "../../vendor/twbs/bootstrap/scss/_buttons.scss";
+@import "../../vendor/twbs/bootstrap/scss/_card.scss";
+@import "../../vendor/twbs/bootstrap/scss/_close.scss";
+@import "../../vendor/twbs/bootstrap/scss/_dropdown.scss";
+@import "../../vendor/twbs/bootstrap/scss/_forms.scss";
+@import "../../vendor/twbs/bootstrap/scss/_list-group.scss";
+@import "../../vendor/twbs/bootstrap/scss/_modal.scss";
+@import "../../vendor/twbs/bootstrap/scss/_nav.scss";
+@import "../../vendor/twbs/bootstrap/scss/_navbar.scss";
+@import "../../vendor/twbs/bootstrap/scss/_offcanvas.scss";
+@import "../../vendor/twbs/bootstrap/scss/_pagination.scss";
+@import "../../vendor/twbs/bootstrap/scss/_placeholders.scss";
+@import "../../vendor/twbs/bootstrap/scss/_popover.scss";
+@import "../../vendor/twbs/bootstrap/scss/_tables.scss";
+@import "../../vendor/twbs/bootstrap/scss/_toasts.scss";
+@import "../../vendor/twbs/bootstrap/scss/_tooltip.scss";
+@import "../../vendor/twbs/bootstrap/scss/_transitions.scss";
+
+@import "../../vendor/twbs/bootstrap/scss/_reboot.scss";
+@import "../../vendor/twbs/bootstrap/scss/_type.scss";
+@import "../../vendor/twbs/bootstrap/scss/_images.scss";
+@import "../../vendor/twbs/bootstrap/scss/_containers.scss";
+@import "../../vendor/twbs/bootstrap/scss/_grid.scss";
+@import "../../vendor/twbs/bootstrap/scss/_helpers.scss";
+
+// 7. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "../../vendor/twbs/bootstrap/scss/utilities/_api.scss";
+
+// 8. Add additional custom code here
+
+
+// body{
+//   // background-color: #ffd27247;
+// }
+
+//custom btn
+// .btn-highlight {
+//   // --bs-btn-font-weight: 600;
+//   // --bs-btn-color: var(--bs-white);
+//   --bs-btn-bg: var(--bs-highlight);
+//   --bs-btn-border-color: var(--bs-blue);
+//   // --bs-btn-hover-color: var(--bs-white);
+//   // --bs-btn-hover-bg: #{shade-color($bd-violet, 10%)};
+//   // --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+//   // --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+//   // --bs-btn-active-color: var(--bs-btn-hover-color);
+//   // --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+//   // --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+// }
+
+// .btn-tertiary {
+//   --bs-btn-font-weight: 600;
+//   --bs-btn-color: var(--bs-white);
+//   --bs-btn-bg: var(--bs-highlight);
+//   --bs-btn-border-color: var(--bs-blue);
+//   --bs-btn-hover-color: var(--bs-white);
+//   --bs-btn-hover-bg: #{shade-color($bd-violet, 10%)};
+//   --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+//   --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+//   --bs-btn-active-color: var(--bs-btn-hover-color);
+//   --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+//   --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+// }
+// Custom classes independant from Bootstrap
+.ct-flash-message{
+  margin-top: 108px;
+}
+
+
+@import "./timeline";
+
+// .ct-underline-highlight-warning {
+//   box-shadow:  0rem .5rem 0 0rem $warning;
+// }
+// .ct-underline-highlight-primary {
+//   box-shadow:  0rem .3rem 0 0rem $primary;
+// }
+// .ct-underline-highlight-info {
+//   box-shadow:  0rem .5rem 0 0rem $info
+// }
+// .ct-underline-highlight-success {
+//   box-shadow:  0rem .5rem 0 0rem $success
+// }
+// .ct-underline-highlight-danger {
+//   box-shadow:  0rem .5rem 0 0rem $danger
+// }
+// .ct-underline-highlight-dark {
+//   box-shadow:  0rem .5rem 0 0rem $black
+// }
+
+.card-book:hover{
+  // border: 1px solid $success;
+  cursor: pointer;
+  border-color: $secondary;
+  // color: $white;
+}
+.card-book.active{
+  border-color: $secondary;
+}
+
+.collapsing {
+  transition: none !important;
+}
+
+.card-btn:hover{
+  background-color: $primary;
+  color: $white;
+  // color: $white;
+}
+
+.list-group-mobile{
+  max-height: 400px;
+}
+// .btn-logout{
+//   color: $black;
+// }
+// .btn-logout:hover{
+//   color: $primary;
+// }

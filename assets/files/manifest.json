@@ -1,0 +1,21 @@
+{
+   
+    "short_name": "Boîte à Partage",
+    
+    "name": "Boîte à Partage",
+    
+    "icons": [
+      {
+        "src": "../img/logo-circle-blue.svg",
+        "type": "image/svg",
+        "sizes": "100x100"
+      }
+   ],
+   
+    "start_url": "/",	
+    
+    "background_color": "#000000",
+    
+    "display": "standalone",
+    "theme_color": "#ff0000"
+  }

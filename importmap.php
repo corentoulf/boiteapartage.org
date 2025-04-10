@@ -16,13 +16,110 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
+    'searchItem' => [
+        'path' => './assets/js/searchItem.js',
+        'entrypoint' => true,
     ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    'itemIndex' => [
+        'path' => './assets/js/itemIndex.js',
+        'entrypoint' => true,
     ],
-    '@hotwired/turbo' => [
-        'version' => '7.3.0',
+    'itemAdd' => [
+        'path' => './assets/js/itemAdd.js',
+        'entrypoint' => true,
+    ],
+    'shareCircle' => [
+        'path' => './assets/js/shareCircle.js',
+        'entrypoint' => true,
+    ],
+    'generateFlyer' => [
+        'path' => './assets/js/generateFlyer.js',
+        'entrypoint' => true,
+    ],
+    'select' => [
+        'path' => './assets/js/select.js',
+        'entrypoint' => true,
+    ],
+    'bootstrap-icons/font/bootstrap-icons.min.css' => [
+        'version' => '1.11.3',
+        'type' => 'css',
+    ],
+    'bootstrap' => [
+        'version' => '5.3.3',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'jquery' => [
+        'version' => '3.7.1',
+    ],
+    'datatables.net-bs5' => [
+        'version' => '2.0.4',
+    ],
+    'datatables.net' => [
+        'version' => '2.0.8',
+    ],
+    'datatables.net-bs5/css/dataTables.bootstrap5.min.css' => [
+        'version' => '2.0.4',
+        'type' => 'css',
+    ],
+    'datatables.net-responsive-bs5' => [
+        'version' => '3.0.2',
+    ],
+    'datatables.net-responsive' => [
+        'version' => '3.0.2',
+    ],
+    'datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css' => [
+        'version' => '3.0.2',
+        'type' => 'css',
+    ],
+    'datatables.net-select' => [
+        'version' => '2.0.3',
+    ],
+    'jspdf' => [
+        'version' => '2.5.1',
+    ],
+    '@babel/runtime/helpers/typeof' => [
+        'version' => '7.23.9',
+    ],
+    'fflate' => [
+        'version' => '0.4.8',
+    ],
+    'select2' => [
+        'version' => '4.1.0-rc.0',
+    ],
+    'select2/dist/css/select2.min.css' => [
+        'version' => '4.1.0-rc.0',
+        'type' => 'css',
+    ],
+    'raf' => [
+        'version' => '3.4.1',
+    ],
+    'rgbcolor' => [
+        'version' => '1.0.1',
+    ],
+    'svg-pathdata' => [
+        'version' => '6.0.3',
+    ],
+    'stackblur-canvas' => [
+        'version' => '2.7.0',
+    ],
+    'performance-now' => [
+        'version' => '2.1.0',
+    ],
+    'jquery.qrcode' => [
+        'version' => '1.0.3',
+    ],
+    'quagga' => [
+        'version' => '0.12.1',
+    ],
+    'axios' => [
+        'version' => '1.8.2',
+    ],
+    'lodash' => [
+        'version' => '4.17.21',
+    ],
+    'html5-qrcode' => [
+        'version' => '2.3.8',
     ],
 ];

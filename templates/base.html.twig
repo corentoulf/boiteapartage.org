@@ -4,17 +4,25 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Boîte à Partage{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="icon" href="{{ asset('img/logo-bleu-petard.svg') }}">
+        <link rel="manifest" href="{{ asset('files/manifest.json') }}">
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <div class="hidden" id="swLocation" data-content="{{ asset('js/sw.js') }}"></div>
+            {% block importmap %}{{ importmap(['app']) }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
+    <body class="d-flex flex-column justify-content-start" style="min-height:100vh;">
+        {% block navbar %}{% include 'navbar.html.twig' %}{% endblock %}
+        {% block flash_message %}{% include 'flash_messages.html.twig' %}{% endblock %}
+        {# {% if app.current_route != "app_home" %}
+            {% block fil_ariane %}{% include 'fil_ariane.html.twig' %}{% endblock %}
+        {% endif %} #}
+        
         {% block body %}{% endblock %}
+        {% block footer %}{% include 'footer.html.twig' %}{% endblock %}
     </body>
 </html>

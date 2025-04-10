@@ -1,0 +1,131 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Ajout au Placard{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col-md-8 offset-md-2 p-2 p-lg-5">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <div class="align-items-center d-flex flex-row justify-content-between">
+            <h1 class="fw-bold" id="title">{% if updateMode|default(false) %}Mettre à jour un livre{% else %}Ajouter un livre</h1>
+            <button class="btn btn-sm btn-info ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#formInformation" aria-expanded="false" aria-controls="collapseExample" >
+                <i class="bi bi-info-circle me-2"></i>Aide
+            </button>
+        </div>
+        {% endif %}
+        <div
+            class="alert alert-warning  d-none"
+            role="alert"
+        >
+            <div class="d-flex justify-content-start">
+                <span class="me-3"><i class="bi bi-info-circle"></i></span>
+                <span>Veuillez noter que par défaut, si vous avez rejoint plusieurs boîtes, <strong>tous les éléments</strong> de votre placard seront partagés dans <strong>toutes vos boîtes</strong>.</span>
+            </div>
+        </div>
+        <div class="position-relative">
+            <div class="collapse position-absolute z-3 col-12 col-md-8 end-0 position-absolute z-3 collapse mt-1 mt-md-0" id="formInformation">
+                <div class="alert alert-info">
+                    Faites une recherche du livre ou scannez son code barre.</br>Si vous ne trouvez pas sa référence, ajoutez-le à la main via le formulaire ci-dessous.
+                </div>
+            </div>
+        </div>
+        <div class="d-lg-flex my-3">
+            <div class="col-12 col-md-8 pe-0 pe-md-2">
+                <div class="d-grid gap-2">
+                    <form id="searchBookForm">
+                        <div class="input-group">
+                            <input id="searchBookByTermsInput" class="form-control" type="text" placeholder="Rechercher par mot-clé" aria-label="input search">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-search px-2"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mt-1 mt-md-0 ps-0 ps-md-2 d-flex align-items-center">
+                <!-- Button trigger modal -->
+                <div class="ps-1">Ou</div>
+                <a href="#" id="openScanner" class="link-dark text-start text-md-center ms-2 link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal">
+                    <i class="bi bi-upc-scan me-2 d-none"></i>Scanner le code barre
+                </a>
+                {# <button class="btn btn-primary" id="openScanner"><i class="bi bi-upc-scan me-2"></i>Scanner le code barre</button> #}
+            </div>
+            
+        </div>
+        <div class="accordion d-none" id="searchBookResults">
+            <div class="accordion-item ">
+                <div class="accordion-header ">
+                    <button class="accordion-button px-3 py-2 " id="accordionHeaderBtn" type="button" data-bs-toggle="collapse" data-bs-target="#accordionBody" aria-expanded="true" aria-controls="accordionBody">
+                        Résultats
+                    </button>
+                </div>
+                <div id="accordionBody" class="accordion-collapse collapse show" data-bs-parent="#searchBookResults">
+                    <div class="accordion-body p-3">
+                        <ul class="list-group list-group-flush list-group-mobile overflow-y-auto"  id="searchBookResultsList">
+                            <li class="list-group-item px-0">
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="px-3"><hr class="mt-4"></div>
+        {{ form_errors(form) }}
+        {{ form_start(form) }}
+        
+            {# {{ form_row(form.description, {
+                label: 'Description',
+                attr :{
+                    "autofocus":"true"
+                },
+                help: 'Ajoutez un maximum de précision sur l\'objet (max 255 caractères)'
+            }) }} #}
+            {{ form_row(form.itemType)}}
+            {{ form_row(form.property_1)}}
+            {{ form_row(form.property_2)}}
+            {{ form_row(form.property_3)}}
+            {{ form_row(form.property_4)}}
+            {{ form_row(form.property_5)}}
+            <div class="row ">
+                <div class="col d-flex justify-content-end">
+                    {{ form_row(form.submitAndAdd) }}
+                    <div class="ms-2">
+                        {{ form_row(form.submit) }}
+                    </div>
+                </div>
+            </div>
+        {{ form_end(form) }}
+   
+    </div>
+</div>
+
+
+
+<!-- Modal SCAN -->
+<div class="modal" id="barcodeScannerModal" tabindex="-1" aria-labelledby="barcodeScannerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="barcodeScannerModalLabel">Visez le code-barre du livre</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="reader" width="600px" height="600px"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'itemAdd']) }}
+    {% endblock %}
+{% endblock %}

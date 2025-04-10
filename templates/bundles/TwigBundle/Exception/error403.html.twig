@@ -1,0 +1,23 @@
+{% extends 'base_error.html.twig' %}
+
+{% block title %}Une erreur s'est produite{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="p-5 my-4  ">
+      <div class="container-fluid py-5">
+        <div class="row align-items-center">
+          <div class="col-md-4 text-center">
+            <i class="bi bi-exclamation-triangle" style="font-size:8rem;"></i>
+          </div>
+          <div class="col-md-8">
+            <h1 class="display-5 fw-bold">Oups, petit problème d'autorisation :</h1>
+            <p class="fs-4">{{status_text}}</p>
+            <p class="fs-4">Veuillez retourner sur la page d'accueil et réessayer.</p>
+            <a href="{{path('app_home')}}" class="btn btn-primary btn-lg" type="button"><i class="bi bi-arrow-left me-2"></i>Retourner à l'accueil</a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+</div>
+{% endblock %}

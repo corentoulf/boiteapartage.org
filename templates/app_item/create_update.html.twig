@@ -1,0 +1,44 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Ajout au Placard{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="p-2 p-lg-5 col-md-6 offset-md-3">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <h1 class="fw-bold mb-3">{% if updateMode|default(false) %}Mettre à jour un objet{% else %}Ajouter un objet au placard{% endif %}</h1>
+        <div
+            class="alert alert-warning  d-none"
+            role="alert"
+        >
+            <div class="d-flex justify-content-start">
+                <span class="me-3"><i class="bi bi-info-circle"></i></span>
+                <span>Veuillez noter que par défaut, si vous avez rejoint plusieurs boîtes, <strong>tous les éléments</strong> de votre placard seront partagés dans <strong>toutes vos boîtes</strong>.</span>
+            </div>
+        </div>
+        {{ form_errors(form) }}
+        {{ form_start(form) }}
+            {{ form_row(form.itemType, {
+                label: 'Catégorie'
+            }) }}
+            {{ form_row(form.property_1, {
+                label: 'Description',
+                attr :{
+                    "autofocus":"true"
+                },
+                help: 'Ajoutez un maximum de précision sur l\'objet (max 255 caractères)'
+            }) }}
+            <div class="row ">
+                <div class="col d-flex justify-content-end">
+                    {{ form_row(form.submitAndAdd) }}
+                    <div class="ms-2">
+                        {{ form_row(form.submit) }}
+                    </div>
+                </div>
+            </div>
+        {{ form_end(form) }}
+</div>
+{% endblock %}

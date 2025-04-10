@@ -1,0 +1,68 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Mon Placard{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="px-lg-5">
+      <div class="container-fluid py-5">
+        <div class="d-flex align-items-center justify-content-between">
+            <h1 class="display-5 fw-bold">Votre placard</h1>
+            <a class="btn btn-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un objet</a>
+        </div>
+        {% if userItems|length == 0 %}
+            <div class="mt-4">
+                <p class="fs-4" >Votre placard est vide. Commencez par <a class=""  href="{{path('app_item_create')}}" role="button">ajouter un objet</a>.</p>
+            </div>
+        {% endif %}
+        {% if userItems|length > 0 %}
+            <div class="mt-4">
+                <div class="col-12 pt-3 pb-2">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="externalFilter">Rechercher un objet</span>
+                            <input type="text" id="filterItemTableInput" class="form-control" placeholder="Visseuse" aria-label="Rechercher un objet" aria-describedby="externalFilter">
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover" id="itemTable">
+                    <thead>
+                        <tr>
+                        <th scope="col">Objet</th>
+                        <th scope="col">Catégorie</th>
+                        <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for userItem in userItems %}  
+                            <tr>
+                                <td>{{userItem.property1}}</td>
+                                <td>{{userItem.itemType ? userItem.itemType.label}}</td>
+                                <td class="justify-content-end d-flex">
+                                    <a href="{{path('app_item_update', {id: userItem.id})}}" class="btn btn-sm btn-outline-secondary border-0 me-2" data-bs-toggle="tooltip" data-bs-title="Éditer"><i class="bi bi-pencil-fill"></i></a>
+                                    <span href="#" class="me-2" data-bs-toggle="tooltip" data-bs-title="Supprimer">
+                                        <a tabindex="0" class="deleteItemBtn btn btn-sm btn-outline-danger border-0" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-title="Confirmer la suppression"  data-bs-content-id="popoverDelete{{userItem.id}}"><i class="bi bi-trash3-fill"></i>
+                                        </a>
+                                        
+                                    </span>
+                                    <div class="d-none">
+                                        <div id="popoverDelete{{userItem.id}}" class="d-flex justify-content-between">
+                                            <a class="btn btn-sm btn-secondary" href="#">Annuler</a>
+                                            <a class="btn btn-sm btn-danger" href="{{path('app_item_delete', {id: userItem.id})}}">Confirmer</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+      </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'itemIndex']) }}
+    {% endblock %}
+{% endblock %}

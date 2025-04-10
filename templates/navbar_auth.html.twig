@@ -1,0 +1,52 @@
+<div class="container py-2">
+    <nav class="navbar navbar-custom navbar-expand-lg py-2 py-lg-4 justify-content-center">
+        <div class="container d-flex justify-content-between align-items-center">
+            {# brand #}
+            <a class="ps-1 navbar-brand d-flex align-items-center" >
+                <img src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="50" height="50">
+                <span class="navbar-brand fs-2 fw-bold ms-3">Boîte à Partage</span>
+            </a>
+            <div class="d-flex flex-row align-items-center justify-content-end">
+                {# Admin Dashboard #}
+                {% if is_granted("ROLE_ADMIN") %}
+                    {# <a class="btn px-4 me-3 d-none d-lg-inline-block" href="{{ path('app_admin') }}">
+                        <i class="bi bi-gear-fill me-2"></i>Admin
+                    </a> #}
+                {% endif %}
+                {# Créer et Gérer les boîtes #}
+                <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative"
+                    <span class=""><i class="bi bi-archive fs-5"></i></span>
+                    <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
+                        Boîtes
+                    </a>
+                </div>
+                {# Gérer ses objets dans son placard #}
+                <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative"
+                    <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
+                    <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
+                        Placard
+                    </a>
+                </div>
+                {# Profil #}
+                <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative"
+                    <span class=""><i class="bi bi-person-square fs-5"></i></span>
+                    <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
+                        {{app.user.firstName ?? 'Compte'}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {# <small class="fw-lighter px-4 align-self-end">{{app.user.email}}</small> #}
+    </nav>
+
+    {% if app.user.isVerified != true %}
+    <nav class="bg-warning-light navbar navbar-expand-lg p-0">
+        <div class="container-fluid d-flex g-0 justify-content-center">
+            <div class="alert alert-warning rounded-0 w-100 border-0">
+                <p class="mb-0 ">Vous n'avez pas encore <b>confirmé votre email</b>. </br>
+                Merci de confirmer la création de votre compte en cliquant sur le lien reçu dans l'email. Sans cela, vous ne pourrez pas consulter les boîtes.</p>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+</div>

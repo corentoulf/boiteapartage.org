@@ -1,0 +1,14 @@
+<div class="container-fluid bg-light mt-auto ">
+    <div class="p-5 row text-center ">
+        {# <div class="col-12"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" id="installApp" href="#">Installer l'application</a></div> #}
+        {% if app.user %}<div class="col-12"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_user_profile')}}">Mon Compte</a></div>{% endif %}
+        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_inspirations')}}">Inspirations</a></div>
+        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_manifeste')}}">Manifeste</a></div>
+        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="https://github.com/corentoulf/boiteapartage.org" target="_blank">Sources</a></div>
+        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="https://linkedin.com/in/corentinthiercelin" target="_blank" >Contact</a></div>
+        {% if is_granted("ROLE_ADMIN") %}
+            <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ path('app_admin') }}">Admin</a></div>
+        {% endif %}
+        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ path('app_logout') }}">Déconnexion</a></div>
+    </div>
+</div>

@@ -1,0 +1,176 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row">
+			{# Search part #}
+			<div class="col-12">
+				<div class="px-lg-5 pt-5">
+					<h1 class="fs-3 fw-bold mb-3">Chercher un objet</h1>
+					{% if userCircles|length > 0 %}
+						{% if is_granted('browse', userCircles[0].circle) %}
+							<form id="homeSearchForm">
+								<div class="input-group mb-3">
+                  <input class="form-control form-control-lg" type="text" placeholder="Moule à cake" aria-label="input search" id="searchTermsInput">
+                  <input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
+                  <button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
+								</div>
+							</form>
+						{% else %}
+							<div class="alert alert-warning">
+								Pour chercher un objet dans une boîte vous devez :</br>
+                <ul>
+                  {% if app.user.isVerified != true %}
+                    <li>
+                      Valider votre email
+                    </li>
+                  {% endif %}
+                  <li>
+                    Ajouter au moins
+                    <strong>5 objets</strong>
+                    dans
+                    <a class="link-offset-1" href="{{path('app_item_create')}}">votre placard</a>
+                  </li>
+                </ul>
+              </div>
+					{% endif %}
+				{% else %}
+					{# User doesn't belong to a circle yet => Invite to create or join one #}
+					<div class="alert alert-warning">
+						Pour chercher un objet dans une boîte vous devez :</br>
+            <ul>
+              {% if app.user.isVerified != true %}
+                <li>
+                  Valider votre email
+                </li>
+              {% endif %}
+              <li>
+                <a class="link-offset-1" href="{{path('app_circle_create')}}">Créer une boîte</a>
+                ou en
+                <a class="link-offset-1" href="{{path('app_circle_join')}}">
+                  Rejoindre une</a>
+              </li>
+              {% if userItems|length < 5 %}
+              <li>
+                Ajouter au moins
+                <strong>5 objets</strong>
+                dans
+                <a class="link-offset-1"href="{{path('app_item_create')}}">votre placard</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+			  {% endif %}
+        </div>
+      </div>
+      {# Inspiration part #}
+      <div class="col-12">
+        <div class="px-lg-5 pt-5">
+          <h1 class="fs-3 fw-bold mb-3">Explorer un univers</h1>
+          <div class="row gx-6 d-flex justify-content-between">
+            <div class="col-4 mb-2 mb-lg-4">
+              <div class="card card-btn">
+                <div class="card-body py-4">
+                  <h5 class="card-title text-center"><i class="bi bi-book fs-1"></i></h5>
+                  <p class="card-text text-center m-0">Boîte à livre</p>
+                  <a href="#" class="stretched-link"></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 mb-2 mb-lg-4">
+              <div class="card card-btn">
+                <div class="card-body py-4">
+                  <h5 class="card-title text-center"><i class="bi bi-controller fs-1"></i></h5>
+                  <p class="card-text text-center m-0">Loisirs et jeux de société</p>
+                  <a href="#" class="stretched-link"></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 mb-2 mb-lg-4">
+              <div class="card card-btn">
+                <div class="card-body py-4">
+                  <h5 class="card-title text-center"><i class="bi bi-duffle fs-1"></i></h5>
+                  <p class="card-text text-center m-0">Appareils</p>
+                  <a href="#" class="stretched-link"></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 mb-2 mb-lg-4">
+              <div class="card card-btn">
+                <div class="card-body py-4">
+                  <h5 class="card-title text-center"><i class="bi bi-cake fs-1"></i></h5>
+                  <p class="card-text text-center m-0">Cuisine</p>
+                  <a href="#" class="stretched-link"></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 mb-2 mb-lg-4">
+              <div class="card card-btn">
+                <div class="card-body py-4">
+                  <h5 class="card-title text-center"><i class="bi bi-tools fs-1"></i></h5>
+                  <p class="card-text text-center m-0">Bricolage</p>
+                  <a href="#" class="stretched-link"></a>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 mb-2 mb-lg-4">
+              <div class="card card-btn">
+                <div class="card-body py-4">
+                  <h5 class="card-title text-center"><i class="bi bi-flower1 fs-1"></i></h5>
+                  <p class="card-text text-center m-0">Jardinage</p>
+                  <a href="#" class="stretched-link"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {# Circles part #}
+      <div class="col-12 col-lg-6 pt-5 d-none">
+        <div class="px-lg-5">
+          <h1 class="fs-3 fw-bold mb-3">Vos Boîtes</h1>
+          {{ include('app_circle/circle_list_component.html.twig') }}
+          <div class="mt-3 ms-1 ms-lg-4">
+            <a href="{{path('app_circle_create')}}" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" type="button">
+              <i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
+            <a href="{{path('app_circle_join')}}" class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" type="button">
+              <i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre une boîte</a>
+          </div>
+        </div>
+      </div>
+      {# Object part #}
+      <div class="col-12 col-lg-6 py-5 d-none">
+        <div class="px-lg-5">
+          <h1 class="fs-3 fw-bold mb-3">Votre Placard</h1>
+          
+          <div class="p-2">
+            {% if userItems|length < 5 %}
+              <div class="alert alert-warning">
+                Ajoutez au moins <b>5 objets</b> pour interagir avec vos boîtes à partage.
+              </div>
+            {% endif %}
+            {% if userItems|length > 0 %}
+              <div class="mb-2">Derniers objets ajoutés :</div>
+            {% endif %}
+            {% include 'app_item/item_list_component.html.twig' with {'limit': 5} %}
+            <div class="mt-3 ms-1 ms-lg-4">
+              <a class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des objets</a>
+              <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create_book')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des livres</a>
+              {% if userItems|length > 0 %}
+                <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_items')}}"><i class="bi bi-eye me-2"></i>Voir tout</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+		</div>
+</div>
+
+{% endblock %}{% block javascripts %}
+{% block importmap %}
+	{{ importmap(['app','shareCircle','generateFlyer']) }}
+{% endblock %}{% endblock %}

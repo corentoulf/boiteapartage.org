@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if registrationPurpose == 'createCircle' %}Créer une boîte à partage
+    {% elseif registrationPurpose == 'joinCircle' %}Rejoindre une boîte à partage
+    {% elseif registrationPurpose == 'joinCircleId' %}Rejoindre "{{registrationCircleId.name}}"
+    {% else %}Inscription
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+    <div class="p-2 p-lg-5 my-4 col-md-6 offset-md-3">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        {% if app.user %}
+            <div class="mb-3">
+                Vous êtes déjà connecté en tant que <span class="fw-semibold">{{ app.user.userIdentifier }}</span>
+            </div>
+            <div class="d-grid gap-2">
+                <a class="btn btn-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'application</a>
+            </div>
+        {% else %}
+            
+            {% if registrationPurpose == 'createCircle' %}
+                <h1 class="fw-bold mb-3">Créer une boîte à partage</h1>
+       
+                <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour vous inscrire et créer votre boîte à partage.</p>
+            {% elseif registrationPurpose == 'joinCircle' %}
+                <h1 class="fw-bold mb-3">Rejoindre une boîte à partage</h1>
+                <p class="fs-6 fw-bold py-3">Vous avez reçu un identifiant de boîte à partage que vous aimeriez rejoindre ? Complétez le formulaire ci-dessous pour vous inscrire et rejoignez la boîte en quelques clics.</p>
+            {% elseif registrationPurpose == 'joinCircleId' %}
+                <h1 class="fw-bold mb-3">Rejoindre la boîte à partage "{{registrationCircleId.name}}"</h1>
+                <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour vous inscrire et rejoindre la boîte.</p>
+            {% else %}
+                <h1 class="fw-bold mb-3 pb-3">Inscription</h1>
+                <p class="fs-6 fw-bold py-3 d-none">Complétez le formulaire ci-dessous pour vous inscrire et démarrer une boîte à partage.</p>
+            {% endif %}
+        
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(registrationForm.firstName, {
+                        label: 'Prénom *'
+                    }) }}
+                </div>
+                <div class="col">
+                    {{ form_row(registrationForm.lastName, {
+                        label: 'Nom',
+                    }) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_row(registrationForm.email, {
+                        label: 'Email *',
+                        type: "email"
+                    }) }}
+                </div>
+                <div class="col">
+                    {{ form_row(registrationForm.phone, {
+                        label: 'Téléphone',
+                        help: 'Ce champs est optionnel'
+                    }) }}
+                </div>
+            </div>
+
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Mot de passe *'
+            }) }}
+            {{ form_row(registrationForm.agreeTerms, {
+                label: 'Accepter les conditions d\'utilisation'
+            }) }}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+            </div>
+        {{ form_end(registrationForm) }}
+        {% endif %}
+        {% if app.user == false %}
+        <div class="col text-center mt-4"><a class="fw-light link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ path('app_login') }}"></i>Vous avez déjà un compte ? </a></div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
