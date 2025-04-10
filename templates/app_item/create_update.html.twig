@@ -21,15 +21,15 @@
         </div>
         {{ form_errors(form) }}
         {{ form_start(form) }}
-            {{ form_row(form.description, {
+            {{ form_row(form.itemType, {
+                label: 'Catégorie'
+            }) }}
+            {{ form_row(form.property_1, {
                 label: 'Description',
                 attr :{
                     "autofocus":"true"
                 },
                 help: 'Ajoutez un maximum de précision sur l\'objet (max 255 caractères)'
-            }) }}
-            {{ form_row(form.category, {
-                label: 'Catégorie'
             }) }}
             <div class="row ">
                 <div class="col d-flex justify-content-end">

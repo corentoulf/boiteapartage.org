@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Item;
 use App\Entity\ItemCircle;
+use App\Entity\ItemType;
 use App\Form\ItemFormType;
+use App\Form\ItemBookFormType;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AppItemController extends AbstractController
 {
-    #[Route('/app/placard', name: 'app_item')]
+    #[Route('/app/placard', name: 'app_items')]
     public function index(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
@@ -26,6 +28,7 @@ class AppItemController extends AbstractController
         ]);
     }
 
+    /*
     #[Route('/app/placard/ajoutsave', name: 'app_item_create_save')]
     public function createItemSave(Request $request, EntityManagerInterface $em): Response
     {
@@ -37,7 +40,7 @@ class AppItemController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $nextAction = $form->get('submitAndAdd')->isClicked()
                 ? 'app_item_create'
-                : 'app_item';
+                : 'app_items';
             $item->setCreatedAt(new DateTimeImmutable('now'));
             $em->persist($item);
 
@@ -57,9 +60,9 @@ class AppItemController extends AbstractController
             $this->addFlash('success', 'L\'objet a bien été ajouté à votre placard.');
 
             if($nextAction === 'app_item_create'){
-                $previousCategory = $item->getCategory();
+                $previousItemType = $item->getItemType();
                 $item = new Item();
-                $item->setCategory($previousCategory);
+                $item->setItemType($previousItemType);
                 $form = $this->createForm(ItemFormType::class, $item);
 
                 return $this->render('app_item/create_update.html.twig', [
@@ -77,70 +80,31 @@ class AppItemController extends AbstractController
             'form' => $form
         ]);
     }
+    */
     #[Route('/app/placard/ajout', name: 'app_item_create')]
     public function createItem(Request $request, EntityManagerInterface $em): Response
     {
-        $item = new Item();
-        $user = $this->getUser();
-        $item->setOwner($user);
-        $form = $this->createForm(ItemFormType::class, $item);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $nextAction = $form->get('submitAndAdd')->isClicked()
-                ? 'app_item_create'
-                : 'app_item';
-            $item->setCreatedAt(new DateTimeImmutable('now'));
-            $em->persist($item);
-
-            //handle itemCircle
-            //get all circles of the user
-            $userCircles = $user->getUserCircles();
-            foreach ($userCircles as &$userCircle) {
-                $circle = $userCircle->getCircle();
-                $itemCircle = new ItemCircle(); //create itemCircle
-                $itemCircle->setCircle($circle); //populate circle
-                $itemCircle->setItem($item); //populate item
-                $em->persist($itemCircle); //persist
-            }
-
-            $em->flush();
-
-            $this->addFlash('success', 'L\'objet a bien été ajouté à votre placard.');
-
-            if($nextAction === 'app_item_create'){
-                $previousCategory = $item->getCategory();
-                $item = new Item();
-                $item->setCategory($previousCategory);
-                $form = $this->createForm(ItemFormType::class, $item);
-
-                return $this->render('app_item/create_update.html.twig', [
-                    'controller_name' => 'AppCircleController',
-                    'form' => $form
-                ]);
-            } else {
-                return $this->redirectToRoute($nextAction);
-            }
-        }
-
-
-        return $this->render('app_item/create_update.html.twig', [
-            'controller_name' => 'AppCircleController',
-            'form' => $form
+        return $this->render('app_item/create/index.html.twig', [
+            'controller_name' => 'AppCircleController'
         ]);
     }
 
-    #[Route('/app/placard/ajout-livre', name: 'app_item_create_book')]
+    #[Route('/app/placard/ajout/livre', name: 'app_item_create_book')]
     public function createBookItem(Request $request, EntityManagerInterface $em): Response
     {
         $item = new Item();
+        $itemType = $em->getRepository(ItemType::class)->findOneBy(['code' => 'book']);
+        $item->setItemType($itemType);
         $user = $this->getUser();
         $item->setOwner($user);
-        $form = $this->createForm(ItemFormType::class, $item);
+        $form = $this->createForm(ItemBookFormType::class, $item);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $nextAction = $form->get('submitAndAdd')->isClicked()
-                ? 'app_item_create'
-                : 'app_item';
+            $nextAction = 'app_items';
+            if(true === $form->get('submitAndAdd')->isClicked()) {
+                $nextAction = 'app_item_create_book';
+            }
             $item->setCreatedAt(new DateTimeImmutable('now'));
             $em->persist($item);
 
@@ -160,12 +124,12 @@ class AppItemController extends AbstractController
             $this->addFlash('success', 'Le livre a bien été ajouté à votre placard.');
 
             if($nextAction === 'app_item_create'){
-                $previousCategory = $item->getCategory();
+                $previousItemType = $item->getItemType();
                 $item = new Item();
-                $item->setCategory($previousCategory);
-                $form = $this->createForm(ItemFormType::class, $item);
+                $item->setItemType($previousItemType);
+                $form = $this->createForm(ItemBookFormType::class, $item);
 
-                return $this->render('app_item/create_book.html.twig', [
+                return $this->render('app_item/create/book.html.twig', [
                     'controller_name' => 'AppCircleController',
                     'form' => $form
                 ]);
@@ -175,7 +139,7 @@ class AppItemController extends AbstractController
         }
 
 
-        return $this->render('app_item/create_book.html.twig', [
+        return $this->render('app_item/create/book.html.twig', [
             'controller_name' => 'AppCircleController',
             'form' => $form
         ]);
@@ -201,7 +165,7 @@ class AppItemController extends AbstractController
             $em->persist($item);
             $em->flush();
             $this->addFlash('success', 'L\'objet a bien été mis à jour');
-            return $this->redirectToRoute('app_item');
+            return $this->redirectToRoute('app_items');
         }
 
 
@@ -224,6 +188,6 @@ class AppItemController extends AbstractController
         $em->remove($item);
         $em->flush();
         $this->addFlash('success', 'L\'objet a bien été supprimé');
-        return $this->redirectToRoute('app_item');
+        return $this->redirectToRoute('app_items');
     }
 }

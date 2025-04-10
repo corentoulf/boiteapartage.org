@@ -1,7 +1,7 @@
 <div class="container py-2">
     <nav class="navbar navbar-expand-lg py-2 py-lg-4 justify-content-between">
         <a class="navbar-brand d-flex align-items-center ms-2 ms-lg-0" href="{{path('app_home')}}">
-            <img class="d-none d-lg-inline-block" src="{{asset('img/logo-circle-blue.svg')}}" alt="La Boîte à Partage" width="50" height="50">
+            <img class="d-none d-lg-inline-block" src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="50" height="50">
             <span class="navbar-brand fs-lg-2 fs-4 fw-bold ms-0 ms-lg-3">Boîte à Partage</span>
         </a>
         {# <div class="d-flex justify-content-between align-items-center px-5 py-3">
@@ -25,10 +25,10 @@
             </button>
         </div> #}
         {% if app.user %}
-            <a class="btn btn-highlight shadow" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-2"></i>Aller sur l'App</a>
+            <a class="btn btn-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-2"></i>Aller sur l'App</a>
 
         {% else %}
-            <a class="btn btn-highlight shadow" href="{{ path('app_login') }}"><i class="bi bi-person-circle me-2"></i><span class="">Connexion</span></a>
+            <a class="btn btn-outline-dark border-0" href="{{ path('app_login') }}"><i class="bi bi-person-circle me-2"></i><span class="">Connexion</span></a>
         {% endif %}
     </nav>
 </div>

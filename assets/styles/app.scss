@@ -4,28 +4,37 @@
 // 2. Include any default variable overrides here
 @page { size: auto;  margin: 0mm; }
 
-
 //colors
-$blue:    #52749c;
-$green: #88C189; //backup plus clair => #7AC67B
-$vivid-green: #148076;
-$red: #FF8D8D;
-$yellow: #ffef61;
-$pale-red: #ff9292;
-$orange: #FFBE3D;
-//#fbffa2   #f6ff45;
+// $blue:    #4e5b84;
+// $green: #88C189; //backup plus clair => #7AC67B
+// $vivid-green: #148076;
+// $red: #FF8D8D;
+// $yellow: #ffef61;
+// $pale-red: #ff9292;
+// $orange: #FFBE3D;
+// //#fbffa2   #f6ff45;
 
-$fan: #ffdcd6;
+// $fan: #ffdcd6;
 
-$bg: $blue;
+// $bg: $blue;
 
 //main color-class
-$primary: $blue;
-$danger: $red;
-$warning: $orange;
-$info: $vivid-green;
-$success: $green;
-$highlight: $yellow;
+$primary: #1e2eba;//#0b7395;
+$secondary: #16228c;
+$info: #326574;
+// $success: #2ca182;
+// $warning: #ffd166;
+// $danger: #ef476f;
+
+// $grey: #8491a1;
+// $dark-grey: #606b79;
+// $highlight: $yellow;
+// //#23665b;
+// $highlight: #ffdcd6;
+
+
+
+
 
 //font
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
@@ -36,40 +45,36 @@ $highlight: $yellow;
 
 $font-family-base: "Lexend";
 
-//Roundness
-$enable-rounded: false;
+/* Roundness */
+$enable-rounded: true;
 // $btn-border-radius:           3px;
 // $btn-border-radius-sm:        3px;
 // $btn-border-radius-lg:        3px;
 //buttons
-//shadows
+/* shadows */
 // $enable-shadows : true;
-
 
 $btn-border-width: 0.05rem;
 
-
-
 $spacer: 1rem;
 $spacers: (
-0: 0,
-1: $spacer * .25,
-2: $spacer * .5,
-3: $spacer,
-4: $spacer * 1.5,
-5: $spacer * 3,
-6: $spacer * 4.5,
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4.5,
 );
 
 // 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
 @import "../../vendor/twbs/bootstrap/scss/_variables.scss";
 @import "../../vendor/twbs/bootstrap/scss/_variables-dark.scss";
 
-// 4. Include any default map overrides here
-$box-shadow-sm:               0 0.5rem 1rem rgba($black, 0.15);
-$box-shadow:                  0.2rem 0.2rem 0rem rgba($black, 1);
-$box-shadow-lg:               0.3rem 0.3rem 0rem rgb($dark, 1);
-// $box-shadow-inset:            inset 0 1px 2px rgba($green, .075);
+// // 4. Include any default map overrides here
+// $box-shadow-sm:               0 0.5rem 1rem rgba($black, 0.15);
+// $box-shadow:                  0.2rem 0.2rem 0rem rgba($black, 1);
+// $box-shadow-lg:               0.3rem 0.3rem 0rem rgb($dark, 1);
 
 $btn-hover-bg-shade-amount:       15%;
 $btn-hover-bg-tint-amount:        15%;
@@ -77,14 +82,16 @@ $btn-hover-border-shade-amount:   20%;
 $btn-hover-border-tint-amount:    10%;
 
 //Colors map
-$custom-colors: (
-  "highlight": $yellow,
-);
-// Merge the maps
-$theme-colors: map-merge($theme-colors, $custom-colors);
+// $custom-colors: (
+//   "highlight": $highlight,
+//   "grey": $grey
+// );
+// // Merge the maps
+// $theme-colors: map-merge($theme-colors, $custom-colors);
 
 // 5. Include remainder of required parts
 @import "../../vendor/twbs/bootstrap/scss/_maps.scss";
+
 @import "../../vendor/twbs/bootstrap/scss/_mixins.scss";
 @import "../../vendor/twbs/bootstrap/scss/_root.scss";
 
@@ -126,48 +133,91 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // 8. Add additional custom code here
 
 
+// body{
+//   // background-color: #ffd27247;
+// }
 
+//custom btn
+// .btn-highlight {
+//   // --bs-btn-font-weight: 600;
+//   // --bs-btn-color: var(--bs-white);
+//   --bs-btn-bg: var(--bs-highlight);
+//   --bs-btn-border-color: var(--bs-blue);
+//   // --bs-btn-hover-color: var(--bs-white);
+//   // --bs-btn-hover-bg: #{shade-color($bd-violet, 10%)};
+//   // --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+//   // --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+//   // --bs-btn-active-color: var(--bs-btn-hover-color);
+//   // --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+//   // --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+// }
 
+// .btn-tertiary {
+//   --bs-btn-font-weight: 600;
+//   --bs-btn-color: var(--bs-white);
+//   --bs-btn-bg: var(--bs-highlight);
+//   --bs-btn-border-color: var(--bs-blue);
+//   --bs-btn-hover-color: var(--bs-white);
+//   --bs-btn-hover-bg: #{shade-color($bd-violet, 10%)};
+//   --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+//   --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+//   --bs-btn-active-color: var(--bs-btn-hover-color);
+//   --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+//   --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+// }
 // Custom classes independant from Bootstrap
 .ct-flash-message{
   margin-top: 108px;
 }
 
-.ct-bg-card{
-  background-color: $fan;
-}
-
 
 @import "./timeline";
 
+// .ct-underline-highlight-warning {
+//   box-shadow:  0rem .5rem 0 0rem $warning;
+// }
+// .ct-underline-highlight-primary {
+//   box-shadow:  0rem .3rem 0 0rem $primary;
+// }
+// .ct-underline-highlight-info {
+//   box-shadow:  0rem .5rem 0 0rem $info
+// }
+// .ct-underline-highlight-success {
+//   box-shadow:  0rem .5rem 0 0rem $success
+// }
+// .ct-underline-highlight-danger {
+//   box-shadow:  0rem .5rem 0 0rem $danger
+// }
+// .ct-underline-highlight-dark {
+//   box-shadow:  0rem .5rem 0 0rem $black
+// }
 
-
-.ct-underline-highlight-warning {
-  box-shadow:  0rem .5rem 0 0rem $warning;
+.card-book:hover{
+  // border: 1px solid $success;
+  cursor: pointer;
+  border-color: $secondary;
+  // color: $white;
 }
-.ct-underline-highlight-primary {
-  box-shadow:  0rem .3rem 0 0rem $primary;
-}
-.ct-underline-highlight-info {
-  box-shadow:  0rem .5rem 0 0rem $info
-}
-.ct-underline-highlight-success {
-  box-shadow:  0rem .5rem 0 0rem $success
-}
-.ct-underline-highlight-danger {
-  box-shadow:  0rem .5rem 0 0rem $danger
-}
-.ct-underline-highlight-dark {
-  box-shadow:  0rem .5rem 0 0rem $black
+.card-book.active{
+  border-color: $secondary;
 }
 
+.collapsing {
+  transition: none !important;
+}
 
-.card-button:hover{
+.card-btn:hover{
   background-color: $primary;
-  color: $light;
+  color: $white;
+  // color: $white;
 }
 
-.videoBarcodeScanner{
-  width: 100%;
-  height: auto;
+.list-group-mobile{
+  max-height: 400px;
 }
+// .btn-logout{
+//   color: $black;
+// }
+// .btn-logout:hover{
+//   color: $primary;
+// }

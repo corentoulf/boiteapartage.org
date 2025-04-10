@@ -1,0 +1,84 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Ajout au Placard{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="col-md-8 offset-md-2 p-2 p-lg-5">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <div class="align-items-center d-flex flex-row justify-content-between">
+            <h1 class="fw-bold" id="title">On range ça où ?</h1>
+        </div>
+        
+        <div class="my-4">
+            <div class="row row-cols-2 row-cols-md-3 g-3 g-md-4">
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-book fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Bibliothèque</p>
+                            <span class="fw-light">Livres, magazines, BD</span>
+                            <a href="{{path('app_item_create_book')}}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-dice-5 fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Loisirs</p>
+                            <span class="fw-light">Jeux de société, jeux vidéos, musique, couture, dessin</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-duffle fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Appareils</p>
+                            <span class="fw-light">Électro-ménager</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-cake fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Cuisine</p>
+                            <span class="fw-light">Robots, pâtisserie, appareils de cuisson</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-tools fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Bricolage</p>
+                            <span class="fw-light">Outils, matériel électroportatifs</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-flower1 fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Jardinage</p>
+                            <span class="fw-light">Outils, matériel électroportatifs</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

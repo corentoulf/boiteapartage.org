@@ -8,7 +8,7 @@
       <div class="container-fluid py-5">
         <div class="d-flex align-items-center justify-content-between">
             <h1 class="display-5 fw-bold">Votre placard</h1>
-            <a class="btn btn-outline-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un objet</a>
+            <a class="btn btn-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un objet</a>
         </div>
         {% if userItems|length == 0 %}
             <div class="mt-4">
@@ -35,12 +35,12 @@
                     <tbody>
                         {% for userItem in userItems %}  
                             <tr>
-                                <td>{{userItem.description}}</td>
-                                <td>{{userItem.category}}</td>
+                                <td>{{userItem.property1}}</td>
+                                <td>{{userItem.itemType ? userItem.itemType.label}}</td>
                                 <td class="justify-content-end d-flex">
-                                    <a href="{{path('app_item_update', {id: userItem.id})}}" class="btn btn-sm btn-outline-secondary me-2" data-bs-toggle="tooltip" data-bs-title="Éditer"><i class="bi bi-pencil-fill"></i></a>
+                                    <a href="{{path('app_item_update', {id: userItem.id})}}" class="btn btn-sm btn-outline-secondary border-0 me-2" data-bs-toggle="tooltip" data-bs-title="Éditer"><i class="bi bi-pencil-fill"></i></a>
                                     <span href="#" class="me-2" data-bs-toggle="tooltip" data-bs-title="Supprimer">
-                                        <a tabindex="0" class="deleteItemBtn btn btn-sm btn-outline-danger" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-title="Confirmer la suppression"  data-bs-content-id="popoverDelete{{userItem.id}}"><i class="bi bi-trash3-fill"></i>
+                                        <a tabindex="0" class="deleteItemBtn btn btn-sm btn-outline-danger border-0" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-title="Confirmer la suppression"  data-bs-content-id="popoverDelete{{userItem.id}}"><i class="bi bi-trash3-fill"></i>
                                         </a>
                                         
                                     </span>

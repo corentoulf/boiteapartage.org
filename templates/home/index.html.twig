@@ -4,17 +4,17 @@
 
 {% block body %}
 <section class="py-3 py-lg-5">
-  <div class="container py-2 text-center">
-    <image class="img-fluid" width="100" src="{{asset('img/logo-circle-blue.svg')}}">
+  <div class="container py-2 text-center d-lg-none">
+    <image class="img-fluid" width="100" src="{{asset('img/logo-bleu-petard.svg')}}" style="max-height:50px;">
   </div>
-  <div class="container py-2 py-lg-2">
+  <div class="container py-2 py-lg-6">
     <div class="d-none d-lg-flex display-4 justify-content-center py-2 pt-lg-2 pb-lg-3">
       <div ><span class="act-underline-highlight-warning">Partager.</span></div>
-      <div class="px-5"><span class="act-underline-highlight-info">Prêter.</span></div>
-      <div ><span class="act-underline-highlight-success">Dépanner.</span></div>
+      <div class="px-5"><span class="act-underline-highlight-info">Explorer.</span></div>
+      <div ><span class="act-underline-highlight-success">Découvrir.</span></div>
     </div>
     <div class="d-lg-none display-4 pt-2 pb-1 row text-center">
-      <span class="act-underline-highlight-warning">Partager. Prêter. Dépanner.</span>
+      <span class="act-underline-highlight-warning">Partager. Explorer. Découvrir.</span>
     </div>
     <div class="d-flex justify-content-center py-2">
       <h4 class="px-2 py-1 text-secondary text-center">
@@ -22,12 +22,12 @@
       </h4>
     </div>
     <div class="text-center text-info mt-2 mt-lg-5">
-      <div class="row py-2">
+      <div class="col-12 col-lg-4 offset-lg-4 px-4 d-grid mt-4 mt-lg-0">
+        <a class="btn btn-lg btn-primary" href="{{path('app_register', {'registrationPurpose': 'default'})}}"><i class="bi bi-plus-square me-2"></i>Créer une boîte</span></a>
+      </div>
+      <div class="row py-3 d-none">
         <div class="col-12 col-lg-3 offset-lg-3 px-4 d-grid gap-2">
-          <a class="btn btn-primary btn-lg shadow-lg" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-2"></i>Lire notre manifeste</span></a>
-        </div>
-        <div class="col-12 col-lg-3 px-4 d-grid gap-2 mt-4 mt-lg-0">
-          <a class="btn btn-highlight btn-lg shadow-lg" href="{{path('app_register', {'registrationPurpose': 'default'})}}"><i class="bi bi-play-circle me-2"></i>Démarrer</span></a>
+          <a class="btn btn-outline-dark border-0" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-2"></i>Lire notre manifeste</span></a>
         </div>
       </div>
       {# <div class="row mt-5">
@@ -63,7 +63,7 @@
                     <a class="" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}">Démarrez une boîte à partage</a> dans votre immeuble, votre quartier ou votre entreprise et permettez le prêt d'objets au sein de votre <b>entourage proche</b>.
                   </p>
                   <p>Créer une boîte c'est créer un cercle qui réunit des personnes désireuses de mettre en commun leurs objets plutôt que d'en accumuler de nouveaux.</p>
-                  <a class="btn btn-highlight shadow me-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-play-circle me-2"></i>Créer une boîte</a>
+                  <a class="btn btn-primary me-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
                 </div>
               </div>
             </div>
@@ -110,7 +110,7 @@
                   <p class="card-text m-0 mb-2">Parce que la <b>confiance est plus forte</b> lorsqu'on est invité et encore plus lorsque c'est par son entourage proche, les boîtes fonctionnent sur invitation.</br>
                   Une fois la boîte créée, partagez-là facilement aux personnes concernées (à vos collègues d'entreprise, à vos voisins, aux membres de votre association, etc..)</p>
                   <p  class="mb-3">Vous avez été invité à rejoindre une boîte ou vous avez vu un prospectus dans votre immeuble ou votre entreprise ?</p>
-                  <a class="btn btn-highlight shadow" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
+                  <a class="btn btn-primary" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
 
                 </div>
               </div>
@@ -158,7 +158,7 @@
               <a class="" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}">Démarrez une boîte à partage</a> dans votre immeuble, votre quartier ou votre entreprise et permettez le prêt d'objets au sein de votre <b>entourage proche</b>.
             </p>
             <p>Créer une boîte c'est créer un cercle qui réunit des personnes désireuses de mettre en commun leurs objets plutôt que d'en accumuler de nouveaux.</p>
-            <a class="btn btn-highlight shadow mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-play-circle me-2"></i>Créer une boîte</a>
+            <a class="btn btn-primary mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
           </div>
         </div>
         <div class="card border-0 mb-3">
@@ -193,7 +193,7 @@
             <p class="card-text m-0 mb-2">Parce que la <b>confiance est plus forte</b> lorsqu'on est invité et encore plus lorsque c'est par son entourage proche, les boîtes fonctionnent sur invitation.</br>
             Une fois la boîte créée, partagez-là facilement aux personnes concernées (à vos collègues d'entreprise, à vos voisins, aux membres de votre association, etc..)</p>
             <p  class="">Vous avez été invité à rejoindre une boîte ou vous avez vu un prospectus dans votre immeuble ou votre entreprise ?</p>
-            <a class="btn btn-highlight shadow mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
+            <a class="btn btn-primary mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
 
           </div>
         </div>  

@@ -73,7 +73,7 @@
           <h1 class="fs-3 fw-bold mb-3">Explorer un univers</h1>
           <div class="row gx-6 d-flex justify-content-between">
             <div class="col-4 mb-2 mb-lg-4">
-              <div class="card shadow card-button">
+              <div class="card card-btn">
                 <div class="card-body py-4">
                   <h5 class="card-title text-center"><i class="bi bi-book fs-1"></i></h5>
                   <p class="card-text text-center m-0">Boîte à livre</p>
@@ -82,7 +82,7 @@
               </div>
             </div>
             <div class="col-4 mb-2 mb-lg-4">
-              <div class="card shadow card-button">
+              <div class="card card-btn">
                 <div class="card-body py-4">
                   <h5 class="card-title text-center"><i class="bi bi-controller fs-1"></i></h5>
                   <p class="card-text text-center m-0">Loisirs et jeux de société</p>
@@ -91,7 +91,7 @@
               </div>
             </div>
             <div class="col-4 mb-2 mb-lg-4">
-              <div class="card shadow card-button">
+              <div class="card card-btn">
                 <div class="card-body py-4">
                   <h5 class="card-title text-center"><i class="bi bi-duffle fs-1"></i></h5>
                   <p class="card-text text-center m-0">Appareils</p>
@@ -100,7 +100,7 @@
               </div>
             </div>
             <div class="col-4 mb-2 mb-lg-4">
-              <div class="card shadow card-button">
+              <div class="card card-btn">
                 <div class="card-body py-4">
                   <h5 class="card-title text-center"><i class="bi bi-cake fs-1"></i></h5>
                   <p class="card-text text-center m-0">Cuisine</p>
@@ -109,7 +109,7 @@
               </div>
             </div>
             <div class="col-4 mb-2 mb-lg-4">
-              <div class="card shadow card-button">
+              <div class="card card-btn">
                 <div class="card-body py-4">
                   <h5 class="card-title text-center"><i class="bi bi-tools fs-1"></i></h5>
                   <p class="card-text text-center m-0">Bricolage</p>
@@ -118,7 +118,7 @@
               </div>
             </div>
             <div class="col-4 mb-2 mb-lg-4">
-              <div class="card shadow card-button">
+              <div class="card card-btn">
                 <div class="card-body py-4">
                   <h5 class="card-title text-center"><i class="bi bi-flower1 fs-1"></i></h5>
                   <p class="card-text text-center m-0">Jardinage</p>
@@ -130,7 +130,7 @@
         </div>
       </div>
       {# Circles part #}
-      <div class="col-12 col-lg-6 pt-5 ">
+      <div class="col-12 col-lg-6 pt-5 d-none">
         <div class="px-lg-5">
           <h1 class="fs-3 fw-bold mb-3">Vos Boîtes</h1>
           {{ include('app_circle/circle_list_component.html.twig') }}
@@ -143,7 +143,7 @@
         </div>
       </div>
       {# Object part #}
-      <div class="col-12 col-lg-6 py-5">
+      <div class="col-12 col-lg-6 py-5 d-none">
         <div class="px-lg-5">
           <h1 class="fs-3 fw-bold mb-3">Votre Placard</h1>
           
@@ -161,7 +161,7 @@
               <a class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des objets</a>
               <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create_book')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des livres</a>
               {% if userItems|length > 0 %}
-                <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item')}}"><i class="bi bi-eye me-2"></i>Voir tout</a>
+                <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_items')}}"><i class="bi bi-eye me-2"></i>Voir tout</a>
               {% endif %}
             </div>
           </div>

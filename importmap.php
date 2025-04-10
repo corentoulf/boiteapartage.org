@@ -116,4 +116,10 @@ return [
     'axios' => [
         'version' => '1.8.2',
     ],
+    'lodash' => [
+        'version' => '4.17.21',
+    ],
+    'html5-qrcode' => [
+        'version' => '2.3.8',
+    ],
 ];

@@ -1,343 +1,74 @@
-import Quagga from 'quagga';
 import axios from 'axios';
+import _ from 'lodash';
+import { Modal } from 'bootstrap';
+import {Html5Qrcode} from "html5-qrcode"; //https://github.com/mebjas/html5-qrcode
 
+/*
+    INIT
+*/
 
-$(function() {
-    var resultCollector = Quagga.ResultCollector.create({
-        capture: true,
-        capacity: 20,
-        blacklist: [{
-            code: "WIWV8ETQZ1", format: "code_93"
-        }, {
-            code: "EH3C-%GU23RK3", format: "code_93"
-        }, {
-            code: "O308SIHQOXN5SA/PJ", format: "code_93"
-        }, {
-            code: "DG7Q$TV8JQ/EN", format: "code_93"
-        }, {
-            code: "VOFD1DB5A.1F6QU", format: "code_93"
-        }, {
-            code: "4SO64P4X8 U4YUU1T-", format: "code_93"
-        }],
-        filter: function(codeResult) {
-            // only store results which match this constraint
-            // e.g.: codeResult
-            return true;
-        }
-    });
-    var App = {
-        init: function() {
-            var self = this;
+//docs : https://scanapp.org/html5-qrcode-docs/docs/intro
+const html5QrCode = new Html5Qrcode(/* element id */ "reader");
 
-            Quagga.init(this.state, function(err) {
-                if (err) {
-                    return self.handleError(err);
-                }
-                //Quagga.registerResultCollector(resultCollector);
-                App.attachListeners();
-                App.checkCapabilities();
-                Quagga.start();
-                var $videoPlayer = $("#interactive").find('video')[0];
-                $($videoPlayer).addClass('videoBarcodeScanner');
-                $("#container").removeClass('d-none')
-                $(".drawingBuffer").addClass('d-none')
-            });
-        },
-        handleError: function(err) {
-            console.log(err);
-        },
-        checkCapabilities: function() {
-            var track = Quagga.CameraAccess.getActiveTrack();
-            var capabilities = {};
-            if (typeof track.getCapabilities === 'function') {
-                capabilities = track.getCapabilities();
-            }
-            this.applySettingsVisibility('zoom', capabilities.zoom);
-            this.applySettingsVisibility('torch', capabilities.torch);
-        },
-        updateOptionsForMediaRange: function(node, range) {
-            console.log('updateOptionsForMediaRange', node, range);
-            var NUM_STEPS = 6;
-            var stepSize = (range.max - range.min) / NUM_STEPS;
-            var option;
-            var value;
-            while (node.firstChild) {
-                node.removeChild(node.firstChild);
-            }
-            for (var i = 0; i <= NUM_STEPS; i++) {
-                value = range.min + (stepSize * i);
-                option = document.createElement('option');
-                option.value = value;
-                option.innerHTML = value;
-                node.appendChild(option);
-            }
-        },
-        applySettingsVisibility: function(setting, capability) {
-            // depending on type of capability
-            if (typeof capability === 'boolean') {
-                var node = document.querySelector('input[name="settings_' + setting + '"]');
-                if (node) {
-                    node.parentNode.style.display = capability ? 'block' : 'none';
-                }
-                return;
-            }
-            if (window.MediaSettingsRange && capability instanceof window.MediaSettingsRange) {
-                var node = document.querySelector('select[name="settings_' + setting + '"]');
-                if (node) {
-                    this.updateOptionsForMediaRange(node, capability);
-                    node.parentNode.style.display = 'block';
-                }
-                return;
-            }
-        },
-        initCameraSelection: function(){
-            var streamLabel = Quagga.CameraAccess.getActiveStreamLabel();
+/*
+    FUNCTIONS
+*/
 
-            return Quagga.CameraAccess.enumerateVideoDevices()
-            .then(function(devices) {
-                function pruneText(text) {
-                    return text.length > 30 ? text.substr(0, 30) : text;
-                }
-                var $deviceSelection = document.getElementById("deviceSelection");
-                while ($deviceSelection.firstChild) {
-                    $deviceSelection.removeChild($deviceSelection.firstChild);
-                }
-                devices.forEach(function(device) {
-                    var $option = document.createElement("option");
-                    $option.value = device.deviceId || device.id;
-                    $option.appendChild(document.createTextNode(pruneText(device.label || device.deviceId || device.id)));
-                    $option.selected = streamLabel === device.label;
-                    $deviceSelection.appendChild($option);
-                });
-            });
-        },
-        attachListeners: function() {
-            var self = this;
-
-            self.initCameraSelection();
-            $(".controls").on("click", "button.stop", function(e) {
-                e.preventDefault();
-                Quagga.stop();
-                self._printCollectedResults();
-            });
-
-            $(".controls .reader-config-group").on("change", "input, select", function(e) {
-                e.preventDefault();
-                var $target = $(e.target),
-                    value = $target.attr("type") === "checkbox" ? $target.prop("checked") : $target.val(),
-                    name = $target.attr("name"),
-                    state = self._convertNameToState(name);
-
-                console.log("Value of "+ state + " changed to " + value);
-                self.setState(state, value);
-            });
-        },
-        _printCollectedResults: function() {
-            var results = resultCollector.getResults(),
-                $ul = $("#result_strip ul.collector");
-
-            results.forEach(function(result) {
-                var $li = $('<li><div class="thumbnail"><div class="imgWrapper"><img /></div><div class="caption"><h4 class="code"></h4></div></div></li>');
-
-                $li.find("img").attr("src", result.frame);
-                $li.find("h4.code").html(result.codeResult.code + " (" + result.codeResult.format + ")");
-                $ul.prepend($li);
-            });
-        },
-        _accessByPath: function(obj, path, val) {
-            var parts = path.split('.'),
-                depth = parts.length,
-                setter = (typeof val !== "undefined") ? true : false;
-
-            return parts.reduce(function(o, key, i) {
-                if (setter && (i + 1) === depth) {
-                    if (typeof o[key] === "object" && typeof val === "object") {
-                        Object.assign(o[key], val);
-                    } else {
-                        o[key] = val;
-                    }
-                }
-                return key in o ? o[key] : {};
-            }, obj);
-        },
-        _convertNameToState: function(name) {
-            return name.replace("_", ".").split("-").reduce(function(result, value) {
-                return result + value.charAt(0).toUpperCase() + value.substring(1);
-            });
-        },
-        detachListeners: function() {
-            $(".controls").off("click", "button.stop");
-            $(".controls .reader-config-group").off("change", "input, select");
-        },
-        applySetting: function(setting, value) {
-            var track = Quagga.CameraAccess.getActiveTrack();
-            if (track && typeof track.getCapabilities === 'function') {
-                switch (setting) {
-                case 'zoom':
-                    return track.applyConstraints({advanced: [{zoom: parseFloat(value)}]});
-                case 'torch':
-                    return track.applyConstraints({advanced: [{torch: !!value}]});
-                }
-            }
-        },
-        setState: function(path, value) {
-            var self = this;
-
-            if (typeof self._accessByPath(self.inputMapper, path) === "function") {
-                value = self._accessByPath(self.inputMapper, path)(value);
-            }
-
-            if (path.startsWith('settings.')) {
-                var setting = path.substring(9);
-                return self.applySetting(setting, value);
-            }
-            self._accessByPath(self.state, path, value);
-
-            console.log(JSON.stringify(self.state));
-            App.detachListeners();
-            Quagga.stop();
-            App.init();
-        },
-        inputMapper: {
-            inputStream: {
-                constraints: function(value){
-                    if (/^(\d+)x(\d+)$/.test(value)) {
-                        var values = value.split('x');
-                        return {
-                            width: {min: parseInt(values[0])},
-                            height: {min: parseInt(values[1])}
-                        };
-                    }
-                    return {
-                        deviceId: value
-                    };
-                }
-            },
-            numOfWorkers: function(value) {
-                return parseInt(value);
-            },
-            decoder: {
-                readers: function(value) {
-                    if (value === 'ean_extended') {
-                        return [{
-                            format: "ean_reader",
-                            config: {
-                                supplements: [
-                                    'ean_5_reader', 'ean_2_reader'
-                                ]
+function searchBookOnApi(terms){
+    var isIsbn = false;
+    var endpoints = [];
+    // let endpoints = [
+    //     'https://api.github.com/users/ejirocodes',
+    //     'https://api.github.com/users/ejirocodes/repos',
+    //     'https://api.github.com/users/ejirocodes/followers',
+    //     'https://api.github.com/users/ejirocodes/following'
+    //   ];
+      
+    //   axios.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
+    //     (data) => console.log(data),
+    //   );
+    var results = [];
+    var totalItems = 0
+    //filter false search
+    if(typeof(terms) !== undefined && terms !== "" && terms !== null){
+        console.log('searching', terms);
+        $("#searchBookResults").removeClass('d-none')
+        openAccordionResult();
+        clearResults();
+        displayLoader();
+        //detect ISBN
+        if(terms.match(/\d{10}$|^\d{13}$/) !== null ){
+            isIsbn = true;
+            //search ISBN then terms
+            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q=isbn:'+encodeURI(terms))
+                .then(function (responseIsbn) {
+                    //fetch isbn first result text
+                    
+                    // fetch isbn terms results
+                    axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q='+encodeURI(terms))
+                        .then(function (responseTerms) {
+                            // handle success
+                            if(responseIsbn.data.totalItems > 0){
+                                totalItems = totalItems + responseIsbn.data.totalItems
+                                results = _.concat(results, responseIsbn.data.items)
                             }
-                        }];
-                    }
-                    return [{
-                        format: value + "_reader",
-                        config: {}
-                    }];
-                }
-            }
-        },
-        state: {
-            inputStream: {
-                type : "LiveStream",
-                constraints: {
-                    width: {min: 640},
-                    height: {min: 480},
-                    facingMode: "environment",
-                    aspectRatio: {min: 1, max: 2}
-                }
-            },
-            locator: {
-                patchSize: "medium",
-                halfSample: true
-            },
-            numOfWorkers: 2,
-            frequency: 10,
-            decoder: {
-                readers : [{
-                    format: "ean_reader",
-                    config: {}
-                }],
-                debug: {
-                    drawBoundingBox: false,
-                    showFrequency: false,
-                    drawScanline: false,
-                    showPattern: false
-                }
-            },
-            locate: true
-        },
-        lastResult : null
-    };
+                            //TODO : if only 1 result -> prefered result
 
-    $("#openScanner").on('click', function(){
-        App.init();
-    })
-    
-
-    Quagga.onProcessed(function(result) {
-        return;
-        var drawingCtx = Quagga.canvas.ctx.overlay,
-            drawingCanvas = Quagga.canvas.dom.overlay;
-
-        if (result) {
-            if (result.boxes) {
-                drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
-                result.boxes.filter(function (box) {
-                    return box !== result.box;
-                }).forEach(function (box) {
-                    Quagga.ImageDebug.drawPath(box, {x: 0, y: 1}, drawingCtx, {color: "green", lineWidth: 2});
-                });
-            }
-
-            if (result.box) {
-                Quagga.ImageDebug.drawPath(result.box, {x: 0, y: 1}, drawingCtx, {color: "#00F", lineWidth: 2});
-            }
-
-            if (result.codeResult && result.codeResult.code) {
-                Quagga.ImageDebug.drawPath(result.line, {x: 'x', y: 'y'}, drawingCtx, {color: 'red', lineWidth: 3});
-            }
-        }
-    });
-
-    Quagga.onDetected(function(result) {
-        var code = result.codeResult.code;
-        // alert(code);
-        if (App.lastResult !== code) {
-            App.lastResult = code;
-            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q=isbn:'+code)
-                .then(function (response) {
-                    // handle success
-                    // alert(JSON.stringify(response));
-                    let results = response.data;
-                    let nbResults = results.totalItems;
-                    if(nbResults>0){
-                        $("#scanResults ul").append(`
-                            <li class="list-group-item">${code} (${nbResults}) ${results.items[0].volumeInfo.title + ' par ' + results.items[0].volumeInfo.authors.join(', ')}</li>    
-                        `);
-                    }
-                    else {
-                        axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q='+code)
-                            .then(function (response) {
-                                // handle success
-                                // alert(JSON.stringify(response));
-                                let results = response.data;
-                                let nbResults = results.totalItems;
-                                if(nbResults>0){
-                                    $("#scanResults ul").append(`
-                                        <li class="list-group-item">${code} (${nbResults}) ${results.items[0].volumeInfo.title + ' par ' + results.items[0].volumeInfo.authors.join(', ')}</li>    
-                                    `);
-                                }
-                                else {
-                                    
-                                }
-                            })
-                            .catch(function (error) {
-                                // handle error
-                                console.log(error);
-                            })
-                            .finally(function () {
-                                // always executed
-                            });
-                    }
+                            if(responseTerms.data.totalItems > 0){
+                                totalItems = totalItems + responseTerms.data.totalItems
+                                results = _.concat(results, responseTerms.data.items)
+                            }
+                            //keep unique values in case of doublon
+                            results = _.uniqBy(results, 'id')
+                            displayResults(results, totalItems);
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+                        .finally(function () {
+                            // always executed
+                        });
                 })
                 .catch(function (error) {
                     // handle error
@@ -346,13 +77,168 @@ $(function() {
                 .finally(function () {
                     // always executed
                 });
-            // var $node = null, canvas = Quagga.canvas.dom.image;
-
-            // $node = $('<li><div class="thumbnail"><div class="imgWrapper"><img /></div><div class="caption"><h4 class="code"></h4></div></div></li>');
-            // $node.find("img").attr("src", canvas.toDataURL());
-            // $node.find("h4.code").html(code);
-            // $("#result_strip ul.thumbnails").prepend($node);
+        } 
+        else {
+            //search terms only
+            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q='+encodeURI(terms))
+                .then(function (responseTerms) {
+                    // handle success
+                    if(responseTerms.data.totalItems > 0){
+                        totalItems = totalItems + responseTerms.data.totalItems
+                        results = _.concat(results, responseTerms.data.items)
+                    }
+                    displayResults(results, totalItems);
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+                .finally(function () {
+                    // always executed
+                });
         }
-    });
+    }
+}
 
-});
+function displayResults(results, totalItems){
+    var $resultCard = `
+    <div class="card card-book d-grid gap-2 mb-2" >
+        <div class="d-flex flex-row align-items-center">
+            <div class="col-3 col-md-1">
+                <img src="" class="img-responsive p-1" style="height:80px;" alt="book cover preview">
+            </div>
+            <div class="col-7 col-md-10 card-body text-left py-2">
+                <h5 class="card-title fs-6 fw-light"></h5>
+                <p class="card-text fs-6 fw-medium"></p>
+            </div>
+            <div class="col-2 col-md-1 form-check">
+                <input class="form-check-input" type="radio" data-title="" data-author="" data-ref-url="" data-img-link="" name="bookSelectionRadio" id="">
+            </div>
+        </div>
+    </div>
+    `;
+    console.log('displaying results', totalItems, results)
+    //clear previous results
+    clearResults();
+    removeLoader();
+    if(results.length > 0){
+        
+        // $("#searchBookResultsList").append(`${totalItems > 100 ? '>100 résultats' : totalItems+' résultat(s)'}`)
+        _.forEach(results, function(book) {
+            let $card = $($resultCard).clone();
+            let title = book.volumeInfo.title;
+            let author = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '';
+            let imgLink = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : encodeURI('https://placehold.co/70x100/transparent/FFFFF?text=Aucune\nimage\ndisponible&font=source-sans-pro')
+            let refLink = book.selfLink || null;
+
+
+            $card.find('.card-title').text(title)
+            $card.find('.card-text').text(author);
+            $card.find('.img-responsive').attr('src', imgLink)
+            console.log($card.find('input[name="bookSelectionRadio"]'))
+            // `<li class="list-group-item" style="min-height:100px;"><img src="${}" class="img-thumbnail" style="height:100px;" alt="..."> ${book.volumeInfo.title} - Auteur(s) ${book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : ''}</li>`
+            $("#searchBookResultsList").append($card)
+            $card.find('input[name="bookSelectionRadio"]')
+                .data('title', book.volumeInfo.title ? book.volumeInfo.title : '')
+                .data('author', book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '')
+                .data('img-link', imgLink)
+                .data('ref-url', refLink)
+        });
+    }
+    else {
+        $("#searchBookResultsList").append(`Aucun résultat`)
+    }
+}
+
+function clearResults(){
+    $("#searchBookResultsList").empty()
+}
+function displayLoader(){
+    $("#searchBookResultsList").append('Recherche...')
+}
+function removeLoader(){
+    $("#searchBookResultsList").empty()
+}
+/*
+    EVENTS DETECTION
+*/
+
+//scan barcode when requested
+var barcodeScannerModal = Modal.getOrCreateInstance($('#barcodeScannerModal'));
+$("#barcodeScannerModal").on('shown.bs.modal', function(e){
+    // This method will trigger user permissions
+    Html5Qrcode.getCameras().then(devices => {
+        /**
+         * devices would be an array of objects of type:
+         * { id: "id", label: "label" }
+         */
+        if (devices && devices.length) {
+            // var cameraId = devices[0].id;
+            html5QrCode.start(
+            { facingMode: "environment" }, 
+            {
+                fps: 10,    // Optional, frame per seconds for qr code scanning
+                qrbox: { width: 250, height: 250 }  // Optional, if you want bounded box UI
+            },
+            (decodedText, decodedResult) => {
+                // do something when code is read
+                console.log(decodedText, decodedResult);
+
+                html5QrCode.stop().then((ignore) => {
+                    // QR Code scanning is stopped.
+                    $("#searchBookByTermsInput").val(decodedText).trigger('submit') //set search to detected text
+                    barcodeScannerModal.hide(); //close modal
+                    searchBookOnApi(decodedText) //search scanned isbn 
+                }).catch((err) => {
+                // Stop failed, handle it.
+                });
+            },
+            (errorMessage) => {
+                // parse error, ignore it.
+                // console.log(errorMessage)
+            })
+            .catch((err) => {
+            // Start failed, handle it.
+            });
+        }
+    }).catch(err => {
+        // handle err
+    });
+})
+
+//ensure camera stops when the modal is closed manually
+$("#barcodeScannerModal").on('hidden.bs.modal', function(e){
+    html5QrCode.stop().then((ignore) => {}).catch((err) => {});
+})
+//search book on form submit
+$("#searchBookForm").on('submit', function(e){
+    e.preventDefault();
+    searchBookOnApi($("#searchBookByTermsInput").val());
+})
+
+//fill form when a book is slected in search results
+$('body').on('click', '.card-book', function(e){
+    var $input = $(this).find('input')
+    $input.prop('checked', true)
+    $('.card-book').removeClass('active');
+    $(this).addClass('active');
+    // closeAccordionResult()
+    //set form inputs value from selected item in search results
+    $('input[name="item_book_form[property_1]"]').val($input.data('title'));
+    $('input[name="item_book_form[property_2]"]').val($input.data('author'));
+    $('input[name="item_book_form[property_3]"]').val($input.data('img-link'));
+    $('input[name="item_book_form[property_4]"]').val($input.data('ref-url'));
+    $('#item_book_form_submitFromSearchBookResult').prop('disabled', false)
+})
+
+//reset masked properties if any manual property changeschange  any of manual property editable
+//item_book_form_property_1
+
+function openAccordionResult(){
+    $('#accordionHeaderBtn').removeClass('collapsed').attr('aria-expanded', true);
+    $('#accordionBody').addClass('show')
+}
+function closeAccordionResult(){
+    $('#accordionHeaderBtn').addClass('collapsed').attr('aria-expanded', false)
+    $('#accordionBody').removeClass('show')
+}

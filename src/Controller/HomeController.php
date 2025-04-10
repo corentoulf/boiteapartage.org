@@ -37,6 +37,12 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/app/css', name: 'app_css')]
+    public function appCss(): Response
+    {
+        return $this->render('app_home/css.html.twig', []);
+    }
+
     #[Route('/manifeste', name: 'app_manifeste')]
     public function manifeste(): Response
     {

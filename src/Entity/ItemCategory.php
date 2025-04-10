@@ -24,9 +24,17 @@ class ItemCategory
     #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'category')]
     private Collection $items;
 
+    /**
+     * @var Collection<int, ItemType>
+     */
+    #[ORM\OneToMany(targetEntity: ItemType::class, mappedBy: 'category')]
+    private Collection $itemTypes;
+
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->itemTypes = new ArrayCollection();
     }
 
     public function __toString()
@@ -80,4 +88,35 @@ class ItemCategory
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, ItemType>
+     */
+    public function getItemTypes(): Collection
+    {
+        return $this->itemTypes;
+    }
+
+    public function addItemType(ItemType $itemType): static
+    {
+        if (!$this->itemTypes->contains($itemType)) {
+            $this->itemTypes->add($itemType);
+            $itemType->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemType(ItemType $itemType): static
+    {
+        if ($this->itemTypes->removeElement($itemType)) {
+            // set the owning side to null (unless already changed)
+            if ($itemType->getCategory() === $this) {
+                $itemType->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -15,16 +15,9 @@ class Item
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
-
     #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
-
-    #[ORM\ManyToOne(inversedBy: 'items')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?ItemCategory $category = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -35,6 +28,24 @@ class Item
     #[ORM\OneToMany(targetEntity: ItemCircle::class, mappedBy: 'item', cascade: ['persist'], orphanRemoval: true)]
     private Collection $itemCircles;
 
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    private ?itemType $itemType = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $property_1 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $property_2 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $property_3 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $property_4 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $property_5 = null;
+
     public function __construct()
     {
         $this->itemCircles = new ArrayCollection();
@@ -42,24 +53,12 @@ class Item
 
     public function __toString()
     {
-        return $this->description . '(' . $this->category . ')';
+        return $this->property_1;
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
     }
 
     public function getOwner(): ?User
@@ -70,18 +69,6 @@ class Item
     public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getCategory(): ?ItemCategory
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?ItemCategory $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -124,6 +111,78 @@ class Item
                 $itemCircle->setItem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getItemType(): ?itemType
+    {
+        return $this->itemType;
+    }
+
+    public function setItemType(?itemType $itemType): static
+    {
+        $this->itemType = $itemType;
+
+        return $this;
+    }
+
+    public function getProperty1(): ?string
+    {
+        return $this->property_1;
+    }
+
+    public function setProperty1(?string $property_1): static
+    {
+        $this->property_1 = $property_1;
+
+        return $this;
+    }
+
+    public function getProperty2(): ?string
+    {
+        return $this->property_2;
+    }
+
+    public function setProperty2(?string $property_2): static
+    {
+        $this->property_2 = $property_2;
+
+        return $this;
+    }
+
+    public function getProperty3(): ?string
+    {
+        return $this->property_3;
+    }
+
+    public function setProperty3(?string $property_3): static
+    {
+        $this->property_3 = $property_3;
+
+        return $this;
+    }
+
+    public function getProperty4(): ?string
+    {
+        return $this->property_4;
+    }
+
+    public function setProperty4(?string $property_4): static
+    {
+        $this->property_4 = $property_4;
+
+        return $this;
+    }
+
+    public function getProperty5(): ?string
+    {
+        return $this->property_5;
+    }
+
+    public function setProperty5(?string $property_5): static
+    {
+        $this->property_5 = $property_5;
 
         return $this;
     }

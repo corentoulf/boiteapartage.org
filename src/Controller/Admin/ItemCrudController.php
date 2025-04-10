@@ -20,8 +20,13 @@ class ItemCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('description'),
+            TextField::new('property_1'),
+            TextField::new('property_2'),
+            TextField::new('property_3'),
+            TextField::new('property_4'),
+            TextField::new('property_5'),
             AssociationField::new('owner'),
+            AssociationField::new('itemType'),
             DateTimeField::new('created_at'),
         ];
     }

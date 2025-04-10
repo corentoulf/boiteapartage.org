@@ -23,12 +23,12 @@ class ItemCircleRepository extends ServiceEntityRepository
     {
         return
             $this->createQueryBuilder('ic')
-            ->select('i.id, i.description, icat.name as category, o.email as owner')
+            ->select('i.id,  itype.label as typeLabel, i.property_1, i.property_2, i.property_3, i.property_4, i.property_5, o.email as owner')
             ->leftJoin('ic.item', 'i', 'ON')
-            ->leftJoin('i.category', 'icat', 'ON')
+            ->leftJoin('i.itemType', 'itype', 'ON')
             ->leftJoin('i.owner', 'o', 'ON')
             ->andWhere('ic.circle IN (:ids)')
-            ->addGroupBy('i.id, i.description, icat.name, o.email')
+            ->addGroupBy('i.id, itype.label, o.email')
             ->setParameter('ids', $value)
             ->getQuery()
             // ->getSQL()

@@ -46,6 +46,12 @@ bootstrapPopovers.forEach(function(el){
     }
 })
 
+//fix modal error (see https://github.com/twbs/bootstrap/issues/41005#issuecomment-2585390544)  
+window.addEventListener('hide.bs.modal', () => {
+    if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+    }
+});
 
 //handle search object request from homepage
 $("#homeSearchForm").on('submit', function(e){

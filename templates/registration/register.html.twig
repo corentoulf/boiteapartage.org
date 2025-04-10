@@ -12,9 +12,7 @@
 
 
 <div class="container">
-    <div class="p-2 p-lg-5 my-4   col-md-6 offset-md-3">
-        <div class="col">Vous avez déjà un compte ? <a class="fw-bold ms-2" href="{{ path('app_login') }}"><i class="bi bi-person-circle me-1"></i>Connectez-vous</a></div>
-        <hr class="border border-primary border-1 opacity-25 mb-5">
+    <div class="p-2 p-lg-5 my-4 col-md-6 offset-md-3">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
@@ -23,7 +21,7 @@
                 Vous êtes déjà connecté en tant que <span class="fw-semibold">{{ app.user.userIdentifier }}</span>
             </div>
             <div class="d-grid gap-2">
-                <a class="btn btn-outline-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'application</a>
+                <a class="btn btn-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'application</a>
             </div>
         {% else %}
             
@@ -38,8 +36,8 @@
                 <h1 class="fw-bold mb-3">Rejoindre la boîte à partage "{{registrationCircleId.name}}"</h1>
                 <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour vous inscrire et rejoindre la boîte.</p>
             {% else %}
-                <h1 class="fw-bold mb-3">Inscription</h1>
-                <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour vous inscrire et démarrer une boîte à partage.</p>
+                <h1 class="fw-bold mb-3 pb-3">Inscription</h1>
+                <p class="fs-6 fw-bold py-3 d-none">Complétez le formulaire ci-dessous pour vous inscrire et démarrer une boîte à partage.</p>
             {% endif %}
         
         {{ form_errors(registrationForm) }}
@@ -78,9 +76,13 @@
             {{ form_row(registrationForm.agreeTerms, {
                 label: 'Accepter les conditions d\'utilisation'
             }) }}
-
-            <button type="submit" class="btn btn-outline-primary">S'inscrire</button>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+            </div>
         {{ form_end(registrationForm) }}
+        {% endif %}
+        {% if app.user == false %}
+        <div class="col text-center mt-4"><a class="fw-light link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ path('app_login') }}"></i>Vous avez déjà un compte ? </a></div>
         {% endif %}
     </div>
 </div>
