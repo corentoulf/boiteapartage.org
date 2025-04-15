@@ -3,6 +3,17 @@
 {% block title %}Boîtes à partage{% endblock %}
 
 {% block body %}
+
+{% set circleTypes = {
+    'building': 'Une Résidence ou un immeuble',
+    'district': 'Un quartier',
+    'village': 'Un hameau ou un village',
+    'company': 'Une entreprise',
+    'association': 'Une association',
+    'other': 'Autre'
+  } 
+%}
+
 <div class="container">
   <div class="px-lg-5">
     <div class="container-fluid py-5">
@@ -10,10 +21,106 @@
           <h1 class="display-5 fw-bold">Vos boîtes</h1>
           <a class="btn btn-primary px-4"  href="{{path('app_circle_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Créer une boîte</a>
       </div>
+      <div class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+        {% for userCircle in userCircles %}  
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="fw-bold fs-4">
+                  {{userCircle.circle.name}} {% if userCircle.circle.createdBy == app.user %}<span class="fw-light fs-6">(propriétaire)</span>{% endif %}
+                </div>
+                <a class="link-dark ms-auto card-more-info collapsed" data-bs-toggle="collapse" href="#circleInfo{{loop.index}}" role="button" aria-expanded="false" aria-controls="circleInfo{{loop.index}}">
+                  <i class="bi bi-chevron-down"></i>
+                </a>
+              </div>
+              <div class="collapse" id="circleInfo{{loop.index}}">
+                <div class="mt-2 fw-bold">
+                  Type de boîte
+                </div>
+                <div class="mt-1">
+                  {{circleTypes[userCircle.circle.circleType]}}
+                </div>
+                <div class="fw-bold mt-2">
+                  Localisation
+                </div>
+                <div class="mt-1">
+                  {{userCircle.circle.addressLabel}}
+                </div>
+              </div>
+              <div class="d-flex align-items-center mt-3 justify-content-end">
+                {% if userCircle.circle.createdBy == app.user %}
+                  <button 
+                    class="btn btn-sm btn-outline-info btn-generate-flyer me-2"  
+                    data-bs-target="#generateFlyerModal" 
+                    data-circle-uri="{{url('app_circle_join_identified', {shortId : userCircle.circle.shortId})}}" 
+                    data-circle-name="{{userCircle.circle.name}}" 
+                    data-circle-short-id="{{userCircle.circle.shortId}}" 
+                    data-circle-type="{{userCircle.circle.circleType}}" 
+                    data-circle-owner-first-name="{{app.user.firstName}}" 
+                    data-circle-owner-last-name="{{app.user.lastName}}" 
+                    >
+                    <i class="bi bi-file-richtext me-2"></i>Générer un flyer
+                  </button>
+                  <div class="d-none" id="logoImgSrc" data-url="{{asset('img/logo-bleu-petard.jpg')}}"></div>
+                  <div class="d-none" id="globeImgSrc" data-url="{{asset('img/globe.png')}}"></div>
+                  <div class="d-none" id="mouseImgSrc" data-url="{{asset('img/mouse.png')}}"></div>
+                  <div class="d-none" id="priseEnMainImgSrc" data-url="{{asset('img/prise-en-main.png')}}"></div>
+                {% endif %}
+              
+                <button 
+                  class="btn btn-sm btn-info btn-share-circle "  
+                  data-bs-target="#shareCircleModal" 
+                  data-circle-uri="{{url('app_circle_join_identified', {shortId : userCircle.circle.shortId})}}" 
+                  data-circle-name="{{userCircle.circle.name}}" 
+                  >
+                  <i class="bi bi-share-fill me-2"></i>Partager
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
-<div class="container">
+
+{# Share modal #}
+<div class="modal fade" id="shareCircleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Flyer modal #}
+<div class="modal fade" id="generateFlyerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <a class="btn btn-info btn-download-flyer" href=""><i class="bi bi-file-earmark-arrow-down me-2"></i>Télécharger le flyer</a>
+        {# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button> #}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{# <div class="container">
   <div class="row">
     <div class="col-md-6 p-5 my-4 ">
       <div class=" p-5 ">
@@ -23,10 +130,10 @@
     </div>
   </div>
 <p class="result"></p>
-</div>
+</div> #}
 {% endblock %}
 {% block javascripts %}
     {% block importmap %}
-     {{ importmap(['app', 'shareCircle']) }}
+     {{ importmap(['app', 'shareCircle', 'generateFlyer']) }}
     {% endblock %}
 {% endblock %}

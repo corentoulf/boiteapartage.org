@@ -221,3 +221,8 @@ $btn-hover-border-tint-amount:    10%;
 // .btn-logout:hover{
 //   color: $primary;
 // }
+
+
+.card-more-info:not(.collapsed) {
+  transform: rotate(-180deg);
+}

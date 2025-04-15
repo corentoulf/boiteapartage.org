@@ -2,38 +2,70 @@
     <nav class="navbar navbar-custom navbar-expand-lg py-2 py-lg-4 justify-content-center">
         <div class="container d-flex justify-content-between align-items-center">
             {# brand #}
-            <a class="ps-1 navbar-brand d-flex align-items-center" >
-                <img src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="50" height="50">
-                <span class="navbar-brand fs-2 fw-bold ms-3">Boîte à Partage</span>
+            <a class="navbar-brand d-flex align-items-center" >
+                <img src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="40" height="40">
+                <span class="navbar-brand fs-4 fw-bold ms-2">Boîte à Partage</span>
             </a>
-            <div class="d-flex flex-row align-items-center justify-content-end">
-                {# Admin Dashboard #}
-                {% if is_granted("ROLE_ADMIN") %}
-                    {# <a class="btn px-4 me-3 d-none d-lg-inline-block" href="{{ path('app_admin') }}">
-                        <i class="bi bi-gear-fill me-2"></i>Admin
-                    </a> #}
-                {% endif %}
-                {# Créer et Gérer les boîtes #}
-                <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative"
-                    <span class=""><i class="bi bi-archive fs-5"></i></span>
-                    <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
-                        Boîtes
-                    </a>
-                </div>
-                {# Gérer ses objets dans son placard #}
-                <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative"
-                    <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
-                    <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
-                        Placard
-                    </a>
-                </div>
-                {# Profil #}
-                <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative"
-                    <span class=""><i class="bi bi-person-square fs-5"></i></span>
-                    <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
-                        {{app.user.firstName ?? 'Compte'}}
-                    </a>
-                </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <form class="ms-auto my-3 my-lg-0 me-lg-4 d-flex" role="search" aria-label="search" id="homeSearchForm" method="POST" action="{{path('app_circle_show_all')}}">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="searchTerms">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+                <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item mt-2 mt-lg-0 ">
+                        <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative">
+                            <span class=""><i class="bi bi-archive fs-5"></i></span>
+                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
+                                Boîtes
+                            </a>
+                        </div>
+                        <div class="d-lg-none mx-2 position-relative">
+                            <div class="d-flex align-items-center">
+                                <span class=""><i class="bi bi-archive fs-5"></i></span>
+                                <a class="ms-2 stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
+                                    Boîtes
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item mt-2 mt-lg-0 ">
+                        <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative">
+                            <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
+                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
+                                Placard
+                            </a>
+                        </div>
+                        <div class="d-lg-none mx-2 position-relative">
+                            <div class="d-flex align-items-center">
+                                <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
+                                <a class="ms-2 stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
+                                    Placard
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item mt-2 mt-lg-0 ">
+                        <div class="d-none d-lg-flex flex-column justify-content-center align-items-center mx-2 position-relative">
+                            <span class=""><i class="bi bi-person-circle fs-5"></i></span>
+                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
+                                {{app.user.firstName ?? 'Compte'}}
+                            </a>
+                        </div>
+                        <div class="d-lg-none mx-2 position-relative">
+                            <div class="d-flex align-items-center">
+                                <span class=""><i class="bi bi-person-circle fs-5"></i></span>
+                                <a class="ms-2 stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
+                                    {{app.user.firstName ?? 'Compte'}}
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
         {# <small class="fw-lighter px-4 align-self-end">{{app.user.email}}</small> #}

@@ -97,7 +97,10 @@ class CircleFormType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => "Créer une boîte"
+                'label' => "Créer une boîte",
+                'row_attr' => [
+                    "class" => "d-grid gap-2"
+                ]
             ])
         ;
 

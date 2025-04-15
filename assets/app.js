@@ -53,16 +53,6 @@ window.addEventListener('hide.bs.modal', () => {
     }
 });
 
-//handle search object request from homepage
-$("#homeSearchForm").on('submit', function(e){
-    e.preventDefault();
-    var targetPath = $('#targetPathInput').val();
-    var circleChoice = $('#circleChoiceSelect').val();
-    var searchTerms = $('#searchTermsInput').val();
-    targetPath = encodeURI(targetPath + '?q=' + searchTerms) //add search terms and encode
-    window.location.replace(targetPath);
-})
-
 //dismiss alerts (flash_messages) automatically when not manually dismissable
 setTimeout(() => {
     $('.alert-success:not(.alert-static)').fadeOut(500, function(){

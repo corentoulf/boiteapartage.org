@@ -9,16 +9,15 @@
 		<div class="row">
 			{# Search part #}
 			<div class="col-12">
-				<div class="px-lg-5 pt-5">
-					<h1 class="fs-3 fw-bold mb-3">Chercher un objet</h1>
+				<div class="px-lg-5 pt-3 d-md-none">
+					<h1 class="fs-3 fw-bold mb-3 ">Chercher un objet</h1>
 					{% if userCircles|length > 0 %}
 						{% if is_granted('browse', userCircles[0].circle) %}
-							<form id="homeSearchForm">
-								<div class="input-group mb-3">
-                  <input class="form-control form-control-lg" type="text" placeholder="Moule à cake" aria-label="input search" id="searchTermsInput">
-                  <input type="hidden" id="targetPathInput" value="{{path('app_circle_show_all')}}">
-                  <button class="btn btn-primary" type="submit" id="searchObject">Chercher</button>
-								</div>
+							<form id="homeSearchForm" method="POST" action="{{path('app_circle_show_all')}}">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="searchTerms">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                </div>
 							</form>
 						{% else %}
 							<div class="alert alert-warning">
@@ -68,7 +67,72 @@
         </div>
       </div>
       {# Inspiration part #}
-      <div class="col-12">
+      <h1 class="fs-3 fw-bold mt-4">Explorer un univers</h1>
+      <div class="mt-3">
+            <div class="row row-cols-2 row-cols-md-3 g-3 g-md-4">
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-book fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Bibliothèque</p>
+                            <span class="fw-light">Livres, magazines, BD</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-dice-5 fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Loisirs</p>
+                            <span class="fw-light">Jeux de société, jeux vidéos, musique, couture, dessin</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-duffle fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Appareils</p>
+                            <span class="fw-light">Électro-ménager</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-cake fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Cuisine</p>
+                            <span class="fw-light">Robots, pâtisserie, appareils de cuisson</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-tools fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Bricolage</p>
+                            <span class="fw-light">Outils, matériel électroportatifs</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-flower1 fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Jardinage</p>
+                            <span class="fw-light">Outils, matériel électroportatifs</span>
+                            <a href="#" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <div class="col-12 d-none">
         <div class="px-lg-5 pt-5">
           <h1 class="fs-3 fw-bold mb-3">Explorer un univers</h1>
           <div class="row gx-6 d-flex justify-content-between">

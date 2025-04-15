@@ -210,7 +210,7 @@ class AppCircleController extends AbstractController
 
         $user = $this->getUser();
         $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
-
+        $searchTerms = $request->getPayload()->get('searchTerms');
         //get circles the user belongs to
         $circlesToFetch = array();
         foreach ($userCircles as $key => $userCircle) {
@@ -221,7 +221,8 @@ class AppCircleController extends AbstractController
 
         return $this->render('app_circle/show.html.twig', [
             'controller_name' => 'AppCircleController',
-            'items' => $items
+            'items' => $items,
+            "searchTerms" => $searchTerms
         ]);
     }
 }
