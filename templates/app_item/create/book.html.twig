@@ -10,16 +10,16 @@
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
         <div class="align-items-center d-flex flex-row justify-content-between">
-            <h1 class="fw-bold" id="title">{% if updateMode|default(false) %}Mettre à jour un livre{% else %}Ajouter un livre</h1>
+            <h1 class="fw-bold" id="title">{% if updateMode|default(false) %}Mettre à jour un livre{% else %}Ajouter à la <span class="text-highlight">bibliothèque</span></h1>
             <button class="btn btn-sm btn-info ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#formInformation" aria-expanded="false" aria-controls="collapseExample" >
                 <i class="bi bi-info-circle me-2"></i>Aide
             </button>
         </div>
         {% endif %}
+        {# message d'alerte sur le côté global d'un objet dispo dans tous les cercles #}
         <div
             class="alert alert-warning  d-none"
-            role="alert"
-        >
+            role="alert">
             <div class="d-flex justify-content-start">
                 <span class="me-3"><i class="bi bi-info-circle"></i></span>
                 <span>Veuillez noter que par défaut, si vous avez rejoint plusieurs boîtes, <strong>tous les éléments</strong> de votre placard seront partagés dans <strong>toutes vos boîtes</strong>.</span>
@@ -28,11 +28,11 @@
         <div class="position-relative">
             <div class="collapse position-absolute z-3 col-12 col-md-8 end-0 position-absolute z-3 collapse mt-1 mt-md-0" id="formInformation">
                 <div class="alert alert-info">
-                    Faites une recherche du livre ou scannez son code barre.</br>Si vous ne trouvez pas sa référence, ajoutez-le à la main via le formulaire ci-dessous.
+                    Faites une recherche par mot-clé du livre ou scannez son code barre.</br>Si vous ne trouvez pas sa référence à l'aide de la recherche, ajoutez-le à la main via le formulaire ci-dessous.
                 </div>
             </div>
         </div>
-        <div class="d-lg-flex my-3">
+        <div class="d-lg-flex mt-5">
             <div class="col-12 col-md-8 pe-0 pe-md-2">
                 <div class="d-grid gap-2">
                     <form id="searchBookForm">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div class="px-3"><hr class="mt-4"></div>
+        <div class="px-3"><hr class="my-4"></div>
         {{ form_errors(form) }}
         {{ form_start(form) }}
         

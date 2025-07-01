@@ -10,7 +10,7 @@
 // $vivid-green: #148076;
 // $red: #FF8D8D;
 // $yellow: #ffef61;
-// $pale-red: #ff9292;
+$pale-red: #ff9292;
 // $orange: #FFBE3D;
 // //#fbffa2   #f6ff45;
 
@@ -28,7 +28,7 @@ $info: #326574;
 
 // $grey: #8491a1;
 // $dark-grey: #606b79;
-// $highlight: $yellow;
+$highlight: $pale-red;
 // //#23665b;
 // $highlight: #ffdcd6;
 
@@ -82,12 +82,11 @@ $btn-hover-border-shade-amount:   20%;
 $btn-hover-border-tint-amount:    10%;
 
 //Colors map
-// $custom-colors: (
-//   "highlight": $highlight,
-//   "grey": $grey
-// );
-// // Merge the maps
-// $theme-colors: map-merge($theme-colors, $custom-colors);
+$custom-colors: (
+  "highlight": $highlight,
+);
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
 
 // 5. Include remainder of required parts
 @import "../../vendor/twbs/bootstrap/scss/_maps.scss";

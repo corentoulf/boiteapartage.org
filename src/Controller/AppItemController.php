@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Entity\ItemCategory;
 use App\Entity\ItemCircle;
 use App\Entity\ItemType;
 use App\Form\ItemFormType;
 use App\Form\ItemBookFormType;
+use App\Form\ItemDefaultFormType;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -89,60 +91,119 @@ class AppItemController extends AbstractController
         ]);
     }
 
-    #[Route('/app/placard/ajout/livre', name: 'app_item_create_book')]
-    public function createBookItem(Request $request, EntityManagerInterface $em): Response
+    #[Route('/app/placard/ajout/{code}', name: 'app_item_create_by_category')]
+    public function createBookItem(Request $request, EntityManagerInterface $em, ItemCategory $category): Response
     {
         $item = new Item();
-        $itemType = $em->getRepository(ItemType::class)->findOneBy(['code' => 'book']);
-        $item->setItemType($itemType);
         $user = $this->getUser();
         $item->setOwner($user);
-        $form = $this->createForm(ItemBookFormType::class, $item);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $nextAction = 'app_items';
-            if(true === $form->get('submitAndAdd')->isClicked()) {
-                $nextAction = 'app_item_create_book';
-            }
-            $item->setCreatedAt(new DateTimeImmutable('now'));
-            $em->persist($item);
+        //set form type according to item category
+        switch ($category->getCode()) {
+            case 'bibliotheque':
+                $form = $this->createForm(ItemBookFormType::class, $item, [
+                    'category' => $category,
+                ]);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    
+                    $item->setCreatedAt(new DateTimeImmutable('now'));
+                    $em->persist($item);
 
-            //handle itemCircle
-            //get all circles of the user
-            $userCircles = $user->getUserCircles();
-            foreach ($userCircles as &$userCircle) {
-                $circle = $userCircle->getCircle();
-                $itemCircle = new ItemCircle(); //create itemCircle
-                $itemCircle->setCircle($circle); //populate circle
-                $itemCircle->setItem($item); //populate item
-                $em->persist($itemCircle); //persist
-            }
-
-            $em->flush();
-
-            $this->addFlash('success', 'Le livre a bien été ajouté à votre placard.');
-
-            if($nextAction === 'app_item_create'){
-                $previousItemType = $item->getItemType();
-                $item = new Item();
-                $item->setItemType($previousItemType);
-                $form = $this->createForm(ItemBookFormType::class, $item);
-
+                    //handle itemCircle
+                    //get all circles of the user
+                    $userCircles = $user->getUserCircles();
+                    foreach ($userCircles as &$userCircle) {
+                        $circle = $userCircle->getCircle();
+                        $itemCircle = new ItemCircle(); //create itemCircle
+                        $itemCircle->setCircle($circle); //populate circle
+                        $itemCircle->setItem($item); //populate item
+                        $em->persist($itemCircle); //persist
+                    }
+        
+                    $em->flush();
+        
+                    $this->addFlash('success', 'Le livre a bien été ajouté à votre placard.');
+                    
+                    //if user want to add another of same type
+                    if(true === $form->get('submitAndAdd')->isClicked()) {
+                        //preset form with current item type
+                        $previousItemType = $item->getItemType();
+                        $item = new Item();
+                        $item->setItemType($previousItemType);
+                        $form = $this->createForm(ItemBookFormType::class, $item, [
+                            'category' => $category,
+                        ]);
+                        //redirect to form
+                        return $this->render('app_item/create/book.html.twig', [
+                            'controller_name' => 'AppItemController',
+                            'form' => $form
+                        ]);
+                    }
+                    //user doesn't want to add another => redirect to items
+                    else {
+                        return $this->redirectToRoute('app_items');
+                    }
+                }
                 return $this->render('app_item/create/book.html.twig', [
-                    'controller_name' => 'AppCircleController',
+                    'controller_name' => 'AppItemController',
                     'form' => $form
                 ]);
-            } else {
-                return $this->redirectToRoute($nextAction);
-            }
+                break;
+            
+            default:
+                $form = $this->createForm(ItemDefaultFormType::class, $item, [
+                    'category' => $category,
+                ]);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    
+                    $item->setCreatedAt(new DateTimeImmutable('now'));
+                    $em->persist($item);
+
+                    //handle itemCircle
+                    //get all circles of the user
+                    $userCircles = $user->getUserCircles();
+                    foreach ($userCircles as &$userCircle) {
+                        $circle = $userCircle->getCircle();
+                        $itemCircle = new ItemCircle(); //create itemCircle
+                        $itemCircle->setCircle($circle); //populate circle
+                        $itemCircle->setItem($item); //populate item
+                        $em->persist($itemCircle); //persist
+                    }
+        
+                    $em->flush();
+        
+                    $this->addFlash('success', 'L\'objet a bien été ajouté à votre placard.');
+                    
+                    //if user want to add another of same type
+                    if(true === $form->get('submitAndAdd')->isClicked()) {
+                        //preset form with current item type
+                        $previousItemType = $item->getItemType();
+                        $item = new Item();
+                        $item->setItemType($previousItemType);
+                        $form = $this->createForm(ItemDefaultFormType::class, $item, [
+                            'category' => $category,
+                        ]);
+                        //redirect to form
+                        return $this->render('app_item/create/default.html.twig', [
+                            'controller_name' => 'AppItemController',
+                            'form' => $form,
+                            'category' => $category
+                        ]);
+                    }
+                    //user doesn't want to add another => redirect to items
+                    else {
+                        return $this->redirectToRoute('app_items');
+                    }
+                }
+                return $this->render('app_item/create/default.html.twig', [
+                    'controller_name' => 'AppItemController',
+                    'form' => $form,
+                    'category' => $category
+                ]);
+                break;
         }
-
-
-        return $this->render('app_item/create/book.html.twig', [
-            'controller_name' => 'AppCircleController',
-            'form' => $form
-        ]);
     }
 
     #[Route('/app/placard/{id}/update', name: 'app_item_update', requirements: ['id' => '\d+'])]

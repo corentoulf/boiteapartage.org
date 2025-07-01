@@ -4,13 +4,13 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container min-vh-100">
     <div class="col-md-8 offset-md-2 p-2 p-lg-5">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
         <div class="align-items-center d-flex flex-row justify-content-between">
-            <h1 class="fw-bold" id="title">On range ça où ?</h1>
+            <h1 class="fw-bold display-5" id="title">On range ça où ?</h1>
         </div>
         
         <div class="my-4">
@@ -21,37 +21,7 @@
                             <h5 class="card-title "><i class="bi bi-book fs-1"></i></h5>
                             <p class="card-text fw-semibold fs-5">Bibliothèque</p>
                             <span class="fw-light">Livres, magazines, BD</span>
-                            <a href="{{path('app_item_create_book')}}" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card card-btn h-100 ">
-                        <div class="card-body text-center">
-                            <h5 class="card-title "><i class="bi bi-dice-5 fs-1"></i></h5>
-                            <p class="card-text fw-semibold fs-5">Loisirs</p>
-                            <span class="fw-light">Jeux de société, jeux vidéos, musique, couture, dessin</span>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card card-btn h-100 ">
-                        <div class="card-body text-center">
-                            <h5 class="card-title "><i class="bi bi-duffle fs-1"></i></h5>
-                            <p class="card-text fw-semibold fs-5">Appareils</p>
-                            <span class="fw-light">Électro-ménager</span>
-                            <a href="#" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card card-btn h-100 ">
-                        <div class="card-body text-center">
-                            <h5 class="card-title "><i class="bi bi-cake fs-1"></i></h5>
-                            <p class="card-text fw-semibold fs-5">Cuisine</p>
-                            <span class="fw-light">Robots, pâtisserie, appareils de cuisson</span>
-                            <a href="#" class="stretched-link"></a>
+                            <a href="{{path('app_item_create_by_category', {code: "bibliotheque"})}}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
@@ -61,17 +31,49 @@
                             <h5 class="card-title "><i class="bi bi-tools fs-1"></i></h5>
                             <p class="card-text fw-semibold fs-5">Bricolage</p>
                             <span class="fw-light">Outils, matériel électroportatifs</span>
-                            <a href="#" class="stretched-link"></a>
+                            <a href="{{path('app_item_create_by_category', {code: "bricolage"})}}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card card-btn h-100 ">
                         <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-duffle fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Appareils</p>
+                            <span class="fw-light">Électro-ménager, aspirateurs, etc..</span>
+                            <a href="{{path('app_item_create_by_category', {code: "appareils"})}}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-dice-5 fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Loisirs</p>
+                            <span class="fw-light">Jeux de société, jeux vidéos, musique, couture, dessin</span>
+                            <a href="{{path('app_item_create_by_category', {code: "loisirs"})}}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
+                            <h5 class="card-title "><i class="bi bi-cake fs-1"></i></h5>
+                            <p class="card-text fw-semibold fs-5">Cuisine</p>
+                            <span class="fw-light">Robots, pâtisserie, appareils de cuisson</span>
+                            <a href="{{path('app_item_create_by_category', {code: "cuisine"})}}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="card card-btn h-100 ">
+                        <div class="card-body text-center">
                             <h5 class="card-title "><i class="bi bi-flower1 fs-1"></i></h5>
                             <p class="card-text fw-semibold fs-5">Jardinage</p>
                             <span class="fw-light">Outils, matériel électroportatifs</span>
-                            <a href="#" class="stretched-link"></a>
+                            <a href="{{path('app_item_create_by_category', {code: "jardinage"})}}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

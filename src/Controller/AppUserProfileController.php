@@ -63,7 +63,7 @@ class AppUserProfileController extends AbstractController
         
         return $this->render('app_user_profile/update_info.html.twig', [
             'controller_name' => 'AppUserProfileController',
-            'updateUserInfoForm' => $form
+            'form' => $form
         ]);
     }
 

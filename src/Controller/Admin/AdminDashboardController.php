@@ -51,10 +51,10 @@ class AdminDashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToRoute('Retourner sur l\'app', 'fa fa-external-link', 'app_auth_home'),
             MenuItem::section('Objets'),
-            MenuItem::linkToCrud('Objets', 'fas fa-list', Item::class),
-            MenuItem::linkToCrud('Types d\'objet', 'fas fa-list', ItemType::class),
-            MenuItem::linkToCrud('Objets X Boîtes', 'fas fa-list', ItemCircle::class),
             MenuItem::linkToCrud('Catégories d\'objets', 'fas fa-list', ItemCategory::class),
+            MenuItem::linkToCrud('Types d\'objet', 'fas fa-list', ItemType::class),
+            MenuItem::linkToCrud('Objets', 'fas fa-list', Item::class),
+            MenuItem::linkToCrud('Objets X Boîtes', 'fas fa-list', ItemCircle::class),
             MenuItem::section('Utilisateurs'),
             MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class),
             MenuItem::linkToCrud('Boîtes', 'fas fa-user', Circle::class),

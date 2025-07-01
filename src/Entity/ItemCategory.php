@@ -16,7 +16,7 @@ class ItemCategory
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $label = null;
 
     /**
      * @var Collection<int, Item>
@@ -30,6 +30,9 @@ class ItemCategory
     #[ORM\OneToMany(targetEntity: ItemType::class, mappedBy: 'category')]
     private Collection $itemTypes;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $code = null;
+
 
     public function __construct()
     {
@@ -39,7 +42,7 @@ class ItemCategory
 
     public function __toString()
     {
-        return $this->name;
+        return $this->label;
     }
 
     public function getId(): ?int
@@ -47,14 +50,14 @@ class ItemCategory
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getLabel(): ?string
     {
-        return $this->name;
+        return $this->label;
     }
 
-    public function setName(string $name): static
+    public function setLabel(string $label): static
     {
-        $this->name = $name;
+        $this->label = $label;
 
         return $this;
     }
@@ -115,6 +118,18 @@ class ItemCategory
                 $itemType->setCategory(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): static
+    {
+        $this->code = $code;
 
         return $this;
     }

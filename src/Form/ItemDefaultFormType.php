@@ -8,21 +8,13 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Country;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class ItemBookFormType extends AbstractType
+class ItemDefaultFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -38,49 +30,20 @@ class ItemBookFormType extends AbstractType
                 'label' => "Catégorie",
                 'required' => true,
                 'attr' => [
-                    'hidden' => false
+                    'hidden' => true
                 ],
                 'label_attr' => [
-                    'hidden' => false
+                    'hidden' => true
                 ] 
             ])
             ->add('property_1', TextType::class, [
                 'label' => "Titre",
                 'required' => true
             ])
-            ->add('property_2', TextType::class, [
-                'label' => "Auteur(s)",
+            ->add('property_2', TextareaType::class, [
+                'label' => "Description",
+                'help' => 'Soyez aussi précis que possible.',
                 'required' => true
-            ])
-            ->add('property_3', TextType::class, [
-                'label' => "image_thumbnail_link",
-                'required' => false,
-                'attr' => [
-                    'hidden' => true
-                ],
-                'label_attr' => [
-                    'hidden' => true
-                ] 
-            ])
-            ->add('property_4', TextType::class, [
-                'label' => "api_reference_link",
-                'required' => false,
-                'attr' => [
-                    'hidden' => true
-                ],
-                'label_attr' => [
-                    'hidden' => true
-                ] 
-            ])
-            ->add('property_5', TextType::class, [
-                'label' => "",
-                'required' => false,
-                'attr' => [
-                    'hidden' => true
-                ],
-                'label_attr' => [
-                    'hidden' => true
-                ] 
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $options['update_mode'] === true ? "Mettre à jour" : "Ajouter"
@@ -102,7 +65,7 @@ class ItemBookFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Item::class,
             'update_mode' => false,
-            'category' => null,
+            'category' => null
         ]);
     }
 }
