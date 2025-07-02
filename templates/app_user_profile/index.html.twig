@@ -16,6 +16,33 @@
                         <div class="col">
                             <div class="card card-btn-primary h-100 ">
                                 <div class="card-body text-center">
+                                    <h5 class="card-title "><i class="bi bi-archive fs-1"></i></h5>
+                                    <p class="card-text fw-semibold fs-5">Boîtes</p>
+                                    <span class="fw-light">Gérer les boîtes créées ou rejointes</span>
+                                    <a href="{{path('app_circle')}}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card card-btn-primary h-100 ">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title "><i class="bi bi-bookshelf fs-1"></i></h5>
+                                    <p class="card-text fw-semibold fs-5">Objets</p>
+                                    <span class="fw-light">Gérer les objets que vous mettez à disposition</span>
+                                    <a href="{{path('app_items')}}" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3"><hr class="my-3"></div>
+            <div class="row my-4">
+                <div class="col">
+                    <div class="row row-cols-2 g-3 g-md-4">
+                        <div class="col">
+                            <div class="card card-btn-primary h-100 ">
+                                <div class="card-body text-center">
                                     <h5 class="card-title "><i class="bi bi-person-fill fs-1"></i></h5>
                                     <p class="card-text fw-semibold fs-5">Informations</p>
                                     <span class="fw-light">Modifier l'email, le numéro de tél.</span>
@@ -54,13 +81,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="px-3"><hr class="my-4 my-lg-6"></div>
-                    <div class="row col-10 offset-1 col-lg-6 offset-lg-3">
-                        <a href="{{ path('app_user_delete_account') }}" class="btn btn-outline-danger mb-3">
-                            <i class="bi bi-trash me-2"></i>Supprimer mon compte 😭
-                        </a>
-                    </div>
                 </div>
+            </div>
+            <div class="px-3"><hr class="my-4"></div>
+            <div class="row col-10 offset-1 col-lg-6 offset-lg-3">
+                <a href="{{ path('app_user_delete_account') }}" class="btn btn-outline-danger mb-3">
+                    <i class="bi bi-trash me-2"></i>Supprimer mon compte 😭
+                </a>
             </div>
         </div>
     </div>

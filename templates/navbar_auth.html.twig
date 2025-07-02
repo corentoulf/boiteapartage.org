@@ -19,13 +19,21 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                     <li class="nav-item mt-2 mt-lg-0 ">
                         <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
+                            <span class=""><i class="bi bi-search fs-5"></i></span>
+                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_auth_home') }}">
+                                Chercher
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item mt-2 mt-lg-0 d-none">
+                        <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                             <span class=""><i class="bi bi-archive fs-5"></i></span>
                             <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
                                 Boîtes
                             </a>
                         </div>
                     </li>
-                    <li class="nav-item mt-2 mt-lg-0 ">
+                    <li class="nav-item mt-2 mt-lg-0 d-none">
                         <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                             <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
                             <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
