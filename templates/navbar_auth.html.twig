@@ -20,8 +20,8 @@
                     <li class="nav-item mt-2 mt-lg-0 ">
                         <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                             <span class=""><i class="bi bi-search fs-5"></i></span>
-                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_auth_home') }}">
-                                Chercher
+                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle_search') }}">
+                                Rechercher
                             </a>
                         </div>
                     </li>
@@ -52,31 +52,7 @@
                 </ul>
             </div>
         </div>
-        {# <small class="fw-lighter px-4 align-self-end">{{app.user.email}}</small> #}
     </nav>
-    <div class="d-none" id="navbarToggleExternalContent">
-        <div class="py-2 d-flex flex-row justify-content-center">
-            <div class="d-flex flex-column justify-content-center align-items-center mx-4 position-relative">
-                <span class=""><i class="bi bi-archive fs-5"></i></span>
-                <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
-                    Boîtes
-                </a>
-            </div>
-            <div class="d-flex flex-column justify-content-center align-items-center mx-4 position-relative">
-                <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
-                <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
-                    Placard
-                </a>
-            </div>
-            <div class="d-flex flex-column justify-content-center align-items-center mx-4 position-relative">
-                <span class=""><i class="bi bi-person-circle fs-5"></i></span>
-                <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
-                    {{app.user.firstName ?? 'Compte'}}
-                </a>
-            </div>
-        </div>
-        <div class=""><hr class=""></div>
-    </div>
     {% if app.user.isVerified != true %}
     <nav class="bg-warning-light navbar navbar-expand-lg p-0">
         <div class="container-fluid d-flex g-0 justify-content-center">
@@ -88,3 +64,4 @@
     </nav>
     {% endif %}
 </div>
+

@@ -9,7 +9,6 @@ import {Html5Qrcode} from "html5-qrcode"; //https://github.com/mebjas/html5-qrco
 
 //docs : https://scanapp.org/html5-qrcode-docs/docs/intro
 const html5QrCode = new Html5Qrcode(/* element id */ "reader");
-
 /*
     FUNCTIONS
 */
@@ -112,7 +111,7 @@ function displayResults(results, totalItems){
                 <p class="card-text fs-6 fw-medium"></p>
             </div>
             <div class="col-2 col-md-1 form-check">
-                <input class="form-check-input" type="radio" data-title="" data-author="" data-ref-url="" data-img-link="" name="bookSelectionRadio" id="">
+                <input class="border-dark-subtle form-check-input" type="radio" data-title="" data-author="" data-ref-url="" data-img-link="" name="bookSelectionRadio" id="">
             </div>
         </div>
     </div>
@@ -147,6 +146,7 @@ function displayResults(results, totalItems){
     }
     else {
         $("#searchBookResultsList").append(`Aucun résultat`)
+        $('#bookFormContainer').removeClass('d-none');
     }
 }
 
@@ -218,6 +218,7 @@ $("#searchBookForm").on('submit', function(e){
 
 //fill form when a book is slected in search results
 $('body').on('click', '.card-book', function(e){
+    let $selectedBookPreview = $(this).clone();
     var $input = $(this).find('input')
     $input.prop('checked', true)
     $('.card-book').removeClass('active');
@@ -228,9 +229,27 @@ $('body').on('click', '.card-book', function(e){
     $('input[name="item_book_form[property_2]"]').val($input.data('author'));
     $('input[name="item_book_form[property_3]"]').val($input.data('img-link'));
     $('input[name="item_book_form[property_4]"]').val($input.data('ref-url'));
-    $('#item_book_form_submitFromSearchBookResult').prop('disabled', false)
+    $('#item_book_form_submitFromSearchBookResult').prop('disabled', false);
+    $('#bookFormContainer').removeClass('d-none');
+    $selectedBookPreview.removeClass('card-book').addClass('mt-2')
+    $selectedBookPreview.find('div.form-check').remove();
+    $('#selectedResultInForm').append($selectedBookPreview);
+    $('#bookNotFoundFormHeader').addClass('d-none');
+    $('#bookFoundFormHeader').removeClass('d-none');
+    closeAccordionResult();
 })
 
+$('body').on('click', '#cantFindBook', function(e){
+    closeAccordionResult();
+    $('#selectedResultInForm').empty();
+    $('input[name="item_book_form[property_1]"]').val('');
+    $('input[name="item_book_form[property_2]"]').val('');
+    $('input[name="item_book_form[property_3]"]').val('');
+    $('input[name="item_book_form[property_4]"]').val('');
+    $('#bookFormContainer').removeClass('d-none');
+    $('#bookNotFoundFormHeader').removeClass('d-none');
+    $('#bookFoundFormHeader').addClass('d-none');
+})
 //reset masked properties if any manual property changeschange  any of manual property editable
 //item_book_form_property_1
 

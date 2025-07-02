@@ -103,6 +103,7 @@ class AppItemController extends AbstractController
             case 'bibliotheque':
                 $form = $this->createForm(ItemBookFormType::class, $item, [
                     'category' => $category,
+                    'preferedItemType' => $em->getRepository(ItemType::class)->findOneBy(['code' => 'book'])
                 ]);
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {

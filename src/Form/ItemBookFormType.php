@@ -35,6 +35,7 @@ class ItemBookFormType extends AbstractType
                         ->setParameter('val', $options['category'])
                         ->orderBy('it.label', 'ASC');
                 },
+                'data' => $options['preferedItemType'],
                 'label' => "Catégorie",
                 'required' => true,
                 'attr' => [
@@ -103,6 +104,7 @@ class ItemBookFormType extends AbstractType
             'data_class' => Item::class,
             'update_mode' => false,
             'category' => null,
+            'preferedItemType' => null,
         ]);
     }
 }

@@ -203,11 +203,10 @@ class AppCircleController extends AbstractController
             'items' => $items
         ]);
     }
-    #[Route('/app/boite/all', name: 'app_circle_show_all')]
+    #[Route('/app/boite/recherche', name: 'app_circle_search')]
     #[IsGranted('browseAll', null, 'Vous n\'avez pas le droit de consulter les boîtes. Avez-vous vérifié votre email et partagé 5 objets ?')]
-    public function showAll(Request $request, EntityManagerInterface $em): Response
+    public function browseAll(Request $request, EntityManagerInterface $em): Response
     {
-
         $user = $this->getUser();
         $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
         $searchTerms = $request->getPayload()->get('searchTerms');

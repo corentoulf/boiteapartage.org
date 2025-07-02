@@ -4,14 +4,14 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container min-vh-100">
     <div class="col-md-8 offset-md-2 p-2 p-lg-5">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
         <div class="align-items-center d-flex flex-row justify-content-between">
             <h1 class="fw-bold" id="title">{% if updateMode|default(false) %}Mettre à jour un livre{% else %}Ajouter à la <span class="text-highlight">bibliothèque</span></h1>
-            <button class="btn btn-sm btn-info ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#formInformation" aria-expanded="false" aria-controls="collapseExample" >
+            <button class="btn btn-sm btn-info ms-2 d-none" type="button" data-bs-toggle="collapse" data-bs-target="#formInformation" aria-expanded="false" aria-controls="collapseExample" >
                 <i class="bi bi-info-circle me-2"></i>Aide
             </button>
         </div>
@@ -32,71 +32,96 @@
                 </div>
             </div>
         </div>
-        <div class="d-lg-flex mt-5">
+        <div class="mt-3 d-lg-none ">Taper le nom du livre dans la barre de recherche ou 
+            <a href="#" id="openScanner" class="link-primary text-start text-md-center link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal">
+                Scanner son code barre<i class="bi bi-upc-scan ms-1"></i>
+            </a>
+        </div>
+        <div class="mt-3 d-none d-lg-block">Taper le nom du livre dans la barre de recherche ou <b>scanner son code barre</b>.</div>
+        <div class="d-lg-flex mt-3">
             <div class="col-12 col-md-8 pe-0 pe-md-2">
                 <div class="d-grid gap-2">
                     <form id="searchBookForm">
                         <div class="input-group">
-                            <input id="searchBookByTermsInput" class="form-control" type="text" placeholder="Rechercher par mot-clé" aria-label="input search">
+                            <input id="searchBookByTermsInput" class="form-control" type="text" placeholder="Taper le titre et/ou l'auteur" aria-label="input search">
                             <button class="btn btn-primary" type="submit"><i class="bi bi-search px-2"></i></button>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="col-12 col-md-4 mt-1 mt-md-0 ps-0 ps-md-2 d-flex align-items-center">
+            <div class="col-12 col-md-4 mt-2 mt-md-0 ps-0 ps-md-2 d-lg-flex align-items-center d-none ">
                 <!-- Button trigger modal -->
-                <div class="ps-1">Ou</div>
-                <a href="#" id="openScanner" class="link-dark text-start text-md-center ms-2 link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal">
-                    <i class="bi bi-upc-scan me-2 d-none"></i>Scanner le code barre
+                <a href="#" id="openScanner" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal">
+                    <i class="bi bi-upc-scan me-2"></i>Scanner le code barre
                 </a>
                 {# <button class="btn btn-primary" id="openScanner"><i class="bi bi-upc-scan me-2"></i>Scanner le code barre</button> #}
             </div>
             
         </div>
-        <div class="accordion d-none" id="searchBookResults">
-            <div class="accordion-item ">
-                <div class="accordion-header ">
-                    <button class="accordion-button px-3 py-2 " id="accordionHeaderBtn" type="button" data-bs-toggle="collapse" data-bs-target="#accordionBody" aria-expanded="true" aria-controls="accordionBody">
-                        Résultats
-                    </button>
-                </div>
-                <div id="accordionBody" class="accordion-collapse collapse show" data-bs-parent="#searchBookResults">
-                    <div class="accordion-body p-3">
-                        <ul class="list-group list-group-flush list-group-mobile overflow-y-auto"  id="searchBookResultsList">
-                            <li class="list-group-item px-0">
-                            </li>
-                        </ul>
+        <div id="searchBookResults" class="d-none">
+            <div class="fw-medium mt-4 fs-5">Sélectionner un résultat</div>
+            <div class="accordion mt-2" >
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button px-3 py-2 " id="accordionHeaderBtn" type="button" data-bs-toggle="collapse" data-bs-target="#accordionBody" aria-expanded="true" aria-controls="accordionBody">
+                            Résultat(s)
+                        </button>
+                    </div>
+                    <div id="accordionBody" class="accordion-collapse collapse show" data-bs-parent="#searchBookResults">
+                        <div class="accordion-body p-3">
+                            <ul class="list-group list-group-flush list-group-mobile overflow-y-auto"  id="searchBookResultsList">
+                                <li class="list-group-item px-0">
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="px-4 py-2 d-flex justify-content-end border-top">
+                            <a id="cantFindBook" href="#bookNotFoundFormHeader" class="link-info link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">Je ne trouve pas mon livre ?</a>
+                        </div>        
                     </div>
                 </div>
             </div>
         </div>
-        <div class="px-3"><hr class="my-4"></div>
-        {{ form_errors(form) }}
-        {{ form_start(form) }}
-        
-            {# {{ form_row(form.description, {
-                label: 'Description',
-                attr :{
-                    "autofocus":"true"
-                },
-                help: 'Ajoutez un maximum de précision sur l\'objet (max 255 caractères)'
-            }) }} #}
-            {{ form_row(form.itemType)}}
-            {{ form_row(form.property_1)}}
-            {{ form_row(form.property_2)}}
-            {{ form_row(form.property_3)}}
-            {{ form_row(form.property_4)}}
-            {{ form_row(form.property_5)}}
-            <div class="row ">
-                <div class="col d-flex justify-content-end">
-                    {{ form_row(form.submitAndAdd) }}
-                    <div class="ms-2">
-                        {{ form_row(form.submit) }}
-                    </div>
+        <div id="bookFormContainer" class="d-none">
+            <div class="px-3 d-none"><hr class="my-3"></div>
+            <div id="bookFoundFormHeader" class="d-none">
+                <div class="fw-medium fs-5 mt-3">Vérifier les informations</div>
+                <div id="selectedResultInForm" class="mt-2">
+                    <span class="">Votre sélection</span>
                 </div>
             </div>
-        {{ form_end(form) }}
-   
+            <div class="d-none mt-2" id="bookNotFoundFormHeader">
+                <div class="fw-medium fs-5 mt-3">Renseigner les informations manuellement</div>
+                <span class="fw-light">Veuillez compléter les informations sur le livre dans le formulaire ci-dessous.</span>
+            </div>
+                <div class="mt-2" id="bookForm">
+                    {{ form_errors(form) }}
+                    {{ form_start(form) }}
+                    
+                        {# {{ form_row(form.description, {
+                            label: 'Description',
+                            attr :{
+                                "autofocus":"true"
+                            },
+                            help: 'Ajoutez un maximum de précision sur l\'objet (max 255 caractères)'
+                        }) }} #}
+                        {{ form_row(form.itemType)}}
+                        {{ form_row(form.property_1)}}
+                        {{ form_row(form.property_2)}}
+                        {{ form_row(form.property_3)}}
+                        {{ form_row(form.property_4)}}
+                        {{ form_row(form.property_5)}}
+                        <div class="row ">
+                            <div class="col d-flex justify-content-end">
+                                {{ form_row(form.submitAndAdd) }}
+                                <div class="ms-2">
+                                    {{ form_row(form.submit) }}
+                                </div>
+                            </div>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
