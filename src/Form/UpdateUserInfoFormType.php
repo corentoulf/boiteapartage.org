@@ -29,10 +29,10 @@ class UpdateUserInfoFormType extends AbstractType
             ])
             ->add('phone', TextType::class, [
                 'label'=> 'Téléphone',
-                'help'=> 'Optionnel',
                 'required' => false
             ])
             ->add('email', EmailType::class, [
+                'label'=> 'Email *',
                 'required' => true
             ])
         ;

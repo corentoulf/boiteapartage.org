@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\UpdateUserInfoFormType;
 use App\Form\UpdateUserPasswordFormType;
+use App\Form\UpdateUserPreferenceFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -28,6 +29,7 @@ class AppUserProfileController extends AbstractController
             'controller_name' => 'AppUserProfileController',
         ]);
     }
+
     #[Route('/app/utilisateur/compte/mettre-a-jour', name: 'app_user_update_profile')]
     public function update_profile(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -67,11 +69,42 @@ class AppUserProfileController extends AbstractController
         ]);
     }
 
+    #[Route('/app/utilisateur/compte/preferences', name: 'app_user_update_preference')]
+    public function update_preference(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UpdateUserPreferenceFormType::class, $user, [
+            'userHasPhone' => $user->getPhone() !== null
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            #if the user unchecked both options --> error
+            $formData = $form->getData();
+            if(false === $formData->isAcceptPhoneContact() && false === $formData->isAcceptEmailContact()){
+                $this->addFlash('danger', 'Vous devez accepter au moins une méthode de contact.');
+                return $this->redirectToRoute('app_user_update_preference');
+            }
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Vos préférences ont bien été modifiées.');
+            return $this->redirectToRoute('app_user_profile');
+        }
+        
+        return $this->render('app_user_profile/update_preferences.html.twig', [
+            'controller_name' => 'AppUserProfileController',
+            'form' => $form
+        ]);
+    }
+
     #[Route('/app/utilisateur/compte/changer-mot-de-passe', name: 'app_user_update_password')]
     public function update_password(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
-        
+
         $form = $this->createForm(UpdateUserPasswordFormType::class, $user);
         $form->handleRequest($request);
 

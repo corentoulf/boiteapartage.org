@@ -73,6 +73,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $last_name = null;
 
+    #[ORM\Column(options: [
+        "default" => false
+    ])]
+    private ?bool $acceptPhoneContact = null;
+
+    #[ORM\Column(options: [
+        "default" => true
+    ])]
+    private ?bool $acceptEmailContact = null;
+
     public function __construct()
     {
         $this->ownedCircles = new ArrayCollection();
@@ -288,6 +298,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(?string $last_name): static
     {
         $this->last_name = $last_name;
+
+        return $this;
+    }
+
+    public function isAcceptPhoneContact(): ?bool
+    {
+        return $this->acceptPhoneContact;
+    }
+
+    public function setAcceptPhoneContact(bool $acceptPhoneContact): static
+    {
+        $this->acceptPhoneContact = $acceptPhoneContact;
+
+        return $this;
+    }
+
+    public function isAcceptEmailContact(): ?bool
+    {
+        return $this->acceptEmailContact;
+    }
+
+    public function setAcceptEmailContact(bool $acceptEmailContact): static
+    {
+        $this->acceptEmailContact = $acceptEmailContact;
 
         return $this;
     }

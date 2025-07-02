@@ -205,8 +205,14 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   transition: none !important;
 }
 
-.card-btn:hover{
+.card-btn-primary:hover{
   background-color: $primary;
+  color: $white;
+  // color: $white;
+}
+
+.card-btn-info:hover{
+  background-color: $info;
   color: $white;
   // color: $white;
 }

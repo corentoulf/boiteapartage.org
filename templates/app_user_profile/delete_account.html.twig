@@ -3,15 +3,11 @@
 {# {% block title %}Hello HomeController!{% endblock %} #}
 
 {% block body %}
-
 <div class="container min-vh-100">
     <div class="px-lg-5 col-md-8 offset-md-2">
-        <div class="container-fluid py-5">
-            <div class="d-flex align-items-center justify-content-between">
-                <h1 class="display-5 fw-bold">Supprimer mon compte</h1>
-            </div>
-            <p class="fw-bold">Supprimer son compte est une action irréversible.</p>
-            <p class="text-danger fs-5">Êtes-vous bien certain de vouloir supprimer votre compte et toutes les données rattachées ?</p>
+        <div class="container-fluid py-2 py-lg-4">
+            <h1 class="display-5 fw-bold">Supprimer mon compte</h1>
+            <p class="text-danger fs-5">Êtes-vous bien certain de vouloir supprimer votre compte et toutes les données rattachées ? Cette action est <u>irréversible</u>.</p>
             <div class="d-grid gap-2 col-8 offset-2 mt-4">
                 <a href="  {{ path('app_user_delete_account_confirm') }}" class="btn btn-danger">Oui, supprimer mon compte définitivement</a>
             </div>

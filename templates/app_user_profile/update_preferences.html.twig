@@ -1,0 +1,54 @@
+{% extends 'base_auth.html.twig' %}
+
+{# {% block title %}Hello HomeController!{% endblock %} #}
+
+{% block body %}
+
+
+<div class="container min-vh-100">
+    <div class="px-lg-5 col-md-8 offset-md-2">
+        <div class="container-fluid py-5">
+            <div class="d-flex align-items-center justify-content-between">
+                <h1 class="display-6 fw-bold">Mettre à jour les préférences</h1>
+            </div>
+            <div class="alert alert-info d-flex align-items-center ms-0 m-3" role="alert">
+                <i class="bi bi-info-circle"></i>
+                <div class="ms-3">
+                    Lorsque vous faites une demande à un utilisateur, c'est lui qui vous contactera selon vos préférences : par email ou par téléphone (sms ou appel).</br>Ainsi, les autres utilisateurs <b>ne voient jamais vos coordonnées</b> tant que vous ne leur avez pas demandé la disponibilité d'un objet.
+                </div>
+            </div>
+            <div class="row my-4">
+                {% for flash_error in app.flashes('verify_email_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+                {{ form_errors(form) }}
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="col">
+                            <div class="fs-4 fw-bold">Rappel de vos coordonnées</div>
+                            <div>Email :  <b>{{app.user.email}}</b></br>
+                            Téléphone : <b>{{app.user.phone ?? 'non communiqué'}}</b></div>
+                        </div>
+                    </div>
+                        <div class="px-4"><hr class="mb-4 mt-2"></div>
+                    
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(form.acceptEmailContact) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(form.acceptPhoneContact) }}
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
