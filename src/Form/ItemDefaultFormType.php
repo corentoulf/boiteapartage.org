@@ -24,7 +24,7 @@ class ItemDefaultFormType extends AbstractType
                 'query_builder' => function (EntityRepository $er) use($options): QueryBuilder {
                     return $er->createQueryBuilder('it')
                         ->andWhere('it.category = :val')
-                        ->setParameter('val', $options['category'])
+                        ->setParameter('val', $options['itemCategory'])
                         ->orderBy('it.label', 'ASC');
                 },
                 'label' => "Catégorie",
@@ -65,7 +65,7 @@ class ItemDefaultFormType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Item::class,
             'update_mode' => false,
-            'category' => null
+            'itemCategory' => null
         ]);
     }
 }

@@ -5,23 +5,23 @@
 {% block body %}
 
 {% set title = 'Ajouter au placard' %}
-{% if category.code == 'bricolage' %}
+{% if itemCategory.code == 'bricolage' %}
     {% set title %}
         Ajouter au rayon <span class="text-highlight">bricolage</span>
     {% endset %}
-{% elseif category.code == 'cuisine' %}
+{% elseif itemCategory.code == 'cuisine' %}
     {% set title %}
         Ajouter au rayon <span class="text-highlight">cuisine</span>
     {% endset %}
-{% elseif category.code == 'loisirs' %}
+{% elseif itemCategory.code == 'loisirs' %}
     {% set title %}
         Ajouter au rayon <span class="text-highlight">loisirs</span>
     {% endset %}
-{% elseif category.code == 'jardinage' %}
+{% elseif itemCategory.code == 'jardinage' %}
     {% set title %}
         Ajouter au rayon <span class="text-highlight">jardin</span>
     {% endset %}
-{% elseif category.code == 'appareils' %}
+{% elseif itemCategory.code == 'appareils' %}
     {% set title %}
         Ajouter un <span class="text-highlight">appareil</span>
     {% endset %}

@@ -20,6 +20,10 @@ return [
         'path' => './assets/js/searchItem.js',
         'entrypoint' => true,
     ],
+    'home' => [
+        'path' => './assets/js/home.js',
+        'entrypoint' => true,
+    ],
     'itemIndex' => [
         'path' => './assets/js/itemIndex.js',
         'entrypoint' => true,

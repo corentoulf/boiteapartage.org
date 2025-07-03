@@ -11,115 +11,54 @@
         {% endfor %}
         <div class="align-items-center d-flex flex-row justify-content-between">
             <h1 class="fw-bold" id="title">{% if updateMode|default(false) %}Mettre à jour un livre{% else %}Ajouter à la <span class="text-highlight">bibliothèque</span></h1>
-            <button class="btn btn-sm btn-info ms-2 d-none" type="button" data-bs-toggle="collapse" data-bs-target="#formInformation" aria-expanded="false" aria-controls="collapseExample" >
-                <i class="bi bi-info-circle me-2"></i>Aide
-            </button>
         </div>
         {% endif %}
-        {# message d'alerte sur le côté global d'un objet dispo dans tous les cercles #}
-        <div
-            class="alert alert-warning  d-none"
-            role="alert">
-            <div class="d-flex justify-content-start">
-                <span class="me-3"><i class="bi bi-info-circle"></i></span>
-                <span>Veuillez noter que par défaut, si vous avez rejoint plusieurs boîtes, <strong>tous les éléments</strong> de votre placard seront partagés dans <strong>toutes vos boîtes</strong>.</span>
+
+        {# step 1 : scan ou recherche #}
+        <div id="infoAndScanContainer">
+            <div class="mt-3">
+                Pour ajouter un livre en un clic, vous pouvez <b>scanner son code-barres</b>. Sinon, complétez le formulaire ci-dessous.
             </div>
-        </div>
-        <div class="position-relative">
-            <div class="collapse position-absolute z-3 col-12 col-md-8 end-0 position-absolute z-3 collapse mt-1 mt-md-0" id="formInformation">
-                <div class="alert alert-info">
-                    Faites une recherche par mot-clé du livre ou scannez son code barre.</br>Si vous ne trouvez pas sa référence à l'aide de la recherche, ajoutez-le à la main via le formulaire ci-dessous.
+            <div class="card card-btn-primary justify-content-center mt-3">
+                <div class="card-body">
+                    <h5 class="card-title text-center"><i class="bi bi-upc-scan fs-1"></i></h5>
+                    <p class="card-text text-center m-0">Scanner le code-barres</p>
+                    <a id="openScanner" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal" href="#" class="stretched-link"></a>
                 </div>
             </div>
-        </div>
-        <div class="mt-3 d-lg-none ">Taper le nom du livre dans la barre de recherche ou 
-            <a href="#" id="openScanner" class="link-primary text-start text-md-center link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal">
-                Scanner son code barre<i class="bi bi-upc-scan ms-1"></i>
-            </a>
-        </div>
-        <div class="mt-3 d-none d-lg-block">Taper le nom du livre dans la barre de recherche ou <b>scanner son code barre</b>.</div>
-        <div class="d-lg-flex mt-3">
-            <div class="col-12 col-md-8 pe-0 pe-md-2">
-                <div class="d-grid gap-2">
-                    <form id="searchBookForm">
-                        <div class="input-group">
-                            <input id="searchBookByTermsInput" class="form-control" type="text" placeholder="Taper le titre et/ou l'auteur" aria-label="input search">
-                            <button class="btn btn-primary" type="submit"><i class="bi bi-search px-2"></i></button>
-                        </div>
-                    </form>
-                </div>
+            <div class="row mt-2 justify-content-center align-items-center">
+                <div class="col"><hr></div>
+                    ou
+                <div class="col"><hr></div>
             </div>
-            <div class="col-12 col-md-4 mt-2 mt-md-0 ps-0 ps-md-2 d-lg-flex align-items-center d-none ">
-                <!-- Button trigger modal -->
-                <a href="#" id="openScanner" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal">
-                    <i class="bi bi-upc-scan me-2"></i>Scanner le code barre
-                </a>
-                {# <button class="btn btn-primary" id="openScanner"><i class="bi bi-upc-scan me-2"></i>Scanner le code barre</button> #}
-            </div>
-            
         </div>
-        <div id="searchBookResults" class="d-none">
-            <div class="fw-medium mt-4 fs-5">Sélectionner un résultat</div>
-            <div class="accordion mt-2" >
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 " id="accordionHeaderBtn" type="button" data-bs-toggle="collapse" data-bs-target="#accordionBody" aria-expanded="true" aria-controls="accordionBody">
-                            Résultat(s)
-                        </button>
-                    </div>
-                    <div id="accordionBody" class="accordion-collapse collapse show" data-bs-parent="#searchBookResults">
-                        <div class="accordion-body p-3">
-                            <ul class="list-group list-group-flush list-group-mobile overflow-y-auto"  id="searchBookResultsList">
-                                <li class="list-group-item px-0">
-                                </li>
-                            </ul>
+
+        {# step 2 : ajout manuel ou pré-remplissage depuis scan #}
+        <div id="bookFormContainer" class="">
+            <div class="mt-3">
+                <a id="restartCompleteForm" style="display:none;" href="#" data-bs-dismiss="modal" class="link-dark link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Recommencer</a>
+            </div>
+            <div id="bookFormTitle" class="fw-medium fs-5 mt-3">Ajouter un livre manuellement</div>
+            <div class="mt-2" id="bookForm">
+                {{ form_errors(form) }}
+                {{ form_start(form) }}
+                
+                {{ form_row(form.itemType)}}
+                {{ form_row(form.property_1)}}
+                {{ form_row(form.property_2)}}
+                {{ form_row(form.property_3)}}
+                {{ form_row(form.property_4)}}
+                {{ form_row(form.property_5)}}
+
+                <div class="row ">
+                    <div class="col d-flex justify-content-end">
+                        {{ form_row(form.submitAndAdd) }}
+                        <div class="ms-2">
+                            {{ form_row(form.submit) }}
                         </div>
-                        <div class="px-4 py-2 d-flex justify-content-end border-top">
-                            <a id="cantFindBook" href="#bookNotFoundFormHeader" class="link-info link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">Je ne trouve pas mon livre ?</a>
-                        </div>        
                     </div>
                 </div>
-            </div>
-        </div>
-        <div id="bookFormContainer" class="d-none">
-            <div class="px-3 d-none"><hr class="my-3"></div>
-            <div id="bookFoundFormHeader" class="d-none">
-                <div class="fw-medium fs-5 mt-3">Vérifier les informations</div>
-                <div id="selectedResultInForm" class="mt-2">
-                    <span class="">Votre sélection</span>
-                </div>
-            </div>
-            <div class="d-none mt-2" id="bookNotFoundFormHeader">
-                <div class="fw-medium fs-5 mt-3">Renseigner les informations manuellement</div>
-                <span class="fw-light">Veuillez compléter les informations sur le livre dans le formulaire ci-dessous.</span>
-            </div>
-                <div class="mt-2" id="bookForm">
-                    {{ form_errors(form) }}
-                    {{ form_start(form) }}
-                    
-                        {# {{ form_row(form.description, {
-                            label: 'Description',
-                            attr :{
-                                "autofocus":"true"
-                            },
-                            help: 'Ajoutez un maximum de précision sur l\'objet (max 255 caractères)'
-                        }) }} #}
-                        {{ form_row(form.itemType)}}
-                        {{ form_row(form.property_1)}}
-                        {{ form_row(form.property_2)}}
-                        {{ form_row(form.property_3)}}
-                        {{ form_row(form.property_4)}}
-                        {{ form_row(form.property_5)}}
-                        <div class="row ">
-                            <div class="col d-flex justify-content-end">
-                                {{ form_row(form.submitAndAdd) }}
-                                <div class="ms-2">
-                                    {{ form_row(form.submit) }}
-                                </div>
-                            </div>
-                        </div>
-                    {{ form_end(form) }}
-                </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
@@ -129,24 +68,29 @@
 
 <!-- Modal SCAN -->
 <div class="modal" id="barcodeScannerModal" tabindex="-1" aria-labelledby="barcodeScannerModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down">
+  <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="barcodeScannerModalLabel">Visez le code-barre du livre</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div id="reader" width="600px" height="600px"></div>
+        {# reader part for scaning #}
+        <div id="reader" width="600px" height="600px">
+        </div>
+        {# result found part #}
+        <div id="scanResultContainer" class="">
+        </div>
+        {# no result found #}
+        <div id="scanNoResultContainer">
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
       </div>
     </div>
   </div>
 </div>
-
-
-
 
 {% endblock %}
 {% block javascripts %}

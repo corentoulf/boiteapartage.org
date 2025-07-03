@@ -76,12 +76,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(options: [
         "default" => false
     ])]
-    private ?bool $acceptPhoneContact = null;
+    private ?bool $acceptPhoneContact = false;
 
     #[ORM\Column(options: [
         "default" => true
     ])]
-    private ?bool $acceptEmailContact = null;
+    private ?bool $acceptEmailContact = true;
 
     public function __construct()
     {

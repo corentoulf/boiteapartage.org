@@ -92,17 +92,17 @@ class AppItemController extends AbstractController
     }
 
     #[Route('/app/placard/ajout/{code}', name: 'app_item_create_by_category')]
-    public function createBookItem(Request $request, EntityManagerInterface $em, ItemCategory $category): Response
+    public function createBookItem(Request $request, EntityManagerInterface $em, ItemCategory $ic): Response
     {
         $item = new Item();
         $user = $this->getUser();
         $item->setOwner($user);
 
         //set form type according to item category
-        switch ($category->getCode()) {
+        switch ($ic->getCode()) {
             case 'bibliotheque':
                 $form = $this->createForm(ItemBookFormType::class, $item, [
-                    'category' => $category,
+                    'itemCategory' => $ic,
                     'preferedItemType' => $em->getRepository(ItemType::class)->findOneBy(['code' => 'book'])
                 ]);
                 $form->handleRequest($request);
@@ -131,9 +131,10 @@ class AppItemController extends AbstractController
                         //preset form with current item type
                         $previousItemType = $item->getItemType();
                         $item = new Item();
-                        $item->setItemType($previousItemType);
+                        // $item->setItemType($previousItemType);
                         $form = $this->createForm(ItemBookFormType::class, $item, [
-                            'category' => $category,
+                            'itemCategory' => $ic,
+                            'preferedItemType' => $previousItemType
                         ]);
                         //redirect to form
                         return $this->render('app_item/create/book.html.twig', [
@@ -154,7 +155,7 @@ class AppItemController extends AbstractController
             
             default:
                 $form = $this->createForm(ItemDefaultFormType::class, $item, [
-                    'category' => $category,
+                    'itemCategory' => $ic,
                 ]);
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
@@ -184,13 +185,14 @@ class AppItemController extends AbstractController
                         $item = new Item();
                         $item->setItemType($previousItemType);
                         $form = $this->createForm(ItemDefaultFormType::class, $item, [
-                            'category' => $category,
+                            'itemCategory' => $ic,
+                            'preferedItemType' => $previousItemType
                         ]);
                         //redirect to form
                         return $this->render('app_item/create/default.html.twig', [
                             'controller_name' => 'AppItemController',
                             'form' => $form,
-                            'category' => $category
+                            'itemCategory' => $ic
                         ]);
                     }
                     //user doesn't want to add another => redirect to items
@@ -201,7 +203,7 @@ class AppItemController extends AbstractController
                 return $this->render('app_item/create/default.html.twig', [
                     'controller_name' => 'AppItemController',
                     'form' => $form,
-                    'category' => $category
+                    'itemCategory' => $ic
                 ]);
                 break;
         }
