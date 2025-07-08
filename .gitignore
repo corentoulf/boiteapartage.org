@@ -5,6 +5,7 @@
 /.symfony.local.yaml
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
+/public/images/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###

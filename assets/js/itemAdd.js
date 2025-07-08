@@ -1,19 +1,18 @@
 import axios from 'axios';
 import _ from 'lodash';
 import { Modal } from 'bootstrap';
-import {Html5Qrcode} from "html5-qrcode"; //https://github.com/mebjas/html5-qrcode
+import { Html5Qrcode } from "html5-qrcode"; //https://github.com/mebjas/html5-qrcode
 
 /*
-    INIT
+    INITIALIZATION
 */
-
 //docs : https://scanapp.org/html5-qrcode-docs/docs/intro
 const html5QrCode = new Html5Qrcode(/* element id */ "reader");
 /*
     FUNCTIONS
 */
 
-function searchBookOnApi(mode, terms){
+function searchBookOnApi(mode, terms) {
     var totalItems;
     var results = [];
     // var endpoints = [];
@@ -23,18 +22,18 @@ function searchBookOnApi(mode, terms){
     //     'https://api.github.com/users/ejirocodes/followers',
     //     'https://api.github.com/users/ejirocodes/following'
     //   ];
-      
+
     //   axios.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
     //     (data) => console.log(data),
     //   );
     //filter false search
-    if(typeof(terms) !== undefined && terms !== "" && terms !== null){
+    if (typeof (terms) !== undefined && terms !== "" && terms !== null) {
         //detect ISBN regex terms.match(/\d{10}$|^\d{13}$/)
-        if(mode == 'isbn'){
-$            //search ISBN then terms
-            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=isbn:'+encodeURI(terms))
+        if (mode == 'isbn') {
+            $            //search ISBN then terms
+            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=isbn:' + encodeURI(terms))
                 .then(function (responseIsbn) {
-                    if(responseIsbn.data.totalItems > 0){
+                    if (responseIsbn.data.totalItems > 0) {
                         totalItems = responseIsbn.data.totalItems;
                         results = _.uniqBy(responseIsbn.data.items, 'id');
                     }
@@ -47,13 +46,13 @@ $            //search ISBN then terms
                 .finally(function () {
                     // always executed
                 });
-        } 
+        }
         else {
             //search terms only
-            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q='+encodeURI(terms))
+            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q=' + encodeURI(terms))
                 .then(function (responseTerms) {
                     // handle success
-                    if(responseTerms.data.totalItems > 0){
+                    if (responseTerms.data.totalItems > 0) {
                         totalItems = responseTerms.data.totalItems
                         results = _.uniqBy(responseTerms.data.items, 'id')
                     }
@@ -70,25 +69,28 @@ $            //search ISBN then terms
     }
 }
 
-function displayResults(mode, results, totalItems){
+function displayResults(mode, results, totalItems) {
     switch (mode) {
         case 'isbn':
-            if(results.length > 0){
+            if (results.length > 0) {
                 // $('#reader').addClass('d-none');
                 $('#scanResultContainer').show();
                 $('#scanNoResultContainer').hide();
                 let book = results[0]; //we consider only first result
                 let title = book.volumeInfo.title;
                 let author = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '';
-                let imgLink = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : encodeURI('https://placehold.co/70x100/transparent/FFFFF?text=Aucune\nimage\ndisponible&font=source-sans-pro')
+                let imgLink = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : encodeURI('https://placehold.co/70x100/C0C0C0/FFFFFF?text=Aucune\nimage\ndisponible&font=source-sans-pro')
+
                 let refLink = book.selfLink || null;
                 $('#scanResultContainer').empty();
                 let $bookResult = `
-                <a href="#" data-bs-dismiss="modal" class="link-dark link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Recommencer</a>
+                <a href="#" data-bs-dismiss="modal" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-left"></i>Recommencer</a>
                 <div class="row d-flex justify-content-center mt-3">
-                    <div class="col-8 col-sm-6 col-md-4 col-lg-2">
+                    <div class="col-12 col-md-8 col-lg-3">
                         <div class="card" style="">
-                            <img src="${imgLink}" class="card-img-top p-4" alt="book cover preview">
+                            <div style="height:300px">
+                                <img id="modalImgBookCover" src="${imgLink}" class="card-img-top p-4 mx-auto d-block" alt="book cover preview" data-cover-found="${book.volumeInfo.imageLinks ? true : false}" style="height:100%; width:auto"></img>
+                            </div>
                             <div class="card-body border-top">
                                 <h5 class="card-title">${title}</h5>
                                 <p class="card-text">${author}</p>
@@ -101,7 +103,7 @@ function displayResults(mode, results, totalItems){
                                         data-author="${author}" 
                                         data-img-link="${imgLink}"
                                         data-ref-url="${refLink}" 
-                                    >Sélectionner</a>
+                                    >Valider</a>
                                 </div>
                             </div>
                         </div>
@@ -112,8 +114,8 @@ function displayResults(mode, results, totalItems){
                 // $('#scanResult').empty().append(title+' de ' + author);
                 // $('#scanResultContainer').removeClass('d-none');
                 // $('#wrongScanResult').removeClass('d-none');
-            }  
-            else {
+
+            } else {
                 $('#scanResultContainer').hide();
                 $('#scanNoResultContainer').show();
                 $('#scanResultContainer').empty();
@@ -133,7 +135,7 @@ function displayResults(mode, results, totalItems){
                 $('#scanNoResultContainer').html($bookResult)
             }
             break;
-    
+
         default:
             $("#searchBookResults").removeClass('d-none')
             openAccordionResult();
@@ -163,8 +165,8 @@ function displayResults(mode, results, totalItems){
             //clear previous results
             clearResults();
             removeLoader();
-            if(results.length > 0){  
-                _.forEach(results, function(book) {
+            if (results.length > 0) {
+                _.forEach(results, function (book) {
                     let $card = $($resultCard).clone();
                     let title = book.volumeInfo.title;
                     let author = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '';
@@ -189,13 +191,13 @@ function displayResults(mode, results, totalItems){
     }
 }
 
-function clearResults(){
+function clearResults() {
     $("#searchBookResultsList").empty()
 }
-function displayLoader(){
+function displayLoader() {
     $("#searchBookResultsList").append('Recherche...')
 }
-function removeLoader(){
+function removeLoader() {
     $("#searchBookResultsList").empty()
 }
 
@@ -203,10 +205,9 @@ function removeLoader(){
 /*
     EVENTS DETECTION
 */
-
 //scan barcode when requested
 var barcodeScannerModal = Modal.getOrCreateInstance($('#barcodeScannerModal'));
-$("#barcodeScannerModal").on('shown.bs.modal', function(e){
+$("#barcodeScannerModal").on('shown.bs.modal', function (e) {
     //hide results and set title
     $('#barcodeScannerModalLabel').text("Visez le code-barres")
     $('#scanResultContainer').empty().hide()
@@ -220,43 +221,45 @@ $("#barcodeScannerModal").on('shown.bs.modal', function(e){
         if (devices && devices.length) {
             // var cameraId = devices[0].id;
             html5QrCode.start(
-            { facingMode: "environment" }, 
-            {
-                fps: 10,    // Optional, frame per seconds for qr code scanning
-                qrbox: { width: 250, height: 250 }  // Optional, if you want bounded box UI
-            },
-            (decodedText, decodedResult) => {
-                // do something when code is read
-                console.log(decodedText, decodedResult);
+                { facingMode: "environment" },
+                {
+                    fps: 10,    // Optional, frame per seconds for qr code scanning
+                    qrbox: { width: 250, height: 250 }  // Optional, if you want bounded box UI
+                },
+                (decodedText, decodedResult) => {
+                    // do something when code is read
+                    console.log(decodedText, decodedResult);
 
-                html5QrCode.stop().then((ignore) => {
-                    // QR Code scanning is stopped.
-                    // $("#searchBookByTermsInput").val(decodedText).trigger('submit') //set search to detected text
-                    searchBookOnApi('isbn', decodedText) //search scanned isbn 
-                    $('#barcodeScannerModalLabel').text("Résultats")
-                    // barcodeScannerModal.hide(); //close modal
-                }).catch((err) => {
-                // Stop failed, handle it.
+                    html5QrCode.stop().then((ignore) => {
+                        // QR Code scanning is stopped.
+                        // $("#searchBookByTermsInput").val(decodedText).trigger('submit') //set search to detected text
+                        searchBookOnApi('isbn', decodedText) //search scanned isbn 
+                        $('#barcodeScannerModalLabel').text("Résultats")
+                        // barcodeScannerModal.hide(); //close modal
+                    }).catch((err) => {
+                        // Stop failed, handle it.
+                    });
+                },
+                (errorMessage) => {
+                    // parse error, ignore it.
+                    // console.log(errorMessage)
+                })
+                .catch((err) => {
+                    // Start failed, handle it.
                 });
-            },
-            (errorMessage) => {
-                // parse error, ignore it.
-                // console.log(errorMessage)
-            })
-            .catch((err) => {
-            // Start failed, handle it.
-            });
         }
     }).catch(err => {
         // handle err
     });
 })
 //ensure camera stops when the modal is closed manually 
-$("#barcodeScannerModal").on('hidden.bs.modal', function(e){
-    html5QrCode.stop().then((ignore) => {}).catch((err) => {});
+$("#barcodeScannerModal").on('hidden.bs.modal', function (e) {
+    if(html5QrCode.getState() != '1')     html5QrCode.stop().then((ignore) => { }).catch((err) => { }); //useless as we stop it before searching results
 })
-$('body').on('click', '.select-book-from-scan', function(e){
+//found book is selected, populate form with value and close modal
+$('body').on('click', '.select-book-from-scan', function (e) {
     // e.preventDdefault();
+    resetFormValues()
     //set form inputs value from selected item in search results
     $('input[name="item_book_form[property_1]"]').val($(this).data('title'));
     $('input[name="item_book_form[property_2]"]').val($(this).data('author'));
@@ -268,77 +271,61 @@ $('body').on('click', '.select-book-from-scan', function(e){
     $('#infoAndScanContainer').hide()
     $('#restartCompleteForm').show();
     $('#bookFormTitle').text('Vérifiez les informations');
+    if($('#modalImgBookCover').attr('data-cover-found') == 'true'){
+        $('#imgBookCover').show();
+        $('#openFileInputBtn').hide();
+        $('#retakePhotoBtn').hide();
+        $('#imgBookCover').attr('src', $('#modalImgBookCover').attr('src'))
+    } else {
+        $('#imgBookCover').hide();
+        $('#openFileInputBtn').show();
+        $('#retakePhotoBtn').hide();
+        $('#imgBookCover').attr('src', '')
+    }
     barcodeScannerModal.hide();
 
 })
-// //search book on form submit
-// $("#searchBookForm").on('submit', function(e){
-//     e.preventDefault();
-//     searchBookOnApi($("#searchBookByTermsInput").val());
-//     resetSelectedBookFromResult();
-// })
 
-// //fill form when a book is slected in search results
-// $('body').on('click', '.card-book', function(e){
-//     let $selectedBookPreview = $(this).clone();
-//     var $input = $(this).find('input')
-//     $input.prop('checked', true)
-//     $('.card-book').removeClass('active');
-//     $(this).addClass('active');
-//     // closeAccordionResult()
-//     //set form inputs value from selected item in search results
-//     $('input[name="item_book_form[property_1]"]').val($input.data('title'));
-//     $('input[name="item_book_form[property_2]"]').val($input.data('author'));
-//     $('input[name="item_book_form[property_3]"]').val($input.data('img-link'));
-//     $('input[name="item_book_form[property_4]"]').val($input.data('ref-url'));
-//     $('#item_book_form_submitFromSearchBookResult').prop('disabled', false);
-//     //display selected result
-//     $selectedBookPreview.removeClass('card-book').addClass('mt-2')
-//     $selectedBookPreview.find('div.form-check').remove();
-//     $('#selectedResult').find('.card').remove();
-//     $('#selectedResult').append($selectedBookPreview);
-//     $('#selectedResult').removeClass('d-none');
-//     //d
-//     // $('#bookFormContainer').removeClass('d-none');
-//     closeAccordionResult();
-// })
 
-$('#restartCompleteForm').on('click', function(e){
-    e.preventDefault();
-    $('#infoAndScanContainer').show()
-    $('#restartCompleteForm').hide();
-    $('#bookFormTitle').text('Ajouter un livre manuellement');
+//reset Form
+function resetFormValues(){
     $('input[name="item_book_form[property_1]"]').val('');
     $('input[name="item_book_form[property_2]"]').val('');
     $('input[name="item_book_form[property_3]"]').val('');
     $('input[name="item_book_form[property_4]"]').val('');
+    $('input[name="item_book_form[property_5]"]').val('');
+    $('input[name="item_book_form[imageFile]"]').val('');
+}
+$('#restartCompleteForm').on('click', function (e) {
+    e.preventDefault();
+    $('#infoAndScanContainer').show()
+    $('#restartCompleteForm').hide();
+    $('#bookFormTitle').text('Ajouter un livre manuellement');
+    resetFormValues()
     //disable modification of inputs in form
     $('input[name="item_book_form[property_1]"]').prop("readonly", false);
     $('input[name="item_book_form[property_2]"]').prop("readonly", false);
+    $('#openFileInputBtn').show();
+    $('#imgBookCover').hide();
 })
-// $('body').on('click', '.cant-find-book-btn', function(e){
-//     $('#selectedResultInForm').empty();
-//     $('input[name="item_book_form[property_1]"]').val('');
-//     $('input[name="item_book_form[property_2]"]').val('');
-//     $('input[name="item_book_form[property_3]"]').val('');
-//     $('input[name="item_book_form[property_4]"]').val('');
-//     $('#bookFormContainer').removeClass('d-none');
-//     resetSelectedBookFromResult();
-//     closeAccordionResult();
-// })
-// //reset masked properties if any manual property changeschange  any of manual property editable
-// //item_book_form_property_1
 
-// function openAccordionResult(){
-//     $('#accordionHeaderBtn').removeClass('collapsed').attr('aria-expanded', true);
-//     $('#accordionBody').addClass('show')
-// }
-// function closeAccordionResult(){
-//     $('#accordionHeaderBtn').addClass('collapsed').attr('aria-expanded', false)
-//     $('#accordionBody').removeClass('show')
-// }
+//Capture cover of the book
+$('#openFileInputBtn').on('click', function(e){
+    e.preventDefault();
+    $('#item_book_form_imageFile').trigger('click');
+});
+$('#item_book_form_imageFile').on('change', function(e){
+    $('#imgBookCover').attr('src', URL.createObjectURL(this.files[0]))
+    $('#imgBookCover').show();
+    $('#openFileInputBtn').hide();
+    $('#retakePhotoBtn').show();
+})
 
-// function resetSelectedBookFromResult(){
-//     $('#selectedResult').find('div.card').remove();
-//     $('#selectedResult').addClass('d-none');
-// }
+$('#retakePhotoBtn').on('click', function(e){
+    e.preventDefault();
+    // $('#imgBookCover').attr('src', '')
+    // $('#imgBookCover').hide();
+    // $('#openFileInputBtn').show();
+    // $('#retakePhotoBtn').hide();
+    $('#item_book_form_imageFile').val(null).trigger('click');
+});

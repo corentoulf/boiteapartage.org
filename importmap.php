@@ -20,10 +20,6 @@ return [
         'path' => './assets/js/searchItem.js',
         'entrypoint' => true,
     ],
-    'home' => [
-        'path' => './assets/js/home.js',
-        'entrypoint' => true,
-    ],
     'itemIndex' => [
         'path' => './assets/js/itemIndex.js',
         'entrypoint' => true,
@@ -125,5 +121,14 @@ return [
     ],
     'html5-qrcode' => [
         'version' => '2.3.8',
+    ],
+    'filterizr' => [
+        'version' => '2.2.4',
+    ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
+    'jslib-html5-camera-photo' => [
+        'version' => '3.3.4',
     ],
 ];

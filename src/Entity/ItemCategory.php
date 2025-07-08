@@ -19,12 +19,6 @@ class ItemCategory
     private ?string $label = null;
 
     /**
-     * @var Collection<int, Item>
-     */
-    #[ORM\OneToMany(targetEntity: Item::class, mappedBy: 'category')]
-    private Collection $items;
-
-    /**
      * @var Collection<int, ItemType>
      */
     #[ORM\OneToMany(targetEntity: ItemType::class, mappedBy: 'category')]
@@ -58,36 +52,6 @@ class ItemCategory
     public function setLabel(string $label): static
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Item>
-     */
-    public function getItems(): Collection
-    {
-        return $this->items;
-    }
-
-    public function addItem(Item $item): static
-    {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-            $item->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeItem(Item $item): static
-    {
-        if ($this->items->removeElement($item)) {
-            // set the owning side to null (unless already changed)
-            if ($item->getCategory() === $this) {
-                $item->setCategory(null);
-            }
-        }
 
         return $this;
     }

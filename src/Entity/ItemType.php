@@ -38,7 +38,7 @@ class ItemType
 
     #[ORM\ManyToOne(inversedBy: 'itemTypes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?itemCategory $category = null;
+    private ?ItemCategory $category = null;
 
     /**
      * @var Collection<int, Item>

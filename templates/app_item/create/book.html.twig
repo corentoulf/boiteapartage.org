@@ -36,7 +36,7 @@
         {# step 2 : ajout manuel ou pré-remplissage depuis scan #}
         <div id="bookFormContainer" class="">
             <div class="mt-3">
-                <a id="restartCompleteForm" style="display:none;" href="#" data-bs-dismiss="modal" class="link-dark link-underline link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Recommencer</a>
+                <a id="restartCompleteForm" style="display:none;" href="#" data-bs-dismiss="modal" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-left"></i>Recommencer</a>
             </div>
             <div id="bookFormTitle" class="fw-medium fs-5 mt-3">Ajouter un livre manuellement</div>
             <div class="mt-2" id="bookForm">
@@ -48,9 +48,20 @@
                 {{ form_row(form.property_2)}}
                 {{ form_row(form.property_3)}}
                 {{ form_row(form.property_4)}}
-                {{ form_row(form.property_5)}}
-
-                <div class="row ">
+                {{ form_row(form.property_5)}}         
+                {{ form_row(form.imageFile)}}
+                <div id="imageCoverContainer" class="">
+                    <a href="#" id="openFileInputBtn" class="btn btn-dark"><i class="bi bi-camera-fill me-2"></i>Ajouter une photo</a>
+                    <div class="d-flex flex-column align-items-start mb-3">
+                        <div class="col-8 col-md-4">
+                            <img id="imgBookCover" class="img-fluid" style="display:none;"/>
+                        </div>
+                        <div id="retakePhotoBtn" class="mt-2" style="display:none;">
+                            <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
                     <div class="col d-flex justify-content-end">
                         {{ form_row(form.submitAndAdd) }}
                         <div class="ms-2">
@@ -84,9 +95,6 @@
         {# no result found #}
         <div id="scanNoResultContainer">
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
       </div>
     </div>
   </div>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Circle;
+use App\Entity\Item;
 use App\Entity\ItemCircle;
 use App\Entity\UserCircle;
 use App\Form\CircleFormType;
@@ -198,27 +199,34 @@ class AppCircleController extends AbstractController
         //fetch items that are in the $circle
         $items = $em->getRepository(ItemCircle::class)->findAllInArray(array($circle));
 
-        return $this->render('app_circle/show.html.twig', [
+        return $this->render('app_circle/browse.html.twig', [
             'controller_name' => 'AppCircleController',
             'items' => $items
         ]);
     }
-    #[Route('/app/boite/recherche', name: 'app_circle_search')]
+    #[Route('/app/recherche', name: 'app_circle_search')]
     #[IsGranted('browseAll', null, 'Vous n\'avez pas le droit de consulter les boîtes. Avez-vous vérifié votre email et partagé 5 objets ?')]
     public function browseAll(Request $request, EntityManagerInterface $em): Response
     {
-        $user = $this->getUser();
-        $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]);
         $searchTerms = $request->getPayload()->get('searchTerms');
+        //find all items that the user can pretend to
+        $user = $this->getUser();
+        $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]); //circles the user belongs to
         //get circles the user belongs to
         $circlesToFetch = array();
         foreach ($userCircles as $key => $userCircle) {
             array_push($circlesToFetch, $userCircle->getCircle()->getId());
         }
         //get all user circles items
-        $items = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch);
+        $itemCircles = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch);
+        $items = array();
+        foreach ($itemCircles as $key => $itemCircle) {
+            array_push($items, $itemCircle->getItem());
+        }
+        $items = array_unique($items);
+        // $items = $em->getRepository(ItemCircle::class)->findBy(['circle_id'], $circlesToFetch);
 
-        return $this->render('app_circle/show.html.twig', [
+        return $this->render('app_circle/browse.html.twig', [
             'controller_name' => 'AppCircleController',
             'items' => $items,
             "searchTerms" => $searchTerms

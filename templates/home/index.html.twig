@@ -11,13 +11,36 @@
   background-size: cover;
   background-position: center center;
   min-height: 50vh !important;
-  " class="container-fluid d-flex flex-column justify-content-end align-items-end">
-  <div class="card col-12 col-md-8 col-lg-4 m-2 p-2 m-sm-6 p-sm-4">
+  " class="container-fluid d-none d-sm-block">
+  <div class="container d-none d-sm-flex flex-column align-items-start justify-content-center" style="min-height: 50vh !important;">
+    <div class="card col-12 col-sm-8 col-md-6 col-lg-4  m-sm-6 p-2 p-sm-4">
+      <div class="card-body">
+        <div class="card-title fs-3 fw-medium">Envie de nouvelles lectures ?</div>
+        <div class="d-grid">
+          <a class="btn btn-primary mt-4" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Emprûnter un livre</span></a>
+          <a class="border-0 btn btn-outline-light mt-2 text-dark-emphasis" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Découvrir comment ça marche</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="
+  background: url({{asset('img/background-book.png')}}) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center center;
+  min-height: 30vh !important;
+  " class="container-fluid d-block d-sm-none">
+</div>
+<div class="container d-flex d-sm-none flex-column align-items-start justify-content-center" style="margin-top:-50px;">
+  <div class="card col col-sm-8 col-md-6 col-lg-4  m-1 m-sm-6 p-2 p-sm-4">
     <div class="card-body">
-      <div class="card-title fs-4 fw-medium">Envie de nouvelles lectures ?</div>
+      <div class="card-title fs-3 fw-medium">Envie de nouvelles lectures ?</div>
       <div class="d-grid">
         <a class="btn btn-primary mt-4" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Emprûnter un livre</span></a>
-        <a class="border-0 btn btn-outline-light mt-2 text-dark-emphasis" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Découvrir comment à marche</span></a>
+        <a class="border-0 btn btn-outline-light mt-2 text-dark-emphasis" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Découvrir comment ça marche</span></a>
       </div>
     </div>
   </div>
@@ -225,9 +248,4 @@
     </div>
   </div>
 </section>
-{% endblock %}
-{% block javascripts %}
-    {% block importmap %}
-     {{ importmap(['app', 'home']) }}
-    {% endblock %}
 {% endblock %}

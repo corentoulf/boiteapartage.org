@@ -6,11 +6,12 @@ use App\Entity\Item;
 use App\Entity\ItemType;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -82,6 +83,21 @@ class ItemBookFormType extends AbstractType
                 'label_attr' => [
                     'hidden' => true
                 ] 
+            ])
+            ->add('imageFile', FileType::class, [
+                'label' => "Photo de la 1ère de couverture",
+                'required' => false,
+                'attr' => [
+                    'hidden' => true,
+                    'capture' => "user",
+                    'accept' => "image/*"
+                ],
+                'label_attr' => [
+                    'hidden' => false,
+                ],
+                'row_attr' => [
+                    'class' => 'mb-0'
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $options['update_mode'] === true ? "Mettre à jour" : "Ajouter"

@@ -22,13 +22,13 @@ class ItemCircleRepository extends ServiceEntityRepository
     public function findAllInArray($value): array
     {
         return
-            $this->createQueryBuilder('ic')
-            ->select('i.id,  itype.label as typeLabel, i.property_1, i.property_2, i.property_3, i.property_4, i.property_5, o.email as owner')
-            ->leftJoin('ic.item', 'i', 'ON')
-            ->leftJoin('i.itemType', 'itype', 'ON')
-            ->leftJoin('i.owner', 'o', 'ON')
-            ->andWhere('ic.circle IN (:ids)')
-            ->addGroupBy('i.id, itype.label, o.email')
+            $this->createQueryBuilder('iCirc')
+            // , itype.code as item_type_code, itype.label as item_type_label, i.property_1, i.property_2, i.property_3, i.property_4, i.property_5, itypeCategory.label as category_label')
+            // ->leftJoin('iCirc.item', 'i', 'ON')
+            // ->leftJoin('i.itemType', 'itype', 'ON')
+            // ->leftJoin('itype.category', 'itypeCategory', 'ON')
+            ->andWhere('iCirc.circle IN (:ids)')
+            // ->addGroupBy('i.id, itype.code, itype.label, itypeCategory.label')
             ->setParameter('ids', $value)
             ->getQuery()
             // ->getSQL()
