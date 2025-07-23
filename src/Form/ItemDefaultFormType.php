@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,6 +45,21 @@ class ItemDefaultFormType extends AbstractType
                 'label' => "Description",
                 'help' => 'Soyez aussi précis que possible.',
                 'required' => true
+            ])
+            ->add('imageFile', FileType::class, [
+                'label' => "Photo de l'objet",
+                'required' => false,
+                'attr' => [
+                    'hidden' => true,
+                    'capture' => "user",
+                    'accept' => "image/*"
+                ],
+                'label_attr' => [
+                    'hidden' => false,
+                ],
+                'row_attr' => [
+                    'class' => 'mb-0'
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $options['update_mode'] === true ? "Mettre à jour" : "Ajouter"

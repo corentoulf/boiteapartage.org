@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Circle
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
     private ?int $id = null;
 

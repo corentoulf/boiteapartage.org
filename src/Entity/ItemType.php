@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ItemType
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -54,7 +54,7 @@ class ItemType
 
     public function __toString()
     {
-        return $this->label;
+        return $this->category->getLabel() . ' >  ' . $this->label;
     }
 
     public function getId(): ?int

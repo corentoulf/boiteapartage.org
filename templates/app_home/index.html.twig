@@ -7,11 +7,11 @@
 
 	<div class="container min-vh-100">
     <div class="container">
-      {# Search part #}
+      {# New user part #}
       <div class="px-lg-5">
         {% if userCircles|length > 0 %}
           {% if is_granted('browse', userCircles[0].circle) %}
-            <form id="homeSearchForm" method="POST" action="{{path('app_circle_search')}}">
+            <form class="d-none" id="homeSearchForm" method="POST" action="{{path('app_circle_search')}}">
               <div class="col-lg-8 offset-lg-2 input-group py-3 py-lg-5">
                   <input class="form-control" type="text" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="searchTerms">
                   <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
@@ -63,139 +63,90 @@
         </div>
         {% endif %}
       </div>
-      {# Inspiration part #}
-      <div class="py-4 py-lg-3 px-lg-5">
-        <div class="d-flex align-items-center justify-content-between">
-          <h1 class="display-5 fw-bold">Explorez un univers</h1>
+      {# CTA : Ajout au placard #}
+      <div class="d-flex flex-row justify-content-center mt-4 px-lg-5" style="">
+        <div class="card card-bg-img-pizza-roll col-12 m-sm-4 p-2">
+          <div class="card-body text-center">
+            <div class="card-title fs-3 fw-bold " >
+              C'est le moment de partager
+            </div>
+            <a class="btn btn-primary btn-lg mt-4" href="{{path('app_item_create')}}"><i class="bi bi-plus-square me-2"></i>Proposer un objet</span></a>
+          </div>
         </div>
-          <div class="mt-3">
-                <div class="row row-cols-2 row-cols-md-3 g-3 g-md-4">
-                    <div class="col">
-                        <div class="card card-btn-primary h-100 ">
-                            <div class="card-body text-center">
-                                <h5 class="card-title "><i class="bi bi-book fs-1"></i></h5>
-                                <p class="card-text fw-semibold fs-5">Bibliothèque</p>
-                                <span class="fw-light">Livres, magazines, BD</span>
-                                <a href="#" class="stretched-link"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-btn-primary h-100 ">
-                            <div class="card-body text-center">
-                                <h5 class="card-title "><i class="bi bi-dice-5 fs-1"></i></h5>
-                                <p class="card-text fw-semibold fs-5">Loisirs</p>
-                                <span class="fw-light">Jeux de société, jeux vidéos, musique, couture, dessin</span>
-                                <a href="#" class="stretched-link"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-btn-primary h-100 ">
-                            <div class="card-body text-center">
-                                <h5 class="card-title "><i class="bi bi-duffle fs-1"></i></h5>
-                                <p class="card-text fw-semibold fs-5">Appareils</p>
-                                <span class="fw-light">Électro-ménager</span>
-                                <a href="#" class="stretched-link"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-btn-primary h-100 ">
-                            <div class="card-body text-center">
-                                <h5 class="card-title "><i class="bi bi-cake fs-1"></i></h5>
-                                <p class="card-text fw-semibold fs-5">Cuisine</p>
-                                <span class="fw-light">Robots, pâtisserie, appareils de cuisson</span>
-                                <a href="#" class="stretched-link"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-btn-primary h-100 ">
-                            <div class="card-body text-center">
-                                <h5 class="card-title "><i class="bi bi-tools fs-1"></i></h5>
-                                <p class="card-text fw-semibold fs-5">Bricolage</p>
-                                <span class="fw-light">Outils, matériel électroportatifs</span>
-                                <a href="#" class="stretched-link"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-btn-primary h-100 ">
-                            <div class="card-body text-center">
-                                <h5 class="card-title "><i class="bi bi-flower1 fs-1"></i></h5>
-                                <p class="card-text fw-semibold fs-5">Jardinage</p>
-                                <span class="fw-light">Outils, matériel électroportatifs</span>
-                                <a href="#" class="stretched-link"></a>
-                            </div>
-                        </div>
+      </div>
+      {# Inspiration part #}
+      <div class="py-4 py-lg-3 px-lg-6 mt-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <h1 class="display-5 fw-bold">Explorer</h1>
+        </div>
+        <div class="mt-3">
+          <div class="row row-cols-2 row-cols-md-3 g-3 g-md-4">
+            <div class="col">
+                <div class="card card-btn-primary h-100 card-btn-bibliotheque text-light">
+                    <div class="card-body justify-content-center align-items-center d-flex flex-column py-4 py-md-5">
+                        <h5 class="card-title d-none"><i class="bi bi-book fs-1"></i></h5>
+                        <p class="card-text fw-semibold fs-5 mb-0 mb-md-3 ">Bibliothèque</p>
+                        <span class="fw-light d-none d-md-block text-center">Livres, magazines, BD</span>
+                        <a href="#" class="stretched-link"></a>
                     </div>
                 </div>
             </div>
-          <div class="col-12 d-none">
-            <div class="px-lg-5 pt-5">
-              <h1 class="fs-3 fw-bold mb-3">Explorer un univers</h1>
-              <div class="row gx-6 d-flex justify-content-between">
-                <div class="col-4 mb-2 mb-lg-4">
-                  <div class="card card-btn-primary">
-                    <div class="card-body py-4">
-                      <h5 class="card-title text-center"><i class="bi bi-book fs-1"></i></h5>
-                      <p class="card-text text-center m-0">Boîte à livre</p>
-                      <a href="#" class="stretched-link"></a>
+            <div class="col">
+                <div class="card card-btn-primary h-100 card-btn-loisirs text-light">
+                    <div class="card-body justify-content-center align-items-center d-flex flex-column py-4 py-md-5">
+                        <h5 class="card-title d-none"><i class="bi bi-dice-5 fs-1"></i></h5>
+                        <p class="card-text fw-semibold fs-5 mb-0 mb-md-3">Loisirs</p>
+                        <span class="fw-light d-none d-md-block text-center">Jeux de société, musique, couture</span>
+                        <a href="#" class="stretched-link"></a>
                     </div>
-                  </div>
                 </div>
-                <div class="col-4 mb-2 mb-lg-4">
-                  <div class="card card-btn-primary">
-                    <div class="card-body py-4">
-                      <h5 class="card-title text-center"><i class="bi bi-controller fs-1"></i></h5>
-                      <p class="card-text text-center m-0">Loisirs et jeux de société</p>
-                      <a href="#" class="stretched-link"></a>
+            </div>
+            <div class="col">
+                <div class="card card-btn-primary h-100 card-btn-appareil text-light">
+                    <div class="card-body justify-content-center align-items-center d-flex flex-column py-4 py-md-5">
+                        <h5 class="card-title d-none"><i class="bi bi-align-top fs-1"></i></h5>
+                        <p class="card-text fw-semibold fs-5 mb-0 mb-md-3">Appareils</p>
+                        <span class="fw-light d-none d-md-block text-center">Électro-ménager</span>
+                        <a href="#" class="stretched-link"></a>
                     </div>
-                  </div>
                 </div>
-                <div class="col-4 mb-2 mb-lg-4">
-                  <div class="card card-btn-primary">
-                    <div class="card-body py-4">
-                      <h5 class="card-title text-center"><i class="bi bi-duffle fs-1"></i></h5>
-                      <p class="card-text text-center m-0">Appareils</p>
-                      <a href="#" class="stretched-link"></a>
+            </div>
+            <div class="col">
+                <div class="card card-btn-primary h-100 card-btn-cuisine text-light">
+                    <div class="card-body justify-content-center align-items-center d-flex flex-column py-4 py-md-5">
+                        <h5 class="card-title d-none"><i class="bi bi-cake fs-1"></i></h5>
+                        <p class="card-text fw-semibold fs-5 mb-0 mb-md-3">Cuisine</p>
+                        <span class="fw-light d-none d-md-block text-center">Robots, pâtisserie, appareils de cuisson</span>
+                        <a href="#" class="stretched-link"></a>
                     </div>
-                  </div>
                 </div>
-                <div class="col-4 mb-2 mb-lg-4">
-                  <div class="card card-btn-primary">
-                    <div class="card-body py-4">
-                      <h5 class="card-title text-center"><i class="bi bi-cake fs-1"></i></h5>
-                      <p class="card-text text-center m-0">Cuisine</p>
-                      <a href="#" class="stretched-link"></a>
+            </div>
+            <div class="col">
+                <div class="card card-btn-primary h-100 card-btn-bricolage text-light">
+                    <div class="card-body justify-content-center align-items-center d-flex flex-column py-4 py-md-5">
+                        <h5 class="card-title d-none"><i class="bi bi-tools fs-1"></i></h5>
+                        <p class="card-text fw-semibold fs-5 mb-0 mb-md-3">Bricolage</p>
+                        <span class="fw-light d-none d-md-block text-center">Outils, matériel électroportatifs</span>
+                        <a href="#" class="stretched-link"></a>
                     </div>
-                  </div>
                 </div>
-                <div class="col-4 mb-2 mb-lg-4">
-                  <div class="card card-btn-primary">
-                    <div class="card-body py-4">
-                      <h5 class="card-title text-center"><i class="bi bi-tools fs-1"></i></h5>
-                      <p class="card-text text-center m-0">Bricolage</p>
-                      <a href="#" class="stretched-link"></a>
+            </div>
+            <div class="col">
+                <div class="card card-btn-primary h-100 card-btn-jardinage text-light">
+                    <div class="card-body justify-content-center align-items-center d-flex flex-column py-4 py-md-5">
+                        <h5 class="card-title d-none"><i class="bi bi-flower1 fs-1"></i></h5>
+                        <p class="card-text fw-semibold fs-5 mb-0 mb-md-3">Jardinage</p>
+                        <span class="fw-light d-none d-md-block text-center">Outils, matériel électroportatifs</span>
+                        <a href="#" class="stretched-link"></a>
                     </div>
-                  </div>
                 </div>
-                <div class="col-4 mb-2 mb-lg-4">
-                  <div class="card card-btn-primary">
-                    <div class="card-body py-4">
-                      <h5 class="card-title text-center"><i class="bi bi-flower1 fs-1"></i></h5>
-                      <p class="card-text text-center m-0">Jardinage</p>
-                      <a href="#" class="stretched-link"></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
+        </div>
+
           {# Circles part #}
           <div class="col-12 col-lg-6 pt-5 d-none">
-            <div class="px-lg-5">
+            <div class="px-lg-6">
               <h1 class="fs-3 fw-bold mb-3">Vos Boîtes</h1>
               {{ include('app_circle/circle_list_component.html.twig') }}
               <div class="mt-3 ms-1 ms-lg-4">
@@ -208,7 +159,7 @@
           </div>
           {# Object part #}
           <div class="col-12 col-lg-6 py-5 d-none">
-            <div class="px-lg-5">
+            <div class="px-lg-6">
               <h1 class="fs-3 fw-bold mb-3">Votre Placard</h1>
               
               <div class="p-2">

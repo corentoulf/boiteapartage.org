@@ -137,19 +137,50 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 // }
 
 //custom btn
-// .btn-highlight {
-//   // --bs-btn-font-weight: 600;
-//   // --bs-btn-color: var(--bs-white);
-//   --bs-btn-bg: var(--bs-highlight);
-//   --bs-btn-border-color: var(--bs-blue);
-//   // --bs-btn-hover-color: var(--bs-white);
-//   // --bs-btn-hover-bg: #{shade-color($bd-violet, 10%)};
-//   // --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
-//   // --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-//   // --bs-btn-active-color: var(--bs-btn-hover-color);
-//   // --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
-//   // --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
-// }
+.btn-outline-highlight-subtle {
+  border:0;
+  // --bs-btn-font-weight: 500;
+  --bs-btn-color: var(--bs-dark-text-emphasis);
+  --bs-btn-bg: none;//var(--bs-highlight);
+  // --bs-btn-border-color: var(--bs-blue);
+  --bs-btn-hover-color: var(--bs-dark-text-emphasis);
+  --bs-btn-hover-bg: #{lighten($highlight, 17%)};
+  // --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+  // --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  // --bs-btn-active-color: var(--bs-btn-hover-color);
+  // --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+  // --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+}
+
+.btn-secondary-subtle {
+  border:0;
+  // --bs-btn-font-weight: 500;
+  // --bs-btn-color: var(--bs-dark-text-emphasis);
+  --bs-btn-bg: var(--bs-primary-bg-subtle);
+  // --bs-btn-border-color: var(--bs-blue);
+  --bs-btn-hover-color: var(--bs-light);
+  --bs-btn-hover-bg: #{lighten($primary, 20%)};
+  // --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+  // --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  // --bs-btn-active-color: var(--bs-btn-hover-color);
+  // --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+  // --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+}
+
+.btn-danger-subtle {
+  border:0;
+  // --bs-btn-font-weight: 500;
+  // --bs-btn-color: var(--bs-dark-text-emphasis);
+  --bs-btn-bg: var(--bs-danger-bg-subtle);
+  // --bs-btn-border-color: var(--bs-blue);
+  --bs-btn-hover-color: var(--bs-light);
+  --bs-btn-hover-bg: #{lighten($danger, 10%)};
+  // --bs-btn-hover-border-color: #{shade-color($bd-violet, 10%)};
+  // --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  // --bs-btn-active-color: var(--bs-btn-hover-color);
+  // --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+  // --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+}
 
 // .btn-tertiary {
 //   --bs-btn-font-weight: 600;
@@ -171,6 +202,34 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 
 @import "./timeline";
+
+
+//border breakpoints
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .border#{$infix}-top {      border-top: $border-width solid $border-color !important; }
+    .border#{$infix}-right {    border-right: $border-width solid $border-color !important; }
+    .border#{$infix}-bottom {   border-bottom: $border-width solid $border-color !important; }
+    .border#{$infix}-left {     border-left: $border-width solid $border-color !important; }
+
+    .border#{$infix}-top-0 {    border-top: 0 !important; }
+    .border#{$infix}-right-0 {  border-right: 0 !important; }
+    .border#{$infix}-bottom-0 { border-bottom: 0 !important; }
+    .border#{$infix}-left-0 {   border-left: 0 !important; }
+
+    .border#{$infix}-x {
+      border-left: $border-width solid $border-color !important;
+      border-right: $border-width solid $border-color !important;
+    }
+
+    .border#{$infix}-y {
+      border-top: $border-width solid $border-color !important;
+      border-bottom: $border-width solid $border-color !important;
+    }
+  }
+}
 
 // .ct-underline-highlight-warning {
 //   box-shadow:  0rem .5rem 0 0rem $warning;
@@ -230,4 +289,126 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 .card-more-info:not(.collapsed) {
   transform: rotate(-180deg);
+}
+
+.card-bg-img-pizza-roll{
+  border: 0;
+  background: url('../img/fond-pizza-rolls-empty.svg');
+  background-repeat: no-repeat;
+  background-position: -40px 50px; 
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  // background-color:rgb(247, 246, 255);
+  background-color: #ff929229
+}
+
+.card-btn-bibliotheque{
+  border: 0;
+  background:
+    /* top, transparent black, faked with gradient */ 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5)
+    ),
+    /* bottom, image */
+    url('../img/fond-livre.jpg');
+  background-repeat: no-repeat;
+  // background-position: -40px 50px; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  // background-color:rgb(247, 246, 255);
+  // background-color: #ff929229
+}
+
+
+.card-btn-loisirs{
+  border: 0;
+  background:
+    /* top, transparent black, faked with gradient */ 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5)
+    ),
+    /* bottom, image */
+    url('../img/fond-puzzle.jpg');
+  background-repeat: no-repeat;
+  // background-position: -40px 50px; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  // background-color:rgb(247, 246, 255);
+  // background-color: #ff929229
+}
+
+.card-btn-appareil{
+  border: 0;
+  background:
+    /* top, transparent black, faked with gradient */ 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5)
+    ),
+    /* bottom, image */
+    url('../img/fond-nettoyeur-vapeur.jpg');
+  background-repeat: no-repeat;
+  // background-position: -40px 50px; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  // background-color:rgb(247, 246, 255);
+  // background-color: #ff929229
+}
+
+.card-btn-cuisine{
+  border: 0;
+  background:
+    /* top, transparent black, faked with gradient */ 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5)
+    ),
+    /* bottom, image */
+    url('../img/fond-cuisine.jpg');
+  background-repeat: no-repeat;
+  // background-position: -40px 50px; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  // background-color:rgb(247, 246, 255);
+  // background-color: #ff929229
+}
+
+.card-btn-bricolage{
+  border: 0;
+  background:
+    /* top, transparent black, faked with gradient */ 
+    linear-gradient(
+      rgba(0, 0, 0, 0.4)
+    ),
+    /* bottom, image */
+    url('../img/fond-bricolage.jpg');
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.card-btn-jardinage{
+  border: 0;
+  background:
+    /* top, transparent black, faked with gradient */ 
+    linear-gradient(
+      rgba(0, 0, 0, 0.4)
+    ),
+    /* bottom, image */
+    url('../img/fond-jardinage.jpg');
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }

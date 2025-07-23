@@ -24,8 +24,12 @@ return [
         'path' => './assets/js/itemIndex.js',
         'entrypoint' => true,
     ],
-    'itemAdd' => [
-        'path' => './assets/js/itemAdd.js',
+    'itemAddBook' => [
+        'path' => './assets/js/itemAddBook.js',
+        'entrypoint' => true,
+    ],
+    'itemAddDefault' => [
+        'path' => './assets/js/itemAddDefault.js',
         'entrypoint' => true,
     ],
     'shareCircle' => [
@@ -130,5 +134,11 @@ return [
     ],
     'jslib-html5-camera-photo' => [
         'version' => '3.3.4',
+    ],
+    'list.js' => [
+        'version' => '2.3.1',
+    ],
+    'string-natural-compare' => [
+        'version' => '2.0.3',
     ],
 ];

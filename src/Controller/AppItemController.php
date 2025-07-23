@@ -24,9 +24,11 @@ class AppItemController extends AbstractController
     {
         $user = $this->getUser();
         $userItems = $em->getRepository(Item::class)->findBy(['owner' => $user->getId()]);
+        $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
         return $this->render('app_item/index.html.twig', [
             'controller_name' => 'AppObjectController',
-            'userItems' => $userItems
+            'userItems' => $userItems,
+            'itemCategories' => $itemCategories
         ]);
     }
 
@@ -186,7 +188,7 @@ class AppItemController extends AbstractController
                         $item->setItemType($previousItemType);
                         $form = $this->createForm(ItemDefaultFormType::class, $item, [
                             'itemCategory' => $ic,
-                            'preferedItemType' => $previousItemType
+                            // 'preferedItemType' => $previousItemType
                         ]);
                         //redirect to form
                         return $this->render('app_item/create/default.html.twig', [

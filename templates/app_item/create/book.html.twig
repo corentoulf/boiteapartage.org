@@ -5,12 +5,12 @@
 {% block body %}
 
 <div class="container min-vh-100">
-    <div class="col-md-8 offset-md-2 p-2 p-lg-5">
+    <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
         <div class="align-items-center d-flex flex-row justify-content-between">
-            <h1 class="fw-bold" id="title">{% if updateMode|default(false) %}Mettre à jour un livre{% else %}Ajouter à la <span class="text-highlight">bibliothèque</span></h1>
+            <h1 class="fw-bold fs-3" id="title">{% if updateMode|default(false) %}Mettre à jour un livre{% else %}Ajouter à la <span class="text-highlight">bibliothèque</span></h1>
         </div>
         {% endif %}
 
@@ -60,6 +60,7 @@
                             <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
                         </div>
                     </div>
+                    <div class="form-text mb-0 help-text">Conseil : posez le livre sur une table pour prendre la couverture dans son intégralité.</div>
                 </div>
                 <div class="row mt-5">
                     <div class="col d-flex justify-content-end">
@@ -103,6 +104,6 @@
 {% endblock %}
 {% block javascripts %}
     {% block importmap %}
-     {{ importmap(['app', 'itemAdd']) }}
+     {{ importmap(['app', 'itemAddBook']) }}
     {% endblock %}
 {% endblock %}

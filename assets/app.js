@@ -34,7 +34,6 @@ bootstrapPopovers.forEach(function(el){
 
     if(popoverId){
         const contentEl=$(`#${popoverId.value}`).html();
-        console.log(contentEl)
         new Popover(el,{
             content: contentEl,
             html: true

@@ -1,67 +1,95 @@
-<div class="container">
-    <nav class="navbar navbar-expand py-2 py-lg-4 justify-content-center">
-        <div class="container d-flex justify-content-between align-items-center">
-            {# brand #}
-            <a class="navbar-brand d-flex align-items-center" href="{{path('app_auth_home')}}">
-                <img src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="40" height="40">
-                <span class="navbar-brand d-none d-sm-block fs-4 fw-bold ms-2">Boîte à Partage</span>
-            </a>
-            {# <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button> #}
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                {# <form class="d-none ms-auto my-3 my-lg-0 me-lg-4 d-md-flex" role="search" aria-label="search" id="homeSearchForm" method="POST" action="{{path('app_circle_show_all')}}">
-                    <div class="input-group">
-                        <input class="form-control" type="text" style="min-width: 300px;" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="searchTerms">
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+<nav class="navbar navbar-expand-lg justify-content-between border-lg-bottom py-1">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="{{path('app_auth_home')}}">
+            <img class="" src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="35" height="35">
+            <span class="navbar-brand fw-bold ms-0 ms-2">Boîte à Partage</span>
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenuAuth">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item mt-2 mt-lg-0 ">
+                    <a class="btn btn-primary" href="{{ path('app_item_create') }}"><i class="bi bi-plus-square me-2 fw-bold"></i>Proposer un objet</a>
+                </li>
+                <li class="nav-item mt-2 mt-lg-0 ">
+                    <form class="mx-3 d-none d-lg-flex" role="search" aria-label="search" id="homeSearchForm" method="POST" action="{{path('app_circle_search')}}">
+                        <div class="input-group">
+                            <input class="form-control" type="text" style="" placeholder="Recherche " aria-label="input search" id="searchTermsInput" name="searchTerms">
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
+                    
+                </li>
+                <li class="nav-item mt-2 mt-lg-0 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
+                        <span class=""><i class="bi bi-archive fs-5"></i></span>
+                        <a class="small stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
+                            Boîtes
+                        </a>
                     </div>
-                </form> #}
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                    <li class="nav-item mt-2 mt-lg-0 ">
-                        <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
-                            <span class=""><i class="bi bi-search fs-5"></i></span>
-                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle_search') }}">
-                                Rechercher
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item mt-2 mt-lg-0 d-none">
-                        <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
-                            <span class=""><i class="bi bi-archive fs-5"></i></span>
-                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
-                                Boîtes
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item mt-2 mt-lg-0 d-none">
-                        <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
-                            <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
-                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
-                                Placard
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item mt-2 mt-lg-0 ">
-                        <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
-                            <span class=""><i class="bi bi-person-circle fs-5"></i></span>
-                            <a class="stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
-                                Compte
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                </li>
+                <li class="nav-item mt-2 mt-lg-0">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
+                        <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
+                        <a class="small stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
+                            Placard
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item mt-2 mt-lg-0 ">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
+                        <span class=""><i class="bi bi-person-circle fs-5"></i></span>
+                        <a class="small stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
+                            Compte
+                        </a>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </nav>
-    {% if app.user.isVerified != true %}
-    <nav class="bg-warning-light navbar navbar-expand-lg p-0">
-        <div class="container-fluid d-flex g-0 justify-content-center">
-            <div class="alert alert-warning rounded-0 w-100 border-0">
-                <p class="mb-0 ">Vous n'avez pas encore <b>confirmé votre email</b>. </br>
-                Merci de confirmer la création de votre compte en cliquant sur le lien reçu dans l'email. Sans cela, vous ne pourrez pas consulter les boîtes.</p>
-            </div>
+    </div>
+</nav>
+<nav class="navbar pt-1 pb-3 border-bottom d-flex justify-content-center d-lg-none">
+    <div class="container">
+        <div class="w-100">
+            <form class="mx-2" role="search" aria-label="search" id="homeSearchForm" method="POST" action="{{path('app_circle_search')}}">
+                <div class="input-group">
+                    <input class="form-control" type="text" style="" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="searchTerms">
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
         </div>
-    </nav>
-    {% endif %}
-</div>
+    </div>
+</nav>
 
+<!-- Modal -->
+<div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                <a class="navbar-brand d-flex align-items-center " href="{{path('app_auth_home')}}">
+                    <img class="" src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="35" height="35">
+                    <span class="navbar-brand fw-bold ms-0 ms-2">Boîte à Partage</span>
+                </a>
+            </h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-grid gap-2 ">
+            <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_item_create') }}"><i class="bi bi-plus-circle me-2"></i>Proposer un objet</a>
+        </div>
+        <div class="d-grid gap-2 ">
+            <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle_join') }}"><i class="bi bi-arrow-right-square me-2"></i>Rejoindre une boîte</a>
+        </div>
+        <div class="d-grid gap-2 ">
+            <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle_create') }}"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
+        </div>
+      </div>
+      <div class="modal-footer d-none">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
