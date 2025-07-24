@@ -51,7 +51,6 @@ class ItemDefaultFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'hidden' => true,
-                    'capture' => "user",
                     'accept' => "image/*"
                 ],
                 'label_attr' => [

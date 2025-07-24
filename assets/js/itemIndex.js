@@ -42,15 +42,40 @@ var options = {
 };
 
 var itemList = new List('items', options);
-console.log(itemList)
 $('#filterItemsInput').on('keyup', function() {
     var searchString = $(this).val();
-    itemList.search(searchString);
-    console.log(itemList)
-
-
+    var searchCategory = $('#filterItemsCategorySelect').val();
+    if(searchCategory !== '' && searchString !== ''){
+        $('#filterItemsGlobalInput').val(searchCategory + ' ' + searchString).trigger('change')
+    }
+    else if(searchCategory == ''){
+        $('#filterItemsGlobalInput').val(searchString).trigger('change')
+    }
+    if(searchString == ''){
+        $('#filterItemsGlobalInput').val(searchCategory).trigger('change')
+    }
 });
 $('#filterItemsCategorySelect').on('change', function() {
+    var searchCategory = $(this).val();
+    var searchString = $('#filterItemsInput').val();
+    if(searchCategory !== '' && searchString !== ''){
+        $('#filterItemsGlobalInput').val(searchCategory + ' ' + searchString).trigger('change')
+    }
+    else if(searchCategory == ''){
+        $('#filterItemsGlobalInput').val(searchString).trigger('change')
+    }
+    if(searchString == ''){
+        $('#filterItemsGlobalInput').val(searchCategory).trigger('change')
+    }
+});
+
+
+$('#filterItemsGlobalInput').on('change', function() {
     var searchString = $(this).val();
+    console.log('searchoing' + typeof(searchString))
     itemList.search(searchString);
 });
+
+$('ul.list').on('change', function(e){
+    console.log(this)
+})

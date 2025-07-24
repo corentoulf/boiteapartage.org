@@ -14,7 +14,7 @@
             <div class="card card-bg-img-pizza-roll col-12 m-sm-4 p-2">
             <div class="card-body text-center">
                 <div class="card-title fs-5 fw-bold " >
-                    On en rajoute ?
+                    Que propose-t-on aujourd'hui ?
                 </div>
                 <a class="btn btn-primary mt-4" href="{{path('app_item_create')}}"><i class="bi bi-plus-square me-2"></i>Ajouter un nouvel objet</span></a>
             </div>
@@ -28,17 +28,18 @@
         {% if userItems|length > 0 %}
             <div class="row">
                 <div class="input-group col-md-8">
-                    <input id="filterItemsInput" type="search" class="form-control" type="text" placeholder="Rechercher dans le placard" aria-label="input search" id="searchTermsInput" name="searchTerms">
+                    <input id="filterItemsInput" class="form-control" type="text" placeholder="Rechercher dans le placard" aria-label="input search" name="searchTerms">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
                 <div class="col-md-4 mt-2 mt-md-0">
                     <select class="form-select" id="filterItemsCategorySelect">
-                        <option selected>Catégorie</option>
+                        <option selected value="">Catégorie</option>
                         {% for itemCategory in itemCategories %}
                             <option value="{{itemCategory.code}}">{{itemCategory.label}}</option>
                         {% endfor %}
                     </select>
                 </div>
+                <input id="filterItemsGlobalInput" hidden type="text" name="searchTerms">
             </div>
             <div id="items">
                 <ul class="list-group mt-4 list">
@@ -47,7 +48,7 @@
                         <li 
                             class="list-group-item px-0 py-2" 
                             data-item-title="{{userItem.property1}} {{userItem.property2}} {{userItem.itemType.label}}}}"
-                            data-item-category="{{userItem.itemType.category.label}}"
+                            data-item-category="{{userItem.itemType.category.code}}"
                         >
                             <div class="d-flex flex-row align-items-center">
                                 <img src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : defaultImgUrl}}" class="object-fit-cover ms-2" alt="..." style="width:100px; min-width:100px; height:100px;">
@@ -75,9 +76,11 @@
                                             
                                         </span>
                                         <div class="d-none">
-                                            <div id="popoverDelete{{userItem.id}}" class="d-flex justify-content-between">
-                                                <a class="btn btn-sm btn-secondary" href="#">Annuler</a>
-                                                <a class="btn btn-sm btn-danger" href="{{path('app_item_delete', {id: userItem.id})}}">Confirmer</a>
+                                            <div id="popoverDelete{{userItem.id}}">
+                                                <div class="d-flex flex-row justify-content-end">
+                                                    <a class="btn btn-sm btn-outline-secondary me-2" href="#">Annuler</a>
+                                                    <a class="btn btn-sm btn-danger" href="{{path('app_item_delete', {id: userItem.id})}}">Confirmer</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

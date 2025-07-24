@@ -62,3 +62,17 @@ setTimeout(() => {
 //PWA app concerns
 // import './js/script.js';
 // import './js/sw.js';
+
+
+// usurpation
+$('#usurpateForm').on('submit', function(e){
+    e.preventDefault();
+    let manualEmail = $(this).find('input[name="usurpateEmailInput"').val()
+    let automaticEmail = $(this).find('select[name="usurpateEmailSelect"').val()
+    let currentLocation = location.href
+    if(manualEmail !== ""){
+        location.replace(currentLocation+'?_switch_user='+manualEmail)
+    } else {
+        location.replace(currentLocation+'?_switch_user='+automaticEmail)
+    }
+})
