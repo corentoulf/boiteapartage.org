@@ -16,8 +16,8 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    'searchItem' => [
-        'path' => './assets/js/searchItem.js',
+    'itemSearch' => [
+        'path' => './assets/js/itemSearch.js',
         'entrypoint' => true,
     ],
     'itemIndex' => [

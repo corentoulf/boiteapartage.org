@@ -30,7 +30,7 @@ class AppItemController extends AbstractController
         $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
         return $this->render('app_item/index.html.twig', [
             'controller_name' => 'AppObjectController',
-            'userItems' => $userItems,
+            'items' => $userItems,
             'itemCategories' => $itemCategories
         ]);
     }
@@ -144,7 +144,7 @@ class AppItemController extends AbstractController
                         //redirect to form
                         return $this->render('app_item/create/book.html.twig', [
                             'controller_name' => 'AppItemController',
-                            'form' => $form
+                            'form' => $form,
                         ]);
                     }
                     //user doesn't want to add another => redirect to items
@@ -154,7 +154,7 @@ class AppItemController extends AbstractController
                 }
                 return $this->render('app_item/create/book.html.twig', [
                     'controller_name' => 'AppItemController',
-                    'form' => $form
+                    'form' => $form,
                 ]);
                 break;
             
@@ -197,7 +197,7 @@ class AppItemController extends AbstractController
                         return $this->render('app_item/create/default.html.twig', [
                             'controller_name' => 'AppItemController',
                             'form' => $form,
-                            'itemCategory' => $ic
+                            'itemCategory' => $ic,
                         ]);
                     }
                     //user doesn't want to add another => redirect to items
@@ -208,16 +208,18 @@ class AppItemController extends AbstractController
                 return $this->render('app_item/create/default.html.twig', [
                     'controller_name' => 'AppItemController',
                     'form' => $form,
-                    'itemCategory' => $ic
+                    'itemCategory' => $ic,
                 ]);
                 break;
         }
     }
 
-    #[Route('/app/placard/{id}/update', name: 'app_item_update', requirements: ['id' => '\d+'])]
+    #[Route('/app/placard/{id}/modifier', name: 'app_item_update', requirements: ['id' => '\d+'])]
     public function updateItem(Request $request, EntityManagerInterface $em, int $id): Response
     {
         $item = $em->getRepository(Item::class)->find($id);
+        $ic = $item->getItemType()->getCategory();
+
         if (!$item) {
             throw $this->createNotFoundException(
                 'L\'objet n\'a pas été trouvé.'
@@ -230,25 +232,57 @@ class AppItemController extends AbstractController
             );
         }
 
-        $user = $this->getUser();
-        $form = $this->createForm(ItemFormType::class, $item, [
-            'update_mode' => true,
-        ]);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $em->persist($item);
-            $em->flush();
-            $this->addFlash('success', 'L\'objet a bien été mis à jour');
-            return $this->redirectToRoute('app_items');
+        switch ($ic->getCode()) {
+            case 'bibliotheque':
+                $canEditInfo = true;
+                if($item->getProperty4() !== null){
+                    $canEditInfo = false;
+                }
+                $form = $this->createForm(ItemBookFormType::class, $item, [
+                    'update_mode' => true,
+                    'itemCategory' => $ic,
+                    'canEditInfo' => $canEditInfo
+                ]);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    
+                    $em->persist($item);
+                    $em->flush();
+                    $this->addFlash('success', 'L\'objet a bien été mis à jour');
+                    return $this->redirectToRoute('app_items');
+                }
+        
+        
+                return $this->render('app_item/update/book.html.twig', [
+                    'controller_name' => 'AppCircleController',
+                    'itemCategory' => $ic,
+                    'item'=>$item,
+                    'form' => $form,
+                ]);
+            break;
+            default:
+                $form = $this->createForm(ItemDefaultFormType::class, $item, [
+                    'update_mode' => true,
+                    'itemCategory' => $ic
+                ]);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    
+                    $em->persist($item);
+                    $em->flush();
+                    $this->addFlash('success', 'L\'objet a bien été mis à jour');
+                    return $this->redirectToRoute('app_items');
+                }
+        
+        
+                return $this->render('app_item/update/default.html.twig', [
+                    'controller_name' => 'AppCircleController',
+                    'itemCategory' => $ic,
+                    'item'=>$item,
+                    'form' => $form,
+                ]);
+            break;
         }
-
-
-        return $this->render('app_item/create_update.html.twig', [
-            'controller_name' => 'AppCircleController',
-            'form' => $form,
-            'updateMode' => true
-        ]);
     }
 
     #[Route('/app/placard/{id}/delete', name: 'app_item_delete', requirements: ['id' => '\d+'])]

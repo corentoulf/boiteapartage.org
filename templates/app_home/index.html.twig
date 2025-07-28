@@ -5,19 +5,12 @@
 
 {% block body %}
 
-	<div class="container min-vh-100">
-    <div class="container">
+<div class="container min-vh-100">
+  <div class="container">
       {# New user part #}
-      <div class="px-lg-6">
+      <div class="px-lg-6 mt-4">
         {% if userCircles|length > 0 %}
-          {% if is_granted('browse', userCircles[0].circle) %}
-            <form class="d-none" id="homeSearchForm" method="POST" action="{{path('app_circle_search')}}">
-              <div class="col-lg-8 offset-lg-2 input-group py-3 py-lg-5">
-                  <input class="form-control" type="text" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="searchTerms">
-                  <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
-              </div>
-            </form>
-          {% else %}
+          {% if not is_granted('browse', userCircles[0].circle) %}
             <div class="alert alert-warning">
               Pour chercher un objet dans une boîte vous devez :</br>
               <ul>

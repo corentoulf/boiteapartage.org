@@ -25,9 +25,11 @@ class ItemCrudController extends AbstractCrudController
             TextField::new('property_3'),
             TextField::new('property_4'),
             TextField::new('property_5'),
+            TextField::new('imageName'),
             AssociationField::new('owner'),
             AssociationField::new('itemType'),
             DateTimeField::new('created_at'),
+            DateTimeField::new('updated_at'),
         ];
     }
 }

@@ -4,29 +4,6 @@
 
 {% block body %}
 
-{% set title = 'Ajouter au placard' %}
-{% if itemCategory.code == 'bricolage' %}
-    {% set title %}
-        Ajouter au rayon <span class="text-highlight">bricolage</span>
-    {% endset %}
-{% elseif itemCategory.code == 'cuisine' %}
-    {% set title %}
-        Ajouter au rayon <span class="text-highlight">cuisine</span>
-    {% endset %}
-{% elseif itemCategory.code == 'loisirs' %}
-    {% set title %}
-        Ajouter au rayon <span class="text-highlight">loisirs</span>
-    {% endset %}
-{% elseif itemCategory.code == 'jardinage' %}
-    {% set title %}
-        Ajouter au rayon <span class="text-highlight">jardin</span>
-    {% endset %}
-{% elseif itemCategory.code == 'appareils' %}
-    {% set title %}
-        Ajouter un <span class="text-highlight">appareil</span>
-    {% endset %}
-{% endif %}
-
 <div class="container">
     <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
         {% for flash_error in app.flashes('verify_email_error') %}
@@ -34,7 +11,7 @@
         {% endfor %}
         <div class="align-items-center d-flex flex-row justify-content-between mb-3">
             <h1 class="fw-bold fs-3" id="title">
-                {{title}}
+                Mettre à jour l'objet
             </h1>
         </div>
         {# message d'alerte sur le côté global d'un objet dispo dans tous les cercles #}
@@ -51,15 +28,38 @@
             {{ form_row(form.property_2)}}
             {{ form_row(form.imageFile)}}
                 <div id="imageCoverContainer" class="">
-                    <a href="#" id="openFileInputBtn" class="btn btn-dark">
+                    {% if itemCategory.code == "bibliotheque" and not item.property3 %}
+                        <div id="photoCaptureTip" class="form-text mb-2 help-text">Conseil : posez le livre sur une table pour prendre la couverture dans son intégralité.</div>
+                    {% endif %}
+                    <a 
+                        href="#" 
+                        id="openFileInputBtn" 
+                        class="btn btn-dark" 
+                        {% if item.imageName %}
+                            style="display:none;"
+                        {% endif %}
+                    >
                         <i class="bi bi-camera-fill me-2"></i>Ajouter une photo
                     </a>
                     <div class="d-flex flex-column align-items-start mb-3">
                         <div class="col-8 col-md-4">
-                            <img id="imgBookCover" class="img-fluid" style="display:none;"/>
+                            <img 
+                                id="imgBookCover" 
+                                class="img-fluid" 
+                                {% if not item.imageName %}
+                                    style="display:none;"
+                                {% else %}
+                                    src="{{vich_uploader_asset(item, 'imageFile')}}"     
+                                {% endif %}
+                            />
                         </div>
                         <div 
-                            id="retakePhotoBtn" class="mt-2" style="display:none;">
+                            id="retakePhotoBtn"
+                            class="mt-2"
+                            {% if not item.imageName %}
+                                style="display:none;"
+                            {% endif %}
+                        >
                             <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
                         </div>
                     </div>

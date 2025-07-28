@@ -1,6 +1,6 @@
 {% extends 'base_auth.html.twig' %}
 
-{% block title %}Mon Placard{% endblock %}
+{% block title %}Recherche • Boîte à Partage{% endblock %}
 
 {% block body %}
 <div class="container min-vh-100">
@@ -14,15 +14,15 @@
             <div class="card card-bg-img-pizza-roll col-12 m-sm-4 p-2">
             <div class="card-body text-center px-4">
                 <div class="card-title fs-5 fw-bold " >
-                    Que propose-t-on aujourd'hui ?
+                    Besoin d'aide ?
                 </div>
-                <a class="btn btn-primary mt-2 mt-md-4" href="{{path('app_item_create')}}"><i class="bi bi-plus-square me-2"></i>Ajouter un nouvel objet</span></a>
+                <a class="btn btn-primary mt-2 mt-md-4" href="#"><i class="bi bi-plus-square me-2"></i>Ajouter un nouvel objet</span></a>
             </div>
             </div>
         </div>
         {% if items|length == 0 %}
             <div class="mt-4">
-                <p class="fs-4" >Votre placard est vide. Commencez par <a class=""  href="{{path('app_item_create')}}" role="button">ajouter un objet</a>.</p>
+                <p class="fs-4" >Hmm... Il semblerait que personne n'ait ajouté d'objets dans vos boîtes. Revenez plus tard !</p>
             </div>
         {% endif %}
         {% if items|length > 0 %}
@@ -164,28 +164,9 @@
       </div>
     </div>
 </div>
-{# delete object modal #}
-<div class="modal fade" id="deleteObjectModal" tabindex="-1" aria-labelledby="deleteObjectModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Supprimer un objet</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Confirmez-vous la suppression de <b>"<span class="item-title"></span>"</b> ?</br>
-                <b class="text-danger">Cette action est irréversible.</b>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                <a class="btn btn-danger item-delete-link" href="" class="btn btn-danger">Confirmer</a>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 {% block javascripts %}
     {% block importmap %}
-     {{ importmap(['app', 'itemIndex']) }}
+     {{ importmap(['app', 'itemSearch']) }}
     {% endblock %}
 {% endblock %}

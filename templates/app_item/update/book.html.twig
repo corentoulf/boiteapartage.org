@@ -10,26 +10,7 @@
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
         <div class="align-items-center d-flex flex-row justify-content-between">
-            <h1 class="fw-bold fs-3" id="title">Ajouter à la <span class="text-highlight">bibliothèque</span></h1>
-        </div>
-
-        {# step 1 : scan ou recherche #}
-        <div id="infoAndScanContainer">
-            <div class="mt-3">
-                Pour ajouter un livre en un clic, vous pouvez <b>scanner son code-barres</b>. Sinon, complétez le formulaire ci-dessous.
-            </div>
-            <div class="card card-btn-primary justify-content-center mt-3">
-                <div class="card-body">
-                    <h5 class="card-title text-center"><i class="bi bi-upc-scan fs-1"></i></h5>
-                    <p class="card-text text-center m-0">Scanner le code-barres</p>
-                    <a id="openScanner" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal" href="#" class="stretched-link"></a>
-                </div>
-            </div>
-            <div class="row mt-2 justify-content-center align-items-center">
-                <div class="col"><hr></div>
-                    ou
-                <div class="col"><hr></div>
-            </div>
+            <h1 class="fw-bold fs-3" id="title">Mettre à jour un livre</span></h1>
         </div>
 
         {# step 2 : ajout manuel ou pré-remplissage depuis scan #}
@@ -37,7 +18,6 @@
             <div class="mt-3">
                 <a id="restartCompleteForm" style="display:none;" href="#" data-bs-dismiss="modal" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-left"></i>Recommencer</a>
             </div>
-            <div id="bookFormTitle" class="fw-medium fs-5 mt-3">Ajouter un livre manuellement</div>
             <div class="mt-2" id="bookForm">
                 {{ form_errors(form) }}
                 {{ form_start(form) }}
@@ -49,14 +29,51 @@
                 {{ form_row(form.property_4)}}     
                 {{ form_row(form.imageFile)}}
                 <div id="imageCoverContainer" class="">
-                    <div id="photoCaptureTip" class="form-text mb-2 help-text">Conseil : posez le livre sur une table pour prendre la couverture dans son intégralité.</div>
-                    <a href="#" id="openFileInputBtn" class="btn btn-dark"><i class="bi bi-camera-fill me-2"></i>Ajouter une photo</a>
+                    <div 
+                        id="photoCaptureTip"
+                        class="form-text mb-2 help-text" 
+                        {% if item.property3 or item.imageName %}
+                            style="display:none;"
+                        {% endif %}
+                    >
+                        Conseil : posez le livre sur une table pour prendre la couverture dans son intégralité.
+                    </div>
+                    <a 
+                        href="#" id="openFileInputBtn" 
+                        class="btn btn-dark"
+                        {% if item.property3 or item.imageName %}
+                            style="display:none;"
+                        {% endif %}
+                    >
+                        <i class="bi bi-camera-fill me-2"></i>Ajouter une photo
+                    </a>
                     <div class="d-flex flex-column align-items-start mb-3">
                         <div class="col-8 col-md-4">
-                            <img id="imgBookCover" class="img-fluid" style="display:none;"/>
+                            <img 
+                                id="imgBookCover" 
+                                class="img-fluid" 
+                                {% if item.property3 or item.imageName %}
+                                    {% if item.property3 %}
+                                        src="{{item.property3}}"  
+                                    {% else %}
+                                        src="{{vich_uploader_asset(item, 'imageFile')}}"  
+                                    {% endif %}
+                                {% else %}
+                                    style="display:none;"
+                                {% endif %}
+                            />
                         </div>
-                        <div id="retakePhotoBtn" class="mt-2" style="display:none;">
-                            <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
+                        <div 
+                            id="retakePhotoBtn" 
+                            class="mt-2"
+                            {% if item.imageName %}
+                            {% else %}
+                                style="display:none;"
+                            {% endif %}
+                        >
+                            <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover" >
+                                <i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -28,13 +28,14 @@ class ItemDefaultFormType extends AbstractType
                         ->setParameter('val', $options['itemCategory'])
                         ->orderBy('it.label', 'ASC');
                 },
-                'label' => "Catégorie",
+                'label' => "Sous-catégorie",
+                'choice_label' => 'label',
                 'required' => true,
                 'attr' => [
-                    'hidden' => true
+                    'hidden' => false
                 ],
                 'label_attr' => [
-                    'hidden' => true
+                    'hidden' => false
                 ] 
             ])
             ->add('property_1', TextType::class, [

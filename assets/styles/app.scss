@@ -419,3 +419,18 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   max-height: 150px;
   min-height: 150px;
 }
+.text-max-1-lines{
+  overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 1; /* number of lines to show */
+           line-clamp: 1; 
+   -webkit-box-orient: vertical;
+}
+
+.text-max-2-lines{
+  overflow: hidden;
+   display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
+}

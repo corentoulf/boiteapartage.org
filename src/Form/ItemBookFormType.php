@@ -37,7 +37,8 @@ class ItemBookFormType extends AbstractType
                         ->orderBy('it.label', 'ASC');
                 },
                 'data' => $options['preferedItemType'],
-                'label' => "Catégorie",
+                'label' => "Sous-catégorie",
+                'choice_label' => 'label',
                 'required' => true,
                 'attr' => [
                     'hidden' => false
@@ -48,11 +49,17 @@ class ItemBookFormType extends AbstractType
             ])
             ->add('property_1', TextType::class, [
                 'label' => "Titre",
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'readonly' => !$options['canEditInfo']
+                ]
             ])
             ->add('property_2', TextType::class, [
                 'label' => "Auteur(s)",
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'readonly' => !$options['canEditInfo']
+                ]
             ])
             ->add('property_3', TextType::class, [
                 'label' => "image_thumbnail_link",
@@ -110,6 +117,7 @@ class ItemBookFormType extends AbstractType
             'update_mode' => false,
             'itemCategory' => null,
             'preferedItemType' => null,
+            'canEditInfo' => true
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Circle;
 use App\Entity\Item;
+use App\Entity\ItemCategory;
 use App\Entity\ItemCircle;
 use App\Entity\UserCircle;
 use App\Form\CircleFormType;
@@ -209,6 +210,7 @@ class AppCircleController extends AbstractController
     public function browseAll(Request $request, EntityManagerInterface $em): Response
     {
         $searchTerms = $request->getPayload()->get('searchTerms');
+        $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
         //find all items that the user can pretend to
         $user = $this->getUser();
         $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]); //circles the user belongs to
@@ -218,7 +220,7 @@ class AppCircleController extends AbstractController
             array_push($circlesToFetch, $userCircle->getCircle()->getId());
         }
         //get all user circles items
-        $itemCircles = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch);
+        $itemCircles = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch, $user->getId());
         $items = array();
         foreach ($itemCircles as $key => $itemCircle) {
             array_push($items, $itemCircle->getItem());
@@ -226,10 +228,11 @@ class AppCircleController extends AbstractController
         $items = array_unique($items);
         // $items = $em->getRepository(ItemCircle::class)->findBy(['circle_id'], $circlesToFetch);
 
-        return $this->render('app_circle/browse.html.twig', [
+        return $this->render('app_home/search.html.twig', [
             'controller_name' => 'AppCircleController',
             'items' => $items,
-            "searchTerms" => $searchTerms
+            "searchTerms" => $searchTerms,
+            'itemCategories' => $itemCategories
         ]);
     }
 }

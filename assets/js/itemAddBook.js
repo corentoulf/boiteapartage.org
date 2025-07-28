@@ -70,6 +70,7 @@ function displayResults(mode, results, totalItems) {
                 let isbn = _.filter(book.volumeInfo.industryIdentifiers, function(o) { return o.type == "ISBN_13"; })[0].identifier
                 let author = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '';
                 let imgLink = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : encodeURI('https://placehold.co/70x100/C0C0C0/FFFFFF?text=Aucune\nimage\ndisponible&font=source-sans-pro')
+                let imgFound = book.volumeInfo.imageLinks ? true : false
 
                 let refLink = book.selfLink || null;
                 $('#scanResultContainer').empty();
@@ -92,6 +93,7 @@ function displayResults(mode, results, totalItems) {
                                         data-title="${title}" 
                                         data-author="${author}" 
                                         data-img-link="${imgLink}"
+                                        data-img-found="${imgFound}"
                                         data-isbn="${isbn}" 
                                     >Valider</a>
                                 </div>
@@ -253,7 +255,10 @@ $('body').on('click', '.select-book-from-scan', function (e) {
     //set form inputs value from selected item in search results
     $('input[name="item_book_form[property_1]"]').val($(this).data('title'));
     $('input[name="item_book_form[property_2]"]').val($(this).data('author'));
-    $('input[name="item_book_form[property_3]"]').val($(this).data('img-link'));
+    if($(this).data('img-found') === true){
+        $('#photoCaptureTip').hide();
+        $('input[name="item_book_form[property_3]"]').val($(this).data('img-link'));
+    }
     $('input[name="item_book_form[property_4]"]').val($(this).data('isbn'));
     //disable modification of inputs in form
     $('input[name="item_book_form[property_1]"]').prop("readonly", true);
