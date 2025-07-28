@@ -1,6 +1,6 @@
 {% extends 'base_error.html.twig' %}
 
-{% block title %}Hop hop hop !{% endblock %}
+{% block title %}Une erreur s'est produite{% endblock %}
 {% block body %}
 <div class="container">
     <div class="mb-3">
@@ -10,8 +10,8 @@
             <i class="bi bi-exclamation-triangle" style="font-size:8rem;"></i>
           </div>
           <div class="col-md-8">
-            <h1 class="display-5 fw-bold">Il semblerait que vous n'ayez pas les droits pour faire cela...</h1>
-            <p class="fs-4">{{exception.message == '' ? status_text : exception.message}}</p>
+            <h1 class="display-5 fw-bold">Oups, on a un petit problème...</h1>
+            <p class="fs-4">{{exception.message ? exception.message : status_text}}</p>
             <p class="fs-4">Veuillez retourner sur la page d'accueil et réessayer.</p>
             <a href="{{path('app_home')}}" class="btn btn-primary btn-lg" type="button"><i class="bi bi-arrow-left me-2"></i>Retourner à l'accueil</a>
           </div>

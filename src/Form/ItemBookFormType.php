@@ -74,16 +74,6 @@ class ItemBookFormType extends AbstractType
                     'hidden' => true
                 ] 
             ])
-            ->add('property_5', TextType::class, [
-                'label' => "",
-                'required' => false,
-                'attr' => [
-                    'hidden' => true
-                ],
-                'label_attr' => [
-                    'hidden' => true
-                ] 
-            ])
             ->add('imageFile', FileType::class, [
                 'label' => "Photo de la 1ère de couverture",
                 'required' => false,

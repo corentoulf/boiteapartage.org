@@ -412,3 +412,10 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   -o-background-size: cover;
   background-size: cover;
 }
+
+
+.img-card-item{
+  min-width: -webkit-fill-available;
+  max-height: 150px;
+  min-height: 150px;
+}

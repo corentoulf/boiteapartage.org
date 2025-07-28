@@ -15,17 +15,6 @@ const html5QrCode = new Html5Qrcode(/* element id */ "reader");
 function searchBookOnApi(mode, terms) {
     var totalItems;
     var results = [];
-    // var endpoints = [];
-    // let endpoints = [
-    //     'https://api.github.com/users/ejirocodes',
-    //     'https://api.github.com/users/ejirocodes/repos',
-    //     'https://api.github.com/users/ejirocodes/followers',
-    //     'https://api.github.com/users/ejirocodes/following'
-    //   ];
-
-    //   axios.all(endpoints.map((endpoint) => axios.get(endpoint))).then(
-    //     (data) => console.log(data),
-    //   );
     //filter false search
     if (typeof (terms) !== undefined && terms !== "" && terms !== null) {
         //detect ISBN regex terms.match(/\d{10}$|^\d{13}$/)
@@ -78,6 +67,7 @@ function displayResults(mode, results, totalItems) {
                 $('#scanNoResultContainer').hide();
                 let book = results[0]; //we consider only first result
                 let title = book.volumeInfo.title;
+                let isbn = _.filter(book.volumeInfo.industryIdentifiers, function(o) { return o.type == "ISBN_13"; })[0].identifier
                 let author = book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '';
                 let imgLink = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : encodeURI('https://placehold.co/70x100/C0C0C0/FFFFFF?text=Aucune\nimage\ndisponible&font=source-sans-pro')
 
@@ -102,7 +92,7 @@ function displayResults(mode, results, totalItems) {
                                         data-title="${title}" 
                                         data-author="${author}" 
                                         data-img-link="${imgLink}"
-                                        data-ref-url="${refLink}" 
+                                        data-isbn="${isbn}" 
                                     >Valider</a>
                                 </div>
                             </div>
@@ -264,7 +254,7 @@ $('body').on('click', '.select-book-from-scan', function (e) {
     $('input[name="item_book_form[property_1]"]').val($(this).data('title'));
     $('input[name="item_book_form[property_2]"]').val($(this).data('author'));
     $('input[name="item_book_form[property_3]"]').val($(this).data('img-link'));
-    $('input[name="item_book_form[property_4]"]').val($(this).data('ref-url'));
+    $('input[name="item_book_form[property_4]"]').val($(this).data('isbn'));
     //disable modification of inputs in form
     $('input[name="item_book_form[property_1]"]').prop("readonly", true);
     $('input[name="item_book_form[property_2]"]').prop("readonly", true);
@@ -293,7 +283,6 @@ function resetFormValues(){
     $('input[name="item_book_form[property_2]"]').val('');
     $('input[name="item_book_form[property_3]"]').val('');
     $('input[name="item_book_form[property_4]"]').val('');
-    $('input[name="item_book_form[property_5]"]').val('');
     $('input[name="item_book_form[imageFile]"]').val('');
 }
 $('#restartCompleteForm').on('click', function (e) {

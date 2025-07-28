@@ -26,6 +26,7 @@ bootstrapTooltips.forEach(el => new Tooltip(el, {
     container: 'body'
 }))
 
+
 //handle Bootstrap Popovers
 import { Popover } from 'bootstrap'
 const bootstrapPopovers = $('[data-bs-toggle="popover"]').toArray();

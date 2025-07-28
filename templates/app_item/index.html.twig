@@ -5,18 +5,18 @@
 {% block body %}
 <div class="container">
     <div class="px-lg-6">
-      <div class="container-fluid py-2 py-lg-4" >
+      <div class="container-fluid" >
         {# <h1 class="display-5 fw-bold">Mon placard</h1>
         <div class="d-flex align-items-center justify-content-end my-3">
             <a class="btn btn-primary px-4"  href="{{path('app_item_create')}}" role="button"><i class="bi bi-plus-circle me-2"></i>Ajouter un objet</a>
         </div> #}
         <div class="d-flex flex-row justify-content-center mt-4 px-lg-5" style="">
             <div class="card card-bg-img-pizza-roll col-12 m-sm-4 p-2">
-            <div class="card-body text-center">
+            <div class="card-body text-center px-4">
                 <div class="card-title fs-5 fw-bold " >
                     Que propose-t-on aujourd'hui ?
                 </div>
-                <a class="btn btn-primary mt-4" href="{{path('app_item_create')}}"><i class="bi bi-plus-square me-2"></i>Ajouter un nouvel objet</span></a>
+                <a class="btn btn-primary mt-2 mt-md-4" href="{{path('app_item_create')}}"><i class="bi bi-plus-square me-2"></i>Ajouter un nouvel objet</span></a>
             </div>
             </div>
         </div>
@@ -26,14 +26,14 @@
             </div>
         {% endif %}
         {% if userItems|length > 0 %}
-            <div class="row">
+            <div class="row my-4 px-lg-6">
                 <div class="input-group col-md-8">
-                    <input id="filterItemsInput" class="form-control" type="text" placeholder="Rechercher dans le placard" aria-label="input search" name="searchTerms">
+                    <input id="filterItemsInput" class="form-control" type="text" placeholder="Rechercher dans mon placard" aria-label="input search" name="searchTerms">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
                 <div class="col-md-4 mt-2 mt-md-0">
                     <select class="form-select" id="filterItemsCategorySelect">
-                        <option selected value="">Catégorie</option>
+                        <option selected value="">Filtrer par catégorie</option>
                         {% for itemCategory in itemCategories %}
                             <option value="{{itemCategory.code}}">{{itemCategory.label}}</option>
                         {% endfor %}
@@ -41,87 +41,95 @@
                 </div>
                 <input id="filterItemsGlobalInput" hidden type="text" name="searchTerms">
             </div>
-            <div id="items">
-                <ul class="list-group mt-4 list">
-                    {% for userItem in userItems %} 
-                        {% set defaultImgUrl= "https://placehold.co/100x100/C0C0C0/FFFFFF?text=Pas%20de%0Avisuel&font=source-sans-pro" %}
-                        <li 
-                            class="list-group-item px-0 py-2" 
-                            data-item-title="{{userItem.property1}} {{userItem.property2}} {{userItem.itemType.label}}}}"
-                            data-item-category="{{userItem.itemType.category.code}}"
-                        >
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : defaultImgUrl}}" class="object-fit-cover ms-2" alt="..." style="width:100px; min-width:100px; height:100px;">
-                                <div class="ms-3 d-flex flex-column align-items-start justify-content-between" style="height: -webkit-fill-available; width: -webkit-fill-available;">
-                                    {# contenu #}
-                                    <div class="mt-1 mt-md-3 fs-6">
-                                        <span class="fw-bold">{{userItem.property1}}</span> {{ (userItem.itemType.category.label == "Bibliothèque") ? ' - ' ~ userItem.property2 : ''}}
-                                    </div>
-                                    {# boutons d'action #}
-                                    <div class="mb-1 mb-md-2 ms-auto me-2 me-md-3">
-                                        <a href="{{path('app_item_update', {id: userItem.id})}}" class="btn btn-sm btn-secondary-subtle me-2" >
-                                            <i class="bi bi-pencil-fill me-2"></i>
-                                            Éditer
-                                        </a>
-                                        <span href="#" class="">
-                                            <a 
-                                                tabindex="0" class="deleteItemBtn btn btn-sm btn-danger-subtle" 
-                                                data-bs-trigger="focus" 
-                                                data-bs-toggle="popover" 
-                                                data-bs-title="Confirmer la suppression"  
-                                                data-bs-content-id="popoverDelete{{userItem.id}}"
-                                            >
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
-                                            
-                                        </span>
-                                        <div class="d-none">
-                                            <div id="popoverDelete{{userItem.id}}">
-                                                <div class="d-flex flex-row justify-content-end">
-                                                    <a class="btn btn-sm btn-outline-secondary me-2" href="#">Annuler</a>
-                                                    <a class="btn btn-sm btn-danger" href="{{path('app_item_delete', {id: userItem.id})}}">Confirmer</a>
+            <div class="row my-4 px-lg-6">
+                <div id="items">
+                    <span class="opacity-75">{{userItems|length}} objets</span>
+                    <ul class="list-group list-group-flush mt-4 list">
+                        {% for userItem in userItems %} 
+                            {% set defaultImgUrl= "https://placehold.co/100x100/C0C0C0/FFFFFF?text=Pas%20de%0Avisuel&font=source-sans-pro" %}
+                            <li 
+                                class="list-group-item mb-2 border-0 rounded p-0" 
+                                data-item-title="{{userItem.property1}} {{userItem.property2}} {{userItem.itemType.label}}}}"
+                                data-item-category="{{userItem.itemType.category.code}}"
+                            >
+                                <div class="card mb-3" style="max-width: 700px;">
+                                    <div class="row">
+                                        <div class="col-4 col-md-3">
+                                            {% if userItem.itemType.category.code == "bibliotheque" %}
+                                                {% if userItem.property3 != null %}
+                                                    <img 
+                                                        class="img-fluid rounded-start object-fit-cover img-card-item" 
+                                                        src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : userItem.property3}}"  
+                                                        alt="..."
+                                                    >    
+                                                {% else %}
+                                                    <img 
+                                                        class="img-fluid rounded-start object-fit-cover img-card-item" 
+                                                        src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : defaultImgUrl}}"  
+                                                        alt="..." 
+                                                    >    
+                                                {% endif %}
+                                            {% else %}
+                                                <img 
+                                                    class="img-fluid rounded-start object-fit-cover img-card-item" 
+                                                    src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : defaultImgUrl}}"  
+                                                    alt="..." 
+                                                >
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-8 col-md-9 d-flex flex-column align-items-start justify-content-between py-3">
+                                            {# contenu #}
+                                            <div class="fs-6">
+                                                {% set cardTitle = userItem.property1 %}
+                                                {% set cardSubtitle = (userItem.itemType.category.label == "Bibliothèque") ? ' - ' ~ userItem.property2 : '' %}
+                                                <div  title="{{cardTitle ~ ' ' ~ cardSubtitle}} ">
+                                                    <span class="fw-bold">{{cardTitle|u.truncate(30, '...')}}</span> {{cardSubtitle|u.truncate(30, '...')}}
+                                                </div>
+                                            </div>
+                                            <div class="d-md-none opacity-75" >
+                                                <span title="{{('Catégorie: ' ~ userItem.itemType.category.label ~ ' > ' ~ userItem.itemType.label)}}">{{(userItem.itemType.category.label ~ ' > ' ~ userItem.itemType.label)|u.truncate(30,'...')}}</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center w-100 pe-3">
+                                                {# Catégorie > Sous-catégorie #}
+                                                <div class="d-none d-md-block opacity-75" >
+                                                    <span title="{{('Catégorie: ' ~ userItem.itemType.category.label ~ ' > ' ~ userItem.itemType.label)}}">{{(userItem.itemType.category.label ~ ' > ' ~ userItem.itemType.label)|u.truncate(30,'...')}}</span>
+                                                </div>
+                                                {# boutons d'action #}
+                                                <div class="ms-auto">
+                                                    <a href="{{path('app_item_update', {id: userItem.id})}}" class="btn btn-sm btn-secondary-subtle me-2" >
+                                                        <i class="bi bi-pencil-fill me-2"></i>
+                                                        Éditer
+                                                    </a>
+                                                    <span href="#" class="">
+                                                        <a 
+                                                            tabindex="0" class="deleteItemBtn btn btn-sm btn-danger-subtle" 
+                                                            data-bs-trigger="focus" 
+                                                            data-bs-toggle="popover" 
+                                                            data-bs-title="Confirmer la suppression"  
+                                                            data-bs-content-id="popoverDelete{{userItem.id}}"
+                                                        >
+                                                            <i class="bi bi-trash3-fill"></i>
+                                                        </a>
+                                                        
+                                                    </span>
+                                                    <div class="d-none">
+                                                        <div id="popoverDelete{{userItem.id}}">
+                                                            <div class="d-flex flex-row justify-content-end">
+                                                                <a class="btn btn-sm btn-outline-secondary me-2" href="#">Annuler</a>
+                                                                <a class="btn btn-sm btn-danger" href="{{path('app_item_delete', {id: userItem.id})}}">Confirmer</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
-            {# <table class="table table-striped table-hover" id="itemTable">
-                <thead>
-                    <tr>
-                    <th scope="col">Objet</th>
-                    <th scope="col">Catégorie</th>
-                    <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for userItem in userItems %}  
-                        <tr>
-                            <td>{{userItem.property1}}</td>
-                            <td>{{userItem.itemType ? userItem.itemType.label}}</td>
-                            <td class="justify-content-end d-flex">
-                                <a href="{{path('app_item_update', {id: userItem.id})}}" class="btn btn-sm btn-outline-secondary border-0 me-2" data-bs-toggle="tooltip" data-bs-title="Éditer"><i class="bi bi-pencil-fill"></i></a>
-                                <span href="#" class="me-2" data-bs-toggle="tooltip" data-bs-title="Supprimer">
-                                    <a tabindex="0" class="deleteItemBtn btn btn-sm btn-outline-danger border-0" data-bs-trigger="focus" data-bs-toggle="popover" data-bs-title="Confirmer la suppression"  data-bs-content-id="popoverDelete{{userItem.id}}"><i class="bi bi-trash3-fill"></i>
-                                    </a>
-                                    
-                                </span>
-                                <div class="d-none">
-                                    <div id="popoverDelete{{userItem.id}}" class="d-flex justify-content-between">
-                                        <a class="btn btn-sm btn-secondary" href="#">Annuler</a>
-                                        <a class="btn btn-sm btn-danger" href="{{path('app_item_delete', {id: userItem.id})}}">Confirmer</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table> #}
-            
         {% endif %}
       </div>
     </div>

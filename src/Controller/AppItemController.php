@@ -23,7 +23,10 @@ class AppItemController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        $userItems = $em->getRepository(Item::class)->findBy(['owner' => $user->getId()]);
+        $userItems = $em->getRepository(Item::class)->findBy(
+            ['owner' => $user->getId()],
+            ['id' => 'DESC']
+        );
         $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
         return $this->render('app_item/index.html.twig', [
             'controller_name' => 'AppObjectController',
@@ -217,7 +220,13 @@ class AppItemController extends AbstractController
         $item = $em->getRepository(Item::class)->find($id);
         if (!$item) {
             throw $this->createNotFoundException(
-                'L\'objet n\'a pas été trouvé'
+                'L\'objet n\'a pas été trouvé.'
+            );
+        }
+        //prevent users from updating item they don't own
+        if ($item->getOwner() !== $this->getUser()) {
+            throw $this->createAccessDeniedException(
+                'Vous n\'avez pas les droits pour modifier cet objet.'
             );
         }
 

@@ -123,25 +123,33 @@
         </div>
         {# section separator #}
         <hr class="border border-1 border-dark opacity-50">
+        {# deconnexion #}
+        {% if app.user %}
+            <div class="px-2">
+                <div class="d-grid gap-2 ">
+                    <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a>
+                </div>
+            </div>
+        {% endif %}
         {# ADMIN #}
         {% if is_granted("ROLE_ADMIN") %}
+            <hr class="border border-1 opacity-100">
             <div class="px-2">
                 <div class="d-grid gap-2 ">
                     <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_admin') }}"><i class="bi bi-database-fill-gear me-2"></i>Admin</a>
                 </div>
                 {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
                     <div class="d-grid gap-2 ">
-                        
                         <form class="row row-cols-lg-auto g-3 align-items-center ms-1" id="usurpateForm" method="GET" action="{{path('app_auth_home')}}">
-                            <div class="col-4">
+                            <div class="col-4 d-none">
                                 <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
                                 <input name="usurpateEmailInput" type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
                             </div>
-                            <div class="col-6">
+                            <div class="col-10">
                                 <label class="visually-hidden" for="inlineFormSelectPref">User</label>
                                 <select name="usurpateEmailSelect" class="form-select">
                                     <option value="corentoulf@hotmail.com" selected>corentoulf@hotmail.com</option>
-                                    <option value="corentoulf@yopmail.com" selected>corentoulf@hotmail.com</option>
+                                    <option value="corentoulf@yopmail.com" selected>corentoulf@yopmail.com</option>
                                 </select>
                             </div>
                             <div class="col-2">
@@ -156,21 +164,12 @@
                     </div>
                 {% endif %}
             </div>
-            <hr class="border border-1 opacity-100">
         {% endif %}
         {% if is_granted('IS_IMPERSONATOR') and not is_granted("ROLE_ADMIN")%}
+            <hr class="border border-1 opacity-100">
             <div class="px-2">
                 <div class="d-grid gap-2 ">
                     <a class="btn btn-outline-highlight-subtle text-start" href="{{ impersonation_exit_path(path('app_auth_home')) }}"><i class="bi bi-person-x me-2"></i>Exit impersonation</a>
-                </div>
-            </div>
-            <hr class="border border-1 opacity-100">
-        {% endif %}
-        {# deconnexion #}
-        {% if app.user %}
-            <div class="px-2">
-                <div class="d-grid gap-2 ">
-                    <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a>
                 </div>
             </div>
         {% endif %}
