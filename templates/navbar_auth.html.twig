@@ -24,7 +24,7 @@
                 <li class="nav-item mt-2 mt-lg-0 ">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
                         <span class=""><i class="bi bi-archive fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_circle') }}">
+                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_circle') }}">
                             Boîtes
                         </a>
                     </div>
@@ -32,15 +32,15 @@
                 <li class="nav-item mt-2 mt-lg-0">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
                         <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_items') }}">
+                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_items') }}">
                             Placard
                         </a>
                     </div>
                 </li>
-                <li class="nav-item mt-2 mt-lg-0 d-none">
+                <li class="nav-item mt-2 mt-lg-0">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
                         <span class=""><i class="bi bi-person-circle fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-underline link-offset-2 link-underline-opacity-0 link-underline-opacity-75-hover link-underline-primary" href="{{ path('app_user_profile') }}">
+                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_profile') }}">
                             Compte
                         </a>
                     </div>
@@ -48,7 +48,7 @@
                 <li class="nav-item mt-2 mt-lg-0 ">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
                         <span class=""><i class="bi bi-list fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-underline link-underline-opacity-0 " href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
+                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
                             Menu
                         </a>
                     </div>
@@ -69,10 +69,28 @@
         </div>
     </div>
 </nav>
+{% if not app.user.isVerified %}
+<nav class="navbar bg-warning-subtle">
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center px-2 w-100">
+            <i class="bi bi-exclamation-circle fs-6 me-2"></i>
+            <div class="small">
+                <span class="fw-bold">
+                    Votre email est en attente de validation.
+                </span>
+                {% if is_granted('requestVerificationEmail') %}
+                    Pour recevoir un nouveau lien : <a class="link-dark" href={{path('app_resend_verification_email')}}>cliquer ici</a>.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>
+{% endif %}
+
 
 <!-- Modal -->
 <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
+  <div class="modal-dialog modal-fullscreen modal-halfscreen-lg-up">
     <div class="modal-content">
       <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">

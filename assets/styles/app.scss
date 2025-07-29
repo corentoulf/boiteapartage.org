@@ -434,3 +434,10 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
            line-clamp: 2; 
    -webkit-box-orient: vertical;
 }
+
+@media (min-width: 992px) { 
+  .modal-halfscreen-lg-up{
+    width: 50% !important;
+    left: 50% !important;
+  }
+}

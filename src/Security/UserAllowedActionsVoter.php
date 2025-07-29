@@ -5,6 +5,7 @@ namespace App\Security;
 use App\Entity\UserCircle;
 use App\Entity\Circle;
 use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -14,6 +15,7 @@ class UserAllowedActionsVoter extends Voter
     // these strings are just invented: you can use anything
     const BROWSE = 'browse';
     const BROWSE_ALL = 'browseAll';
+    const CAN_REQUEST_VERIFICATION_EMAIL = "requestVerificationEmail";
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -23,6 +25,10 @@ class UserAllowedActionsVoter extends Voter
         }
         // case browse all
         if (in_array($attribute, [self::BROWSE_ALL])){
+            return true;
+        }
+        // case verification email request
+        if (in_array($attribute, [self::CAN_REQUEST_VERIFICATION_EMAIL])){
             return true;
         }
 
@@ -44,6 +50,7 @@ class UserAllowedActionsVoter extends Voter
         return match($attribute) {
             self::BROWSE => $this->canBrowse($circle, $user),
             self::BROWSE_ALL => $this->canBrowseAll($user),
+            self::CAN_REQUEST_VERIFICATION_EMAIL => $this->canRequestVerificationEmail($user),
             default => throw new \LogicException('This code should not be reached!')
         };
     }
@@ -77,6 +84,27 @@ class UserAllowedActionsVoter extends Voter
             count($user->getItems())>=5 && //check user has shared 5 objects at least
             $user->isVerified()
         ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function canRequestVerificationEmail(User $user): bool
+    {
+        // If last request was more than 8h ago : OK
+        //check last request date
+        $now = new DateTime('now');
+        $lastVerificationRequestSent =
+            max(
+                array_map(
+                    fn($request): DateTime => $request->getRequestedAt(),
+                    $user->getVerificationRequests()->toArray()
+                )
+            );
+        $interval = $now->format('U') - $lastVerificationRequestSent->format('U');
+        //if last request > 8h ago OK
+        if($interval > 28800){
             return true;
         }
 

@@ -83,11 +83,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     ])]
     private ?bool $acceptEmailContact = true;
 
+    /**
+     * @var Collection<int, VerificationRequest>
+     */
+    #[ORM\OneToMany(targetEntity: VerificationRequest::class, mappedBy: 'user_id', orphanRemoval: true, cascade:["persist"])]
+    private Collection $verificationRequests;
+
     public function __construct()
     {
         $this->ownedCircles = new ArrayCollection();
         $this->userCircles = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->verificationRequests = new ArrayCollection();
     }
 
     public function __toString()
@@ -322,6 +329,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAcceptEmailContact(bool $acceptEmailContact): static
     {
         $this->acceptEmailContact = $acceptEmailContact;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VerificationRequest>
+     */
+    public function getVerificationRequests(): Collection
+    {
+        return $this->verificationRequests;
+    }
+
+    public function addVerificationRequest(VerificationRequest $verificationRequest): static
+    {
+        if (!$this->verificationRequests->contains($verificationRequest)) {
+            $this->verificationRequests->add($verificationRequest);
+            $verificationRequest->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVerificationRequest(VerificationRequest $verificationRequest): static
+    {
+        if ($this->verificationRequests->removeElement($verificationRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($verificationRequest->getUserId() === $this) {
+                $verificationRequest->setUserId(null);
+            }
+        }
 
         return $this;
     }

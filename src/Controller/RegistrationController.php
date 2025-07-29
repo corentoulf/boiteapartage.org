@@ -4,21 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Circle;
 use App\Entity\User;
+use App\Entity\VerificationRequest;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Stmt\Switch_;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -64,8 +64,6 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setCreatedAt(new DateTime('now'));
-            $em->persist($user);
-            $em->flush();
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -75,7 +73,14 @@ class RegistrationController extends AbstractController
                     ->subject('Merci de confirmer votre Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
+            //record verification request
+            $verificationRequest = new VerificationRequest();
+            $verificationRequest->setRequestedAt(new DateTime('now'));
+            $verificationRequest->setDestinationEmail($user->getEmail());
+            $user->addVerificationRequest($verificationRequest);
 
+            $em->persist($user);
+            $em->flush();
             // auto-log-in the user redirect to what he wanted to do (registrationPurpose)
             switch ($registrationPurpose) {
                 case 'createCircle':
@@ -102,6 +107,36 @@ class RegistrationController extends AbstractController
             'registrationPurpose' => $registrationPurpose,
             'registrationCircleId' => $circle
         ]);
+    }
+    #[Route('/app/verification-email/renvoi', name: 'app_resend_verification_email')]
+    #[IsGranted('requestVerificationEmail')]
+    public function resendVerificationEmail(
+        Request $request, 
+        EntityManagerInterface $em,
+        Security $security
+        ): Response
+    {
+        $user = $this->getUser();
+        
+        // generate a signed url and email it to the user
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            (new TemplatedEmail())
+                ->from(new Address('corentoulf@gmail.com', 'La Boîte à Partage'))
+                ->to($user->getEmail())
+                ->subject('Merci de confirmer votre Email')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
+        //record verification request
+        $verificationRequest = new VerificationRequest();
+        $verificationRequest->setRequestedAt(new DateTime('now'));
+        $verificationRequest->setDestinationEmail($user->getEmail());
+        $user->addVerificationRequest($verificationRequest);
+
+        $em->persist($user);
+        $em->flush();
+
+        $this->addFlash('info', 'Un nouvel e-mail vous a été envoyé sur "' . $user->getEmail() . '" pour valider votre compte. Veuillez vérifier vos SPAMS.');
+        return $this->redirectToRoute('app_user_profile');
     }
 
     #[Route('/verification/email', name: 'app_verify_email')]

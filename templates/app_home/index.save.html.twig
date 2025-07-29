@@ -7,7 +7,56 @@
 
 <div class="container min-vh-100">
   <div class="container">
-      {# CTA : Ajout au placard ; TODO: custom depending on what we want the user to do (eg : create a circle or join one#}
+      {# New user part #}
+      <div class="px-lg-6 mt-4">
+        {% if userCircles|length > 0 %}
+          {% if not is_granted('browse', userCircles[0].circle) %}
+            <div class="alert alert-warning">
+              Pour chercher un objet dans une boîte vous devez :</br>
+              <ul>
+                {% if app.user.isVerified != true %}
+                  <li>
+                    Valider votre email (si vous n'avez pas reçu le mail, <a href="{{path('app_resend_verification_email')}}">cliquez ici</a>)
+                  </li>
+                {% endif %}
+                <li>
+                  Ajouter au moins
+                  <strong>5 objets</strong>
+                  dans
+                  <a class="link-offset-1" href="{{path('app_items')}}">votre placard</a>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+        {% else %}
+        {# User doesn't belong to a circle yet => Invite to create or join one #}
+        <div class="alert alert-warning">
+          Pour chercher un objet dans une boîte vous devez :</br>
+          <ul>
+            {% if app.user.isVerified != true %}
+              <li>
+                Valider votre email
+              </li>
+            {% endif %}
+            <li>
+              <a class="link-offset-1" href="{{path('app_circle_create')}}">Créer une boîte</a>
+              ou en
+              <a class="link-offset-1" href="{{path('app_circle_join')}}">
+                Rejoindre une</a>
+            </li>
+            {% if userItems|length < 5 %}
+            <li>
+              Ajouter au moins
+              <strong>5 objets</strong>
+              dans
+              <a class="link-offset-1"href="{{path('app_item_create')}}">votre placard</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+      {# CTA : Ajout au placard #}
       <div class="d-flex flex-row justify-content-center mt-4 px-lg-5" style="">
         <div class="card card-bg-img-pizza-roll col-12 m-sm-4 p-2">
           <div class="card-body text-center">

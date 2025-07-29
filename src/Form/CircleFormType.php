@@ -40,9 +40,6 @@ class CircleFormType extends AbstractType
                     'Une association' => 'association',
                     'Autre' => 'other'
                 ],
-                'attr' => [
-                    'class' => 's2-select'
-                ],
                 'required' => true,
             ])
             ->add('name', TextType::class, [
