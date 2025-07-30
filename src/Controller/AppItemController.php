@@ -6,6 +6,7 @@ use App\Entity\Item;
 use App\Entity\ItemCategory;
 use App\Entity\ItemCircle;
 use App\Entity\ItemType;
+use App\Entity\UserFavoriteItem;
 use App\Form\ItemFormType;
 use App\Form\ItemBookFormType;
 use App\Form\ItemDefaultFormType;
@@ -298,5 +299,42 @@ class AppItemController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'L\'objet a bien été supprimé');
         return $this->redirectToRoute('app_items');
+    }
+
+    #[Route('/app/objet/{id}/marquer', name: 'app_item_bookmark', requirements: ['id' => '\d+'], options: ['expose' => true])]
+    public function bookmarkItem(Request $request, EntityManagerInterface $em, int $id): Response
+    {
+        $item = $em->getRepository(Item::class)->find($id);
+        if (!$item) {
+            throw $this->createNotFoundException(
+                'L\'objet n\'a pas été trouvé'
+            );
+        }
+        $user = $this->getUser();
+        // check not already favorite
+        $favoriteItem = new UserFavoriteItem();
+        $favoriteItem->setItemId($item);
+        $favoriteItem->setCreatedAt(new DateTime('now'));
+        $favoriteItem->setUserId($user);
+        $em->persist($favoriteItem);
+        $em->flush();
+        return $this->json([]);
+    }
+
+    #[Route('/app/objet/{id}/demarquer', name: 'app_item_unbookmark', requirements: ['id' => '\d+'], options: ['expose' => true])]
+    public function unbookmarkItem(Request $request, EntityManagerInterface $em, int $id): Response
+    {
+        $user = $this->getUser();
+        $favoriteItem = $em->getRepository(UserFavoriteItem::class)->findOneByUserAndItem($user, $id);
+        if (!$favoriteItem) {
+            throw $this->createNotFoundException(
+                'L\'objet favori n\'a pas été trouvé'
+            );
+        }
+        //Delete
+        $em->remove($favoriteItem);
+
+        $em->flush();
+        return $this->json([]);
     }
 }

@@ -226,13 +226,16 @@ class AppCircleController extends AbstractController
             array_push($items, $itemCircle->getItem());
         }
         $items = array_unique($items);
+        //fetch user favorite items
+        $userFavoriteItems = $user->getUserFavoriteItems();
         // $items = $em->getRepository(ItemCircle::class)->findBy(['circle_id'], $circlesToFetch);
 
         return $this->render('app_home/search.html.twig', [
             'controller_name' => 'AppCircleController',
             'items' => $items,
             "searchTerms" => $searchTerms,
-            'itemCategories' => $itemCategories
+            'itemCategories' => $itemCategories,
+            'userFavoriteItems' => $userFavoriteItems
         ]);
     }
 }

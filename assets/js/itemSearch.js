@@ -1,3 +1,8 @@
+import axios from 'axios';
+import routes from './fos_routes.js';
+import Router from '@toyokumo/fos-router';
+Router.setRoutingData(routes);
+
 import List from '../vendor/list.js/list.js.index.js';
 var options = {
     valueNames: [ 
@@ -63,4 +68,55 @@ deleteObjectModal.on('show.bs.modal', function(e){
     // Update modal content    
     $('#deleteObjectModal').find('.item-title').text(itemTitle);
     $('#deleteObjectModal').find('.item-delete-link').attr('href', itemDeleteLink);
+})
+
+
+$('body').on('click', '.btn-bookmark-item', function(e){
+    e.preventDefault();
+    let $btn = $(this)
+    let itemId = $btn.attr('data-item-id')
+    let url = Router.generate('app_item_bookmark', {
+        'id':itemId
+    })
+    axios.post(url)
+        .then(function (response) {
+            if(response.status == 200){
+                $btn
+                    .removeClass('link-dark').removeClass('btn-bookmark-item')
+                    .addClass('link-highlight').addClass('btn-unbookmark-item')
+                $btn.find('i').removeClass('bi-star').addClass('bi-star-fill')
+            }
+        })
+        .catch(function (error) {
+            // handle error
+            // console.log(error);
+        })
+        .finally(function () {
+            // always executed
+        });
+})
+
+$('body').on('click', '.btn-unbookmark-item', function(e){
+    e.preventDefault();
+    let $btn = $(this)
+    let itemId = $btn.attr('data-item-id')
+    let url = Router.generate('app_item_unbookmark', {
+        'id':itemId
+    })
+    axios.post(url)
+        .then(function (response) {
+            if(response.status == 200){
+                $btn
+                    .removeClass('link-highlight').removeClass('btn-unbookmark-item')
+                    .addClass('link-dark').addClass('btn-bookmark-item')
+                $btn.find('i').removeClass('bi-star-fill').addClass('bi-star')
+            }
+        })
+        .catch(function (error) {
+            // handle error
+            // console.log(error);
+        })
+        .finally(function () {
+            // always executed
+        });
 })

@@ -141,4 +141,7 @@ return [
     'string-natural-compare' => [
         'version' => '2.0.3',
     ],
+    '@toyokumo/fos-router' => [
+        'version' => '1.0.5',
+    ],
 ];

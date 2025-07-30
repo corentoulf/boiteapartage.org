@@ -45,8 +45,8 @@
                 <div id="items">
                     <span class="opacity-75"><span id="itemFoundCount">{{items|length}}</span> objet(s)</span>
                     <ul class="list-group list-group-flush mt-3 list">
+                        {% set defaultImgUrl= asset('img/no-cover-picture-alt.svg') %}
                         {% for userItem in items %} 
-                            {% set defaultImgUrl= "https://placehold.co/100x100/C0C0C0/FFFFFF?text=Pas%20de%0Avisuel&font=source-sans-pro" %}
                             <li 
                                 class="list-group-item border-0 rounded p-0 mb-3" 
                                 data-item-title="{{userItem.property1}} {{userItem.property2}} {{userItem.itemType.label}}}}"
@@ -58,20 +58,20 @@
                                         {% if userItem.itemType.category.code == "bibliotheque" %}
                                             {% if userItem.property3 != null %}
                                                 <img 
-                                                    class="img-fluid rounded-start object-fit-cover img-card-item" 
+                                                    class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
                                                     src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : userItem.property3}}"  
                                                     alt="..."
                                                 >    
                                             {% else %}
                                                 <img 
-                                                    class="img-fluid rounded-start object-fit-cover img-card-item" 
+                                                    class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
                                                     src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : defaultImgUrl}}"  
                                                     alt="..." 
                                                 >    
                                             {% endif %}
                                         {% else %}
                                             <img 
-                                                class="img-fluid rounded-start object-fit-cover img-card-item" 
+                                                class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
                                                 src="{{userItem.imageName ? vich_uploader_asset(userItem, 'imageFile') : defaultImgUrl}}"  
                                                 alt="..." 
                                             >

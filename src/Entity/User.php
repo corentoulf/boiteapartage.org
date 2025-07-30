@@ -86,8 +86,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, VerificationRequest>
      */
-    #[ORM\OneToMany(targetEntity: VerificationRequest::class, mappedBy: 'user_id', orphanRemoval: true, cascade:["persist"])]
+    #[ORM\OneToMany(targetEntity: VerificationRequest::class, mappedBy: 'user_id',  cascade: ['persist'], orphanRemoval: true)]
     private Collection $verificationRequests;
+
+    /**
+     * @var Collection<int, UserFavoriteItem>
+     */
+    #[ORM\OneToMany(targetEntity: UserFavoriteItem::class, mappedBy: 'user_id',  cascade: ['persist'], orphanRemoval: true)]
+    private Collection $userFavoriteItems;
 
     public function __construct()
     {
@@ -95,6 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userCircles = new ArrayCollection();
         $this->items = new ArrayCollection();
         $this->verificationRequests = new ArrayCollection();
+        $this->userFavoriteItems = new ArrayCollection();
     }
 
     public function __toString()
@@ -357,6 +364,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($verificationRequest->getUserId() === $this) {
                 $verificationRequest->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserFavoriteItem>
+     */
+    public function getUserFavoriteItems(): Collection
+    {
+        return $this->userFavoriteItems;
+    }
+
+    public function addUserFavoriteItem(UserFavoriteItem $userFavoriteItem): static
+    {
+        if (!$this->userFavoriteItems->contains($userFavoriteItem)) {
+            $this->userFavoriteItems->add($userFavoriteItem);
+            $userFavoriteItem->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserFavoriteItem(UserFavoriteItem $userFavoriteItem): static
+    {
+        if ($this->userFavoriteItems->removeElement($userFavoriteItem)) {
+            // set the owning side to null (unless already changed)
+            if ($userFavoriteItem->getUserId() === $this) {
+                $userFavoriteItem->setUserId(null);
             }
         }
 
