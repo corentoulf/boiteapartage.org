@@ -17,19 +17,36 @@
             </div>
         </div>
         {% if items|length == 0 %}
-            <div class="mt-4">
-                <p class="fs-4" >Hmm... Il semblerait que personne n'ait ajouté d'objets dans vos boîtes. Revenez plus tard !</p>
+            <div class="mt-4 text-center">
+                {% if searchTerms is defined %}
+                    <div class="py-3">
+                        <p class="display-2 fw-light" >{{searchTerms}}</p>
+                        <p class="fs-4" >Nous n'avons rien trouvé de tel... Essayez peut-être la recherche par catégorie ?</p>
+                    </div>
+                    <div class="mt-4">
+                        {% include '_component/category_explorer.html.twig' %}
+                    </div>
+                {% endif %}
+                {% if categoryCode is defined %}
+                    <div class="py-3">
+                        <p class="fs-4" >Nous n'avons rien trouvé dans cette catégorie... Essayez peut-être une autre ?</p>
+                    </div>
+                    <div class="mt-4">
+                        {% include '_component/category_explorer.html.twig' %}
+                    </div>
+                {% endif %}
+                
             </div>
         {% endif %}
         {% if items|length > 0 %}
             <div class="row my-4 px-lg-6">
                 <div class="input-group col-md-8">
-                    <input id="filterItemsInput" class="form-control" type="text" placeholder="Rechercher dans vos objets" aria-label="input search" name="searchTerms">
+                    <input id="filterItemsInput" class="form-control" type="text" placeholder="Filtrer les résultats" aria-label="input search" name="searchTerms">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
                 <div class="col-md-4 mt-2 mt-md-0">
                     <select class="form-select" id="filterItemsCategorySelect">
-                        <option selected value="">Filtrer par catégorie</option>
+                        <option selected  value="">Filtrer par catégorie</option>
                         {% for itemCategory in itemCategories %}
                             <option value="{{itemCategory.code}}">{{itemCategory.label}}</option>
                         {% endfor %}
@@ -86,11 +103,11 @@
                                                 </div>
                                                 <div>
                                                     {% if item in userFavoriteItems|map(i => i.itemId) %}
-                                                        <a href="#" data-item-id="{{item.id}}" class="btn-unbookmark-item link link-highlight link-underline-opacity-0 link-offset-2 link-underline-hover-75 p-0 m-0 position-relative z-3">
+                                                        <a href="#" data-item-id="{{item.id}}" class="btn-unbookmark-item link link-highlight link-underline-opacity-0 link-offset-2 link-underline-hover-75 p-1 m-0 position-relative z-3">
                                                             <i class="bi bi-star-fill fs-5"></i>
                                                         </a>
                                                     {% else %}
-                                                        <a href="#" data-item-id="{{item.id}}" class="btn-bookmark-item link link-dark link-underline-opacity-0 link-offset-2 link-underline-hover-75 p-0 m-0 position-relative z-3">
+                                                        <a href="#" data-item-id="{{item.id}}" class="btn-bookmark-item link link-dark link-underline-opacity-0 link-offset-2 link-underline-hover-75 p-1 m-0 position-relative z-3">
                                                             <i class="bi bi-star fs-5"></i>
                                                         </a>
                                                     {% endif %}

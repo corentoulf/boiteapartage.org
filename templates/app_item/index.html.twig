@@ -43,7 +43,7 @@
             </div>
             <div class="row my-4 px-lg-6">
                 <div id="items">
-                    <span class="opacity-75"><span id="itemFoundCount">{{items|length}}</span> objet(s)</span>
+                    <span class="opacity-75"><span id="itemFoundCount">Vous proposez {{items|length}}</span> objet(s)</span>
                     <ul class="list-group list-group-flush mt-3 list">
                         {% set defaultImgUrl= asset('img/no-cover-picture-alt.svg') %}
                         {% for userItem in items %} 
@@ -142,8 +142,7 @@
                                                             data-bs-item-title="{{cardTitle}}"
                                                             href="#"
                                                         >
-                                                            <i class="bi bi-trash3-fill me-2"></i>
-                                                            Supprimer
+                                                            <i class="bi bi-trash3-fill me-2"></i>Supprimer
                                                         </a>
                                                         
                                                     </li>

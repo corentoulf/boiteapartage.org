@@ -206,34 +206,76 @@ class AppCircleController extends AbstractController
         ]);
     }
     #[Route('/app/recherche', name: 'app_circle_search')]
-    #[IsGranted('browseAll', null, 'Vous n\'avez pas le droit de consulter les boîtes. Avez-vous vérifié votre email et partagé 5 objets ?')]
-    public function browseAll(Request $request, EntityManagerInterface $em): Response
+    // #[IsGranted('browseAll', null, 'Vous n\'avez pas le droit de consulter les boîtes. Avez-vous vérifié votre email et partagé 5 objets ?')]
+    public function search(Request $request, EntityManagerInterface $em): Response
     {
-        $searchTerms = $request->getPayload()->get('searchTerms');
-        $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
-        //find all items that the user can pretend to
         $user = $this->getUser();
-        $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]); //circles the user belongs to
-        //get circles the user belongs to
-        $circlesToFetch = array();
-        foreach ($userCircles as $key => $userCircle) {
-            array_push($circlesToFetch, $userCircle->getCircle()->getId());
-        }
-        //get all user circles items
-        $itemCircles = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch, $user->getId());
-        $items = array();
-        foreach ($itemCircles as $key => $itemCircle) {
-            array_push($items, $itemCircle->getItem());
-        }
-        $items = array_unique($items);
-        //fetch user favorite items
+        $searchTerms = $request->query->get('q');
+        $itemsFoundIds = $em->getRepository(Item::class)->findTerms($user->getId(), $searchTerms);
+        $itemsFoundIds = array_map(fn($value): int => $value['id'], $itemsFoundIds);
+        $itemsFound = $em->getRepository(Item::class)->findAllInArray($itemsFoundIds);
+        // $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]); //circles the user belongs to
+        // $circlesToFetch = array();
+        // foreach ($userCircles as $key => $userCircle) {
+        //     array_push($circlesToFetch, $userCircle->getCircle()->getId());
+        // }
+        // //find all items that the user can pretend to
+        // //get circles the user belongs to
+        // //get all user circles items
+        // $itemCircles = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch, $user->getId());
+        // $items = array();
+        // foreach ($itemCircles as $key => $itemCircle) {
+        //     array_push($items, $itemCircle->getItem());
+        // }
+        // //fetch user favorite items
+        // $items = array_unique($items);
+
         $userFavoriteItems = $user->getUserFavoriteItems();
         // $items = $em->getRepository(ItemCircle::class)->findBy(['circle_id'], $circlesToFetch);
-
+        
+        $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
         return $this->render('app_home/search.html.twig', [
             'controller_name' => 'AppCircleController',
-            'items' => $items,
+            'items' => $itemsFound,
             "searchTerms" => $searchTerms,
+            'itemCategories' => $itemCategories,
+            'userFavoriteItems' => $userFavoriteItems
+        ]);
+    }
+
+    #[Route('/app/explorer/', name: 'app_circle_explore')]
+    // #[IsGranted('browseAll', null, 'Vous n\'avez pas le droit de consulter les boîtes. Avez-vous vérifié votre email et partagé 5 objets ?')]
+    public function explore(Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $categoryCode = $request->query->get('cat');
+        $itemsFoundIds = $em->getRepository(Item::class)->findByCategory($user->getId(), $categoryCode);
+        $itemsFoundIds = array_map(fn($value): int => $value['id'], $itemsFoundIds);
+        $itemsFound = $em->getRepository(Item::class)->findAllInArray($itemsFoundIds);
+        // $userCircles = $em->getRepository(UserCircle::class)->findBy(['user_id' => $user->getId()]); //circles the user belongs to
+        // $circlesToFetch = array();
+        // foreach ($userCircles as $key => $userCircle) {
+        //     array_push($circlesToFetch, $userCircle->getCircle()->getId());
+        // }
+        // //find all items that the user can pretend to
+        // //get circles the user belongs to
+        // //get all user circles items
+        // $itemCircles = $em->getRepository(ItemCircle::class)->findAllInArray($circlesToFetch, $user->getId());
+        // $items = array();
+        // foreach ($itemCircles as $key => $itemCircle) {
+        //     array_push($items, $itemCircle->getItem());
+        // }
+        // //fetch user favorite items
+        // $items = array_unique($items);
+
+        $userFavoriteItems = $user->getUserFavoriteItems();
+        // $items = $em->getRepository(ItemCircle::class)->findBy(['circle_id'], $circlesToFetch);
+        
+        $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
+        return $this->render('app_home/search.html.twig', [
+            'controller_name' => 'AppCircleController',
+            'items' => $itemsFound,
+            "categoryCode" => $categoryCode,
             'itemCategories' => $itemCategories,
             'userFavoriteItems' => $userFavoriteItems
         ]);

@@ -13,9 +13,9 @@
                     <a class="btn btn-primary" href="{{ path('app_item_create') }}"><i class="bi bi-plus-square me-2 fw-bold"></i>Proposer un objet</a>
                 </li>
                 <li class="nav-item mt-2 mt-lg-0 ">
-                    <form class="mx-3 d-none d-lg-flex" role="search" aria-label="search" id="homeSearchForm" method="POST" action="{{path('app_circle_search')}}">
+                    <form class="mx-3 d-none d-lg-flex" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_circle_search')}}">
                         <div class="input-group">
-                            <input class="form-control" type="text" style="" placeholder="Recherche " aria-label="input search" id="searchTermsInput" name="searchTerms">
+                            <input class="form-control" type="text" style="" placeholder="Recherche " aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
                             <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                         </div>
                     </form>
@@ -60,9 +60,9 @@
 <nav class="navbar pt-1 pb-3 border-bottom d-flex justify-content-center d-lg-none">
     <div class="container">
         <div class="w-100">
-            <form class="mx-2" role="search" aria-label="search" id="homeSearchForm" method="POST" action="{{path('app_circle_search')}}">
+            <form class="mx-2" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_circle_search')}}">
                 <div class="input-group">
-                    <input class="form-control" type="text" style="" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="searchTerms">
+                    <input class="form-control" type="text" style="" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
             </form>
