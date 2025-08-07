@@ -1,6 +1,6 @@
 {% extends 'base_auth.html.twig' %}
 
-{% block title %}Recherche • Boîte à Partage{% endblock %}
+{% block title %}Favoris • Boîte à Partage{% endblock %}
 
 {% block body %}
 <div class="container min-vh-100">
@@ -8,10 +8,10 @@
       <div class="container-fluid" >
         {% if items|length > 0 %}
             <div class="d-flex flex-row justify-content-center mt-4 px-lg-5" style="">
-                <div class="card card-bg-img-pizza-roll col-12 m-sm-4 p-2">
+                <div class="card card-bg-img-highlight col-12 m-sm-4 p-2">
                 <div class="card-body text-center px-4">
                     <div class="card-title fs-5 fw-bold " >
-                        Prêt.e à emprunter un objet ?
+                        Ça y est, on se décide à emprunter son petit favori ?
                     </div>
                     <a class="btn btn-primary mt-2 mt-md-4" href="#"><i class="bi bi-journal-text me-2"></i>Consulter notre guide</span></a>
                 </div>
@@ -21,31 +21,19 @@
         {% endif %}
         {% if items|length == 0 %}
             <div class="mt-4 text-center">
-                {% if searchTerms is defined %}
-                    <div class="py-3">
-                        <p class="display-2 fw-light" >{{searchTerms}}</p>
-                        <p class="fs-4" >Nous n'avons rien trouvé de tel... Essayez peut-être la recherche par catégorie ?</p>
-                    </div>
-                    <div class="mt-4">
-                        {% include '_component/category_explorer.html.twig' %}
-                    </div>
-                {% endif %}
-                {% if categoryCode is defined %}
-                    <div class="py-3">
-                        <p class="fs-4" >Il n'y a pas encore d'objet dans cette catégorie...</p>
-                        <p class="fs-4" >Essayez peut-être une autre ?</p>
-                    </div>
-                    <div class="mt-4">
-                        {% include '_component/category_explorer.html.twig' %}
-                    </div>
-                {% endif %}
-                
+                <div class="py-3">
+                    <p class="fs-4" >Vous n'avez pas encore ajouté d'objet en favoris.</p>
+                    <p class="fw-bold fs-4" >On explore les catégories ?</p>
+                </div>
+                <div class="mt-4">
+                    {% include '_component/category_explorer.html.twig' %}
+                </div>
             </div>
         {% endif %}
         {% if items|length > 0 %}
             <div class="row my-4 px-lg-6">
                 <div class="input-group col-md-8">
-                    <input id="filterItemsInput" class="form-control" type="text" placeholder="Filtrer les résultats" aria-label="input search" name="searchTerms">
+                    <input id="filterItemsInput" class="form-control" type="text" placeholder="Filtrer les favoris" aria-label="input search" name="searchTerms">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
                 </div>
                 <div class="col-md-4 mt-2 mt-md-0">
@@ -64,7 +52,7 @@
                     <ul class="list-group list-group-flush mt-3 list">
                         {% set defaultImgUrl= asset('img/no-cover-picture-alt.svg') %}
                         {% for item in items %} 
-                            {{ include('_component/search_item_list_card.html.twig') }}
+                            {{ include('_component/favorite_item_list_card.html.twig') }}
                         {% endfor %}
                     </ul>
                     <ul class="pagination"></ul>

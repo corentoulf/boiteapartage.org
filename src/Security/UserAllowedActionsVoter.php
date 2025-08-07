@@ -95,11 +95,15 @@ class UserAllowedActionsVoter extends Voter
         // If last request was more than 8h ago : OK
         //check last request date
         $now = new DateTime('now');
+        $userVerificationRequests = $user->getVerificationRequests()->toArray();
+        if(empty($userVerificationRequests)) {
+            return true;
+        }
         $lastVerificationRequestSent =
             max(
                 array_map(
                     fn($request): DateTime => $request->getRequestedAt(),
-                    $user->getVerificationRequests()->toArray()
+                    $userVerificationRequests
                 )
             );
         $interval = $now->format('U') - $lastVerificationRequestSent->format('U');

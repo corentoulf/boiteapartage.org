@@ -1,0 +1,124 @@
+<li 
+    class="list-group-item border-0 rounded p-0 mb-3" 
+    data-item-title="{{item.property1}} {{item.property2}} {{item.itemType.label}}}}"
+    data-item-category="{{item.itemType.category.code}}"
+    >
+    <div class="card d-flex flex-row border-dark-subtle" style="max-width: 700px;">
+        {# Vignette #}
+        <div class="col-4 col-md-3 border-right">
+            {% if item.itemType.category.code == "bibliotheque" %}
+                {% if item.property3 != null %}
+                    <img 
+                        class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
+                        src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : item.property3}}"  
+                        alt="..."
+                    >    
+                {% else %}
+                    <img 
+                        class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
+                        src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : defaultImgUrl}}"  
+                        alt="..." 
+                    >    
+                {% endif %}
+            {% else %}
+                <img 
+                    class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
+                    src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : defaultImgUrl}}"  
+                    alt="..." 
+                >
+            {% endif %}
+        </div>
+        {# contenu #}
+        <div class="col-8 col-md-9 d-flex flex-column justify-content-between">
+            {# CONTENT #}
+            <div class="d-flex flex-column h-100 justify-content-between px-3 pt-3 pb-2">
+                {# Titre #}
+                {% set cardTitle = item.property1 %}
+                {% set cardSubtitle = (item.itemType.category.label == "Bibliothèque") ? ' - ' ~ item.property2 : '' %}
+                <div class="d-flex flex-row justify-content-between align-items-top">
+                    <div class="fs-6 text-max-2-lines" title="{{cardTitle}} - {{cardSubtitle}}">
+                        <span class="fw-bold">{{cardTitle}}</span>{{cardSubtitle}}
+                    </div>
+                    <div>
+                        {% if item in userFavoriteItems|map(i => i.itemId) %}
+                            <a href="#" data-item-id="{{item.id}}" class="btn-unbookmark-item link link-highlight link-underline-opacity-0 link-offset-2 link-underline-hover-75 ps-2 p-1 m-0 position-relative z-3">
+                                <i class="bi bi-heart-fill fs-5"></i>
+                            </a>
+                        {% else %}
+                            <a href="#" data-item-id="{{item.id}}" class="btn-bookmark-item link link-dark link-underline-opacity-0 link-offset-2 link-underline-hover-75 ps-2 p-1 m-0 position-relative z-3">
+                                <i class="bi bi-heart fs-5"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {# Catégorie #}
+                <div class="opacity-75 text-max-1-lines" >
+                    <small>{{(item.itemType.category.label ~ ' > ' ~ item.itemType.label)}}</small>
+                </div>
+            </div>
+            
+            {# ACTIONS #}
+            {# boutons d'action #}
+            <div class="d-none justify-content-end align-items-center border-top p-2 text-sm">
+                <a href="{{path('app_item_update', {id: item.id})}}" class="btn btn-sm btn-outline-dark border-0 d-none d-md-block" >
+                    <i class="bi bi-pause-circle me-1"></i>
+                    Mettre en pause
+                </a>
+                <a href="{{path('app_item_update', {id: item.id})}}" class="btn btn-sm btn-outline-dark border-0" >
+                    <i class="bi bi-pen me-1"></i>
+                    Éditer
+                </a>
+                {# more actions #}
+                <div class="btn-group ms-2">
+                    <a href="#" class="link-dark link-offset-2 link-offset-2-hover link-underline-opacity-10 link-underline-opacity-50-hover" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {# Plus #}
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li  class="">
+                            <a 
+                                tabindex="0" 
+                                class="dropdown-item small" 
+                                href="#"
+                            >
+                                <i class="bi bi-pause-circle me-2"></i>Mettre en pause
+                            </a>
+                            
+                        </li>
+                        <li  class="">
+                            <a 
+                                tabindex="0" 
+                                class="dropdown-item small" 
+                                href="path('app_item_update', {id: item.id})}}"
+                            >
+                                <i class="bi bi-pen me-2"></i>Éditer
+                            </a>
+                            
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li  class="">
+                            <a 
+                                tabindex="0" 
+                                class="dropdown-item small text-danger" 
+                                data-bs-toggle="modal" 
+                                data-bs-title="Confirmer la suppression"  
+                                data-bs-target="#deleteObjectModal"
+                                data-bs-item-delete-link="{{path('app_item_delete', {id: item.id})}}"
+                                data-bs-item-title="{{cardTitle}}"
+                                href="#"
+                            >
+                                <i class="bi bi-trash3-fill me-2"></i>
+                                Supprimer
+                            </a>
+                            
+                        </li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {# modal trigger #}
+        <a href="#" class="stretched-link"></a>
+    </div>
+</li>

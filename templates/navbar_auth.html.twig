@@ -22,7 +22,7 @@
                     
                 </li>
                 <li class="nav-item mt-2 mt-lg-0 ">
-                    <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-archive fs-5"></i></span>
                         <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_circle') }}">
                             Boîtes
@@ -30,7 +30,7 @@
                     </div>
                 </li>
                 <li class="nav-item mt-2 mt-lg-0">
-                    <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
                         <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_items') }}">
                             Placard
@@ -38,15 +38,23 @@
                     </div>
                 </li>
                 <li class="nav-item mt-2 mt-lg-0">
-                    <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
+                        <span class=""><i class="bi bi-heart fs-5"></i></span>
+                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_favorite_items') }}">
+                            Favoris
+                        </a>
+                    </div>
+                </li>
+                {# <li class="nav-item mt-2 mt-lg-0 d-none">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-person-circle fs-5"></i></span>
                         <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_profile') }}">
                             Compte
                         </a>
                     </div>
-                </li>
+                </li> #}
                 <li class="nav-item mt-2 mt-lg-0 ">
-                    <div class="d-flex flex-column justify-content-center align-items-center mx-3 position-relative">
+                    <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-list fs-5"></i></span>
                         <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
                             Menu
@@ -102,6 +110,13 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body px-0">
+        <div class="px-2">
+            <div class="d-grid gap-2 ">
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_user_favorite_items') }}"><i class="bi bi-heart me-2"></i>Favoris</a>
+            </div>
+        </div>
+        {# section separator #}
+        <hr class="border border-1 opacity-100">
         {# Section primary actions #}
         <div class="px-2">
             <div class="d-grid gap-2 ">
@@ -157,7 +172,7 @@
                     <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_admin') }}"><i class="bi bi-database-fill-gear me-2"></i>Admin</a>
                 </div>
                 {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
-                    <div class="d-grid gap-2 ">
+                    <div class="d-grid gap-2 mt-2">
                         <form class="row row-cols-lg-auto g-3 align-items-center ms-1" id="usurpateForm" method="GET" action="{{path('app_auth_home')}}">
                             <div class="col-4 d-none">
                                 <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
@@ -165,13 +180,13 @@
                             </div>
                             <div class="col-10">
                                 <label class="visually-hidden" for="inlineFormSelectPref">User</label>
-                                <select name="usurpateEmailSelect" class="form-select">
+                                <select name="usurpateEmailSelect" class="form-select form-select-sm">
                                     <option value="corentoulf@hotmail.com" selected>corentoulf@hotmail.com</option>
                                     <option value="corentoulf@yopmail.com" selected>corentoulf@yopmail.com</option>
                                 </select>
                             </div>
                             <div class="col-2">
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-right"></i></button>
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-arrow-right"></i></button>
                             </div>
                         </form>
                     </div>

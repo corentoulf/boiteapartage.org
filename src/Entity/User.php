@@ -95,6 +95,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: UserFavoriteItem::class, mappedBy: 'user_id',  cascade: ['persist'], orphanRemoval: true)]
     private Collection $userFavoriteItems;
 
+    /**
+     * @var Collection<int, Loan>
+     */
+    #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'lender', orphanRemoval: true)]
+    private Collection $lenderLoans;
+
+    /**
+     * @var Collection<int, Loan>
+     */
+    #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'borrower', orphanRemoval: true)]
+    private Collection $borrowerLoans;
+
     public function __construct()
     {
         $this->ownedCircles = new ArrayCollection();
@@ -102,6 +114,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->items = new ArrayCollection();
         $this->verificationRequests = new ArrayCollection();
         $this->userFavoriteItems = new ArrayCollection();
+        $this->lenderLoans = new ArrayCollection();
+        $this->borrowerLoans = new ArrayCollection();
     }
 
     public function __toString()
@@ -394,6 +408,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userFavoriteItem->getUserId() === $this) {
                 $userFavoriteItem->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Loan>
+     */
+    public function getLenderLoans(): Collection
+    {
+        return $this->lenderLoans;
+    }
+
+    public function addLenderLoan(Loan $lenderLoan): static
+    {
+        if (!$this->lenderLoans->contains($lenderLoan)) {
+            $this->lenderLoans->add($lenderLoan);
+            $lenderLoan->setLender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLenderLoan(Loan $lenderLoan): static
+    {
+        if ($this->lenderLoans->removeElement($lenderLoan)) {
+            // set the owning side to null (unless already changed)
+            if ($lenderLoan->getLender() === $this) {
+                $lenderLoan->setLender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Loan>
+     */
+    public function getBorrowerLoans(): Collection
+    {
+        return $this->borrowerLoans;
+    }
+
+    public function addBorrowerLoan(Loan $borrowerLoan): static
+    {
+        if (!$this->borrowerLoans->contains($borrowerLoan)) {
+            $this->borrowerLoans->add($borrowerLoan);
+            $borrowerLoan->setBorrower($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorrowerLoan(Loan $borrowerLoan): static
+    {
+        if ($this->borrowerLoans->removeElement($borrowerLoan)) {
+            // set the owning side to null (unless already changed)
+            if ($borrowerLoan->getBorrower() === $this) {
+                $borrowerLoan->setBorrower(null);
             }
         }
 

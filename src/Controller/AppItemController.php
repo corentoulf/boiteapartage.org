@@ -337,4 +337,17 @@ class AppItemController extends AbstractController
         $em->flush();
         return $this->json([]);
     }
+    
+    #[Route('/app/favoris', name: 'app_user_favorite_items')]
+    public function user_favorite(EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
+        $favoriteItems = $user->getUserFavoriteItems();
+        return $this->render('app_item/favorite/index.html.twig', [
+            'controller_name' => 'AppUserProfileController',
+            'itemCategories' => $itemCategories,
+            'items' => $favoriteItems
+        ]);
+    }
 }

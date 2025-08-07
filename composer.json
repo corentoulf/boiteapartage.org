@@ -46,6 +46,7 @@
         "symfony/twig-bundle": "7.3.*",
         "symfony/validator": "7.3.*",
         "symfony/web-link": "7.3.*",
+        "symfony/workflow": "7.3.*",
         "symfony/yaml": "7.3.*",
         "symfonycasts/reset-password-bundle": "^1.21",
         "symfonycasts/sass-bundle": "^0.7.0",

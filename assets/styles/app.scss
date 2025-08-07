@@ -304,6 +304,18 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   background-color: #ff929229
 }
 
+.card-bg-img-highlight{
+  border: 0;
+  background-repeat: no-repeat;
+  background-position: -40px 50px; 
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  // background-color:rgb(247, 246, 255);
+  background-color: #ff929229
+}
+
 .card-btn-bibliotheque{
   border: 0;
   background:
