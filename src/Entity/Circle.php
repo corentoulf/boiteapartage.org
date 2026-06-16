@@ -189,11 +189,9 @@ class Circle
 
     public function removeUserCircle(UserCircle $userCircle): static
     {
-        if ($this->userCircles->removeElement($userCircle)) {
-            // set the owning side to null (unless already changed)
-            if ($userCircle->getCircle() === $this) {
-                $userCircle->setCircle(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->userCircles->removeElement($userCircle) && $userCircle->getCircle() === $this) {
+            $userCircle->setCircle(null);
         }
 
         return $this;
@@ -231,11 +229,9 @@ class Circle
 
     public function removeItemCircle(ItemCircle $itemCircle): static
     {
-        if ($this->itemCircles->removeElement($itemCircle)) {
-            // set the owning side to null (unless already changed)
-            if ($itemCircle->getCircle() === $this) {
-                $itemCircle->setCircle(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->itemCircles->removeElement($itemCircle) && $itemCircle->getCircle() === $this) {
+            $itemCircle->setCircle(null);
         }
 
         return $this;
@@ -300,5 +296,13 @@ class Circle
 
         return $this;
     }
-
+    public function hasMember(User $user): bool
+    {
+        foreach ($this->userCircles as $uc) {    
+            if ($uc->getUser() === $user) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

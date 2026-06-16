@@ -23,7 +23,7 @@
                   Ajouter au moins
                   <strong>5 objets</strong>
                   dans
-                  <a class="link-offset-1" href="{{path('app_items')}}">votre placard</a>
+                  <a class="link-offset-1" href="{{path('app_items_mine')}}">votre placard</a>
                 </li>
               </ul>
             </div>
@@ -169,7 +169,7 @@
                   <a class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des objets</a>
                   {# <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create_book')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des livres</a> #}
                   {% if userItems|length > 0 %}
-                    <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_items')}}"><i class="bi bi-eye me-2"></i>Voir tout</a>
+                    <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_items_mine')}}"><i class="bi bi-eye me-2"></i>Voir tout</a>
                   {% endif %}
                 </div>
               </div>

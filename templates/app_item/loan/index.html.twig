@@ -1,0 +1,45 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Mon Placard{% endblock %}
+{% set defaultImgUrl= asset('img/no-cover-picture-alt.svg') %}
+{% set allowClickOnItem = false %}
+{% set cardHighlightedWithShadow = true %}
+{% block body %}
+<div class="container min-vh-100">
+    <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <div class="align-items-center d-flex flex-row justify-content-between">
+            <h1 class="fw-bold fs-3" id="title">Emprunter <span class="text-highlight">{{item.property1}}</span></h1>
+        </div>
+        <div class="row py-4">
+          <div class="col">
+            {{ include('_component/item_card.html.twig') }}
+          </div>
+        </div>
+        <div class="card text-bg-light border-0 p-3">
+          <div class="card-body ">
+            {{ form_errors(form) }}
+            {{ form_start(form) }}
+            <h4>Formulaire de demande d'emprunt</h4>
+            <div class="row mt-4">
+              <div class="col-12 col-md-6">
+                {{ form_row(form.requested_start_date)}}
+              </div>
+              <div class="col-12 col-md-6">
+                {{ form_row(form.requested_end_date)}}
+              </div>
+            </div>
+            {{ form_end(form) }}
+          </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'itemIndex']) }}
+    {% endblock %}
+{% endblock %}

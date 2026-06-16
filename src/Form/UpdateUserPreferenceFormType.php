@@ -27,7 +27,7 @@ class UpdateUserPreferenceFormType extends AbstractType
                 'label'    => 'J\'accepte d\'être contacté par téléphone',
                 'required' => false,
                 'disabled' => !$options['userHasPhone'],
-                'help' => !$options['userHasPhone'] ? 'Ajoutez votre numéro à vos informations pour pouvoir activer le contact par téléphone' : '',
+                'help' => $options['userHasPhone'] ? '' : 'Ajoutez votre numéro à vos informations pour pouvoir activer le contact par téléphone',
                 'label_attr' => [
                     'class' => 'checkbox-switch',
                 ],

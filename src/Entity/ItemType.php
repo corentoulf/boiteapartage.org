@@ -166,11 +166,9 @@ class ItemType
 
     public function removeItem(Item $item): static
     {
-        if ($this->items->removeElement($item)) {
-            // set the owning side to null (unless already changed)
-            if ($item->getItemType() === $this) {
-                $item->setItemType(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->items->removeElement($item) && $item->getItemType() === $this) {
+            $item->setItemType(null);
         }
 
         return $this;

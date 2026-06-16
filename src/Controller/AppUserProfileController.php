@@ -149,7 +149,7 @@ class AppUserProfileController extends AbstractController
     public function delete_account_confirm(Security $security): Response
     {
         //TODO: delete the user and Its data
-        $response = $security->logout(false);
+        $security->logout(false);
         return $this->redirectToRoute('app_home');
     }
 }

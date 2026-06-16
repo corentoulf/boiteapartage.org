@@ -1,0 +1,57 @@
+{% set cardClass = cardHighlightedWithShadow ? 'border-0 border-light-subtle card d-flex flex-row g-0 mw-100 shadow' : 'card d-flex flex-row border-dark-subtle g-0 mw-100'%}
+<div class="{{cardClass}}" style="max-width: 700px;">
+    {# Vignette #}
+    <div class="col-4 col-md-3 border-right">
+        {% if item.itemType.category.code == "bibliotheque" %}
+            {% if item.property3 != null %}
+                <img 
+                    class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
+                    src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : item.property3}}"  
+                    alt="..."
+                >    
+            {% else %}
+                <img 
+                    class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
+                    src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : defaultImgUrl}}"  
+                    alt="..." 
+                >    
+            {% endif %}
+        {% else %}
+            <img 
+                class="img-fluid rounded-start-1 object-fit-cover img-card-item" 
+                src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : defaultImgUrl}}"  
+                alt="..." 
+            >
+        {% endif %}
+    </div>
+    {# contenu #}
+    <div class="col-8 col-md-9 d-flex flex-column justify-content-between">
+        <div class="d-flex flex-column h-100 justify-content-between px-3 pt-3 pb-2">
+            {# Titre #}
+            {% set cardTitle = item.property1 %}
+            {% set cardSubtitle = (item.itemType.category.label == "Bibliothèque") ? ' - ' ~ item.property2 : '' %}
+            <div class="d-flex flex-row justify-content-between align-items-top">
+                <div class="fs-6 text-max-2-lines" title="{{cardTitle}} - {{cardSubtitle}}">
+                    <span class="fw-bold">{{cardTitle}}</span>{{cardSubtitle}}
+                </div>
+                <div>
+                    {% if item in userFavoriteItems|map(i => i.itemId) %}
+                        <a href="#" data-item-id="{{item.id}}" class="btn-unbookmark-item link link-highlight link-underline-opacity-0 link-offset-2 link-underline-hover-75 ps-2 p-1 m-0 position-relative z-3">
+                            <i class="bi bi-heart-fill fs-5"></i>
+                        </a>
+                    {% else %}
+                        <a href="#" data-item-id="{{item.id}}" class="btn-bookmark-item link link-dark link-underline-opacity-0 link-offset-2 link-underline-hover-75 ps-2 p-1 m-0 position-relative z-3">
+                            <i class="bi bi-heart fs-5"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            {# Catégorie #}
+            <div class="opacity-75 text-max-1-lines" >
+                <small>{{(item.itemType.category.label ~ ' > ' ~ item.itemType.label)}}</small>
+            </div>
+        </div>
+    </div>
+    {# modal trigger #}
+    {% if allowClickOnItem %}<a href="{{path('app_loan_request', {id: item.id})}}" class="stretched-link"></a>{% endif %}
+</div>

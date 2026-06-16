@@ -16,6 +16,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 class ItemTypeCrudController extends AbstractCrudController
 {
+    /**
+     * @var \EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator
+     */
+    public $adminUrlGenerator;
     public function __construct(AdminUrlGenerator $adminUrlGenerator)
     {
         $this->adminUrlGenerator = $adminUrlGenerator;

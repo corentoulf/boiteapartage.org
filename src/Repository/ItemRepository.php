@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Circle;
 use App\Entity\Item;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -29,11 +31,10 @@ class ItemRepository extends ServiceEntityRepository
                 item.id IN (
                     SELECT item_id
                     FROM item_circle 
-                    WHERE circle_id IN (
-                        SELECT circle_id 
+                    WHERE circle IN (
+                        SELECT circle
                         FROM public.user_circle
-                        WHERE user_circle.user_id_id = :uid
-                    
+                        WHERE user_circle.user = :uid
                     )
                 )
             AND
@@ -54,40 +55,33 @@ class ItemRepository extends ServiceEntityRepository
    /**
     * @return Item[] Returns an array of Item ids
     */
-    public function findByCategory($userId, $categoryCode): array
-    {
-         $conn = $this->getEntityManager()->getConnection();
-         $sql = "
-            SELECT i.id
-            FROM item i
-            LEFT JOIN item_type it ON i.item_type_id = it.id 
-            LEFT JOIN item_category ic ON it.category_id = ic.id 
+   public function findAllowedId($userId, $itemId): array
+   {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "
+            SELECT item.id
+            FROM public.item
             WHERE 
-                i.id IN (
+                item.id = (
                     SELECT item_id
-                    FROM item_circle 
-                    WHERE circle_id IN (
-                        SELECT circle_id 
+                    FROM public.item_circle 
+                    WHERE circle IN (
+                        SELECT circle 
                         FROM public.user_circle
-                        WHERE user_circle.user_id_id = :uid
-                    
+                        WHERE user_circle.user = :uid
                     )
+                    AND item_circle.item_id = :iid
+                    LIMIT 1
                 )
             AND
-                i.owner_id <> :uid
-            AND
-                ic.code = :categoryCode
+                item.owner_id <> :uid;
+        ";
+        // $terms = '%'.addcslashes($searchTerms, '%_').'%';
+        $resultSet = $conn->executeQuery($sql, ['uid' => $userId, 'iid' => $itemId]);
 
-            GROUP BY i.id, ic.code
-            ORDER BY i.id DESC;
-
-         ";
-         // $terms = '%'.addcslashes($searchTerms, '%_').'%';
-         $resultSet = $conn->executeQuery($sql, ['uid' => $userId, 'categoryCode' => $categoryCode]);
- 
-         // returns an array of arrays (i.e. a raw data set)
-         return $resultSet->fetchAllAssociative();
-    }
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+   }
 
    /**
     * @return Item[] Returns an array of Item objects
@@ -103,13 +97,51 @@ class ItemRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-//    public function findOneBySomeField($value): ?Item
-//    {
-//        return $this->createQueryBuilder('i')
-//            ->andWhere('i.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+    public function findWithCirclesAndMembers(int $id): ?Item
+    {
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.itemCircles', 'ic')->addSelect('ic')
+            ->leftJoin('ic.circle', 'c')->addSelect('c')
+            ->leftJoin('c.userCircles', 'uc')->addSelect('uc')
+            ->leftJoin('uc.user', 'u')->addSelect('u')
+            ->where('i.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findByKeywordAndCategory(
+        User    $user,
+        ?string $keyword = null,
+        ?string $category = null,
+    ): array {
+        $qb = $this->createQueryBuilder('i')
+            ->innerJoin('i.itemCircles', 'ic')
+            ->innerJoin('ic.circle', 'c')
+            ->leftJoin('c.userCircles', 'uc')
+            ->leftJoin('uc.user', 'u')
+            ->addSelect('ic', 'c')
+            ->where('u = :user')
+            ->andWhere('i.owner != :user')
+            ->setParameter('user', $user)
+            ->groupBy('i.id, ic.id, c.id')
+            ->orderBy('i.id', 'DESC')
+            ;
+
+        if ($keyword !== null) {
+            $qb->andWhere(
+                'LOWER(i.property_1) LIKE LOWER(:keyword)
+                OR LOWER(i.property_2) LIKE LOWER(:keyword)'
+            )
+            ->setParameter('keyword', '%' . $keyword . '%');
+        }
+        if ($category !== null) {
+            $qb->innerJoin('i.itemType', 'type')
+               ->innerJoin('type.category', 'cat')
+               ->andWhere('cat.code = :category')
+               ->setParameter('category', $category);
+        }
+        return $qb->getQuery()->getResult();
+    }
 }

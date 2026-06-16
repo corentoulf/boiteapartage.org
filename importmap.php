@@ -55,7 +55,7 @@ return [
         'version' => '2.11.8',
     ],
     'jquery' => [
-        'version' => '3.7.1',
+        'version' => '4.0.0',
     ],
     'datatables.net-bs5' => [
         'version' => '2.0.4',
@@ -90,10 +90,10 @@ return [
         'version' => '0.4.8',
     ],
     'select2' => [
-        'version' => '4.1.0-rc.0',
+        'version' => '4.1.0',
     ],
     'select2/dist/css/select2.min.css' => [
-        'version' => '4.1.0-rc.0',
+        'version' => '4.1.0',
         'type' => 'css',
     ],
     'raf' => [

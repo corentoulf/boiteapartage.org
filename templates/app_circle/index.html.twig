@@ -5,7 +5,7 @@
 {% block body %}
 
 {% set circleTypes = {
-    'building': 'Une Résidence ou un immeuble',
+    'building': 'Une résidence ou un immeuble',
     'district': 'Un quartier',
     'village': 'Un hameau ou un village',
     'company': 'Une entreprise',
@@ -28,7 +28,7 @@
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-center">
                 <div class="fw-bold fs-4">
-                  {{userCircle.circle.name}} {% if userCircle.circle.createdBy == app.user %}<span class="fw-light fs-6">(propriétaire)</span>{% endif %}
+                  {{userCircle.circle.name}}{% if userCircle.circle.createdBy == app.user %}<span class="fw-light fs-6 fst-italic">créé par vous</span>{% endif %}
                 </div>
                 <a class="link-dark ms-auto card-more-info collapsed" data-bs-toggle="collapse" href="#circleInfo{{loop.index}}" role="button" aria-expanded="false" aria-controls="circleInfo{{loop.index}}">
                   <i class="bi bi-chevron-down"></i>
@@ -118,19 +118,6 @@
     </div>
   </div>
 </div>
-
-
-{# <div class="container">
-  <div class="row">
-    <div class="col-md-6 p-5 my-4 ">
-      <div class=" p-5 ">
-        <h1 class="fs-3 fw-bold mb-4">Boîtes à partage</h1>
-        {{ include('app_circle/circle_list_component.html.twig') }}
-      </div>
-    </div>
-  </div>
-<p class="result"></p>
-</div> #}
 {% endblock %}
 {% block javascripts %}
     {% block importmap %}

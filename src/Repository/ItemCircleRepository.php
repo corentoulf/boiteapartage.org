@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Circle;
 use App\Entity\ItemCircle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -37,14 +38,4 @@ class ItemCircleRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    //    public function findOneBySomeField($value): ?ItemCircle
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

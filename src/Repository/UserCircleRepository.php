@@ -22,7 +22,7 @@ class UserCircleRepository extends ServiceEntityRepository
         public function findByUserAndCircleId($userId, $circleId): array
         {
             return $this->createQueryBuilder('uc')
-                ->andWhere('uc.user_id = :user')
+                ->andWhere('uc.user = :user')
                 ->andWhere('uc.circle = :circle')
                 ->setParameter('user', $userId)
                 ->setParameter('circle', $circleId)

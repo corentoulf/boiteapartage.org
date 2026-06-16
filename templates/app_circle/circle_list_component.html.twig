@@ -22,7 +22,7 @@
 </ul>
  #}
 {% set circleTypes = {
-    'building': 'Une Résidence ou un immeuble',
+    'building': 'Une Rrsidence ou un immeuble',
     'district': 'Un quartier',
     'village': 'Un hameau ou un village',
     'company': 'Une entreprise',
@@ -36,7 +36,7 @@
       <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#circle{{loop.index}}" aria-expanded="false" aria-controls="circle{{loop.index}}">
           <div class="fw-bold">{{userCircle.circle.name}}
-            {% if userCircle.circle.createdBy == app.user %}<span class="fw-light">(propriétaire)</span>{% endif %}
+            {% if userCircle.circle.createdBy == app.user %}<span class="fw-light fs-6 fst-italic">créé par vous-même</span>{% endif %}
           </div>
       </h2>
       <div id="circle{{loop.index}}" class="accordion-collapse collapse" data-bs-parent="#accordionCircles">

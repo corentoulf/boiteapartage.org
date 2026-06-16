@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, UserCircle>
      */
-    #[ORM\OneToMany(targetEntity: UserCircle::class, mappedBy: 'user_id', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserCircle::class, mappedBy: 'user', cascade: ['persist'], orphanRemoval: true)]
     private Collection $userCircles;
 
 
@@ -86,13 +86,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, VerificationRequest>
      */
-    #[ORM\OneToMany(targetEntity: VerificationRequest::class, mappedBy: 'user_id',  cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: VerificationRequest::class, mappedBy: 'user',  cascade: ['persist'], orphanRemoval: true)]
     private Collection $verificationRequests;
 
     /**
      * @var Collection<int, UserFavoriteItem>
      */
-    #[ORM\OneToMany(targetEntity: UserFavoriteItem::class, mappedBy: 'user_id',  cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: UserFavoriteItem::class, mappedBy: 'user',  cascade: ['persist'], orphanRemoval: true)]
     private Collection $userFavoriteItems;
 
     /**
@@ -254,11 +254,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeUserCircle(UserCircle $userCircle): static
     {
-        if ($this->userCircles->removeElement($userCircle)) {
-            // set the owning side to null (unless already changed)
-            if ($userCircle->getUserId() === $this) {
-                $userCircle->setUserId(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->userCircles->removeElement($userCircle) && $userCircle->getUserId() === $this) {
+            $userCircle->setUserId(null);
         }
 
         return $this;
@@ -296,11 +294,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeItem(Item $item): static
     {
-        if ($this->items->removeElement($item)) {
-            // set the owning side to null (unless already changed)
-            if ($item->getOwner() === $this) {
-                $item->setOwner(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->items->removeElement($item) && $item->getOwner() === $this) {
+            $item->setOwner(null);
         }
 
         return $this;
@@ -374,11 +370,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeVerificationRequest(VerificationRequest $verificationRequest): static
     {
-        if ($this->verificationRequests->removeElement($verificationRequest)) {
-            // set the owning side to null (unless already changed)
-            if ($verificationRequest->getUserId() === $this) {
-                $verificationRequest->setUserId(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->verificationRequests->removeElement($verificationRequest) && $verificationRequest->getUserId() === $this) {
+            $verificationRequest->setUserId(null);
         }
 
         return $this;
@@ -404,11 +398,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeUserFavoriteItem(UserFavoriteItem $userFavoriteItem): static
     {
-        if ($this->userFavoriteItems->removeElement($userFavoriteItem)) {
-            // set the owning side to null (unless already changed)
-            if ($userFavoriteItem->getUserId() === $this) {
-                $userFavoriteItem->setUserId(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->userFavoriteItems->removeElement($userFavoriteItem) && $userFavoriteItem->getUserId() === $this) {
+            $userFavoriteItem->setUserId(null);
         }
 
         return $this;
@@ -434,11 +426,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeLenderLoan(Loan $lenderLoan): static
     {
-        if ($this->lenderLoans->removeElement($lenderLoan)) {
-            // set the owning side to null (unless already changed)
-            if ($lenderLoan->getLender() === $this) {
-                $lenderLoan->setLender(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->lenderLoans->removeElement($lenderLoan) && $lenderLoan->getLender() === $this) {
+            $lenderLoan->setLender(null);
         }
 
         return $this;
@@ -464,11 +454,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeBorrowerLoan(Loan $borrowerLoan): static
     {
-        if ($this->borrowerLoans->removeElement($borrowerLoan)) {
-            // set the owning side to null (unless already changed)
-            if ($borrowerLoan->getBorrower() === $this) {
-                $borrowerLoan->setBorrower(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->borrowerLoans->removeElement($borrowerLoan) && $borrowerLoan->getBorrower() === $this) {
+            $borrowerLoan->setBorrower(null);
         }
 
         return $this;

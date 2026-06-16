@@ -425,9 +425,16 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   background-size: cover;
 }
 
-
+.required::after{
+  content: "*";
+  color: $pale-red
+}
 .img-card-item{
   min-width: -webkit-fill-available;
+  max-height: 150px;
+  min-height: 150px;
+}
+.img-item{
   max-height: 150px;
   min-height: 150px;
 }

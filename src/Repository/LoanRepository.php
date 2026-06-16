@@ -16,20 +16,24 @@ class LoanRepository extends ServiceEntityRepository
         parent::__construct($registry, Loan::class);
     }
 
-//    /**
-//     * @return Loan[] Returns an array of Loan objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Loan[] Returns an array of Loan objects
+    */
+   public function findPendingByItemBorrower($item, $borrower): array
+   {
+       return $this->createQueryBuilder('l')
+           ->andWhere('l.borrower = :b')
+           ->andWhere('l.item = :i')
+           ->andWhere('l.status IN (:statuses)')
+           ->setParameter('b', $borrower)
+           ->setParameter('i', $item)
+           ->setParameter('statuses', ['requested', 'accepted', 'lent'])
+           ->orderBy('l.id', 'ASC')
+           ->setMaxResults(1)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Loan
 //    {

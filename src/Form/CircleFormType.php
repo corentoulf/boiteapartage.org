@@ -33,7 +33,7 @@ class CircleFormType extends AbstractType
             ->add('circle_type', ChoiceType::class, [
                 'label' => 'Cette boîte à partage est pour :',
                 'choices' => [
-                    'Une Résidence ou un immeuble' => 'building',
+                    'Une résidence ou un immeuble' => 'building',
                     'Un quartier' => 'district',
                     'Un hameau ou un village' => 'village',
                     'Une entreprise' => 'company',

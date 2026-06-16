@@ -1,2 +1,35 @@
 framework:
-    workflows: null
+    workflows: 
+        loan_lifecycle:
+            type: 'state_machine' # or 'state_machine'
+            audit_trail:
+                enabled: true
+            marking_store:
+                type: 'method'
+                property: 'status'
+            supports:
+                - App\Entity\Loan
+            initial_marking: requested
+            places:          # defining places manually is optional
+                - requested
+                - accepted
+                - rejected
+                - lent
+                - returned
+                - cancelled
+            transitions:
+                accept:
+                    from: requested
+                    to:   accepted
+                reject:
+                    from: requested
+                    to:   rejected
+                lend:
+                    from: accepted
+                    to:   lent
+                return:
+                    from: lent
+                    to: returned
+                cancel:
+                    from: requested, accepted
+                    to: cancelled

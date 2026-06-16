@@ -30,7 +30,6 @@ class ItemCategory
 
     public function __construct()
     {
-        $this->items = new ArrayCollection();
         $this->itemTypes = new ArrayCollection();
     }
 
@@ -76,11 +75,9 @@ class ItemCategory
 
     public function removeItemType(ItemType $itemType): static
     {
-        if ($this->itemTypes->removeElement($itemType)) {
-            // set the owning side to null (unless already changed)
-            if ($itemType->getCategory() === $this) {
-                $itemType->setCategory(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->itemTypes->removeElement($itemType) && $itemType->getCategory() === $this) {
+            $itemType->setCategory(null);
         }
 
         return $this;

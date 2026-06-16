@@ -28,14 +28,27 @@ class Loan
     #[ORM\Column]
     private ?\DateTime $requested_end_date = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTime $start_date = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTime $end_date = null;
 
     #[ORM\Column]
     private ?\DateTime $created_at = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $request_message = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $response_message = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $status = null;
+
+    #[ORM\ManyToOne(inversedBy: 'loans')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Item $item = null;
 
     public function getId(): ?int
     {
@@ -122,6 +135,52 @@ class Loan
     public function setCreatedAt(\DateTime $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getRequestMessage(): ?string
+    {
+        return $this->request_message;
+    }
+
+    public function setRequestMessage(?string $request_message): static
+    {
+        $this->request_message = $request_message;
+
+        return $this;
+    }
+
+    public function getResponseMessage(): ?string
+    {
+        return $this->response_message;
+    }
+
+    public function setResponseMessage(?string $response_message): static
+    {
+        $this->response_message = $response_message;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status, array $context = []): void
+    {
+        $this->status = $status;
+    }
+
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    public function setItem(?Item $item): static
+    {
+        $this->item = $item;
 
         return $this;
     }

@@ -20,19 +20,15 @@ class UserAllowedActionsVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         // case browse one circle
-        if ($subject instanceof Circle && in_array($attribute, [self::BROWSE])){
+        if ($subject instanceof Circle && $attribute === self::BROWSE){
             return true;
         }
         // case browse all
-        if (in_array($attribute, [self::BROWSE_ALL])){
+        if ($attribute === self::BROWSE_ALL){
             return true;
         }
         // case verification email request
-        if (in_array($attribute, [self::CAN_REQUEST_VERIFICATION_EMAIL])){
-            return true;
-        }
-
-        return false;
+        return $attribute === self::CAN_REQUEST_VERIFICATION_EMAIL;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
@@ -62,32 +58,20 @@ class UserAllowedActionsVoter extends Voter
         //check that the user is in that circle
         $userCircles = $user->getUserCircles();
         $userIsInCircle = false;
-        foreach ($userCircles as $key => $uc) {
+        foreach ($userCircles as $uc) {
             if($uc->getCircle()->getId() == $circle->getId()){ $userIsInCircle = true; }
         }
-        if (
-            count($user->getItems())>=5 && //check user has shared 5 objects at least
-            $userIsInCircle === true &&
-            $user->isVerified()
-        ) {
-            return true;
-        }
-
-        return false;
+        return count($user->getItems())>=5 && //check user has shared 5 objects at least
+        $userIsInCircle &&
+        $user->isVerified();
     }
 
     private function canBrowseAll(User $user): bool
     {
         // true if they have verified their email AND have add at least 5 objects they can browse any circle
         // It's not here that we check which circles the user belongs to, It's done in the controller
-        if (
-            count($user->getItems())>=5 && //check user has shared 5 objects at least
-            $user->isVerified()
-        ) {
-            return true;
-        }
-
-        return false;
+        return count($user->getItems())>=5 && //check user has shared 5 objects at least
+        $user->isVerified();
     }
 
     private function canRequestVerificationEmail(User $user): bool
@@ -108,10 +92,6 @@ class UserAllowedActionsVoter extends Voter
             );
         $interval = $now->format('U') - $lastVerificationRequestSent->format('U');
         //if last request > 8h ago OK
-        if($interval > 28800){
-            return true;
-        }
-
-        return false;
+        return $interval > 28800;
     }
 }

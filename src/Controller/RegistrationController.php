@@ -86,19 +86,15 @@ class RegistrationController extends AbstractController
                 case 'createCircle':
                     $security->login($user, 'form_login');
                     return $this->redirectToRoute('app_circle_create');
-                    break;
                 case 'joinCircle':
                     $security->login($user, 'form_login');
                     return $this->redirectToRoute('app_circle_join');
-                    break;
                 case 'joinCircleId':
                     $security->login($user, 'form_login');
                     return $this->redirectToRoute('app_circle_join_identified', ['shortId' => $circle->getShortId()]);
-                    break;
                             
                 default:
-                    return $security->login($user, 'form_login'); //default success login path
-                    break;
+                    return $security->login($user, 'form_login');
             }
         }
 

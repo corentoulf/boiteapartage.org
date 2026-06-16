@@ -17,7 +17,7 @@ class UserCircleCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('user_id'),
+            AssociationField::new('user'),
             AssociationField::new('circle'),
             DateTimeField::new('created_at')
         ];

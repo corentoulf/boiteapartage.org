@@ -31,13 +31,13 @@ class UserFavoriteItemRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-       public function findOneByUserAndItem($user_id, $item_id): ?UserFavoriteItem
+       public function findOneByUserAndItem($user, $item): ?UserFavoriteItem
        {
            return $this->createQueryBuilder('u')
-               ->andWhere('u.user_id = :uid')
+               ->andWhere('u.user = :uid')
                ->andWhere('u.item_id = :iid')
-               ->setParameter('uid', $user_id)
-               ->setParameter('iid', $item_id)
+               ->setParameter('uid', $user)
+               ->setParameter('iid', $item)
                ->getQuery()
                ->getOneOrNullResult()
            ;

@@ -13,7 +13,7 @@
                     <a class="btn btn-primary" href="{{ path('app_item_create') }}"><i class="bi bi-plus-square me-2 fw-bold"></i>Proposer un objet</a>
                 </li>
                 <li class="nav-item mt-2 mt-lg-0 ">
-                    <form class="mx-3 d-none d-lg-flex" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_circle_search')}}">
+                    <form class="mx-3 d-none d-lg-flex" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_items_search')}}">
                         <div class="input-group">
                             <input class="form-control" type="text" style="" placeholder="Recherche " aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
                             <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
@@ -21,7 +21,7 @@
                     </form>
                     
                 </li>
-                <li class="nav-item mt-2 mt-lg-0 ">
+                <li class="nav-item mt-2 mt-lg-0 d-none">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-archive fs-5"></i></span>
                         <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_circle') }}">
@@ -29,10 +29,10 @@
                         </a>
                     </div>
                 </li>
-                <li class="nav-item mt-2 mt-lg-0">
+                <li class="nav-item mt-2 mt-lg-0 d-none">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_items') }}">
+                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_items_mine') }}">
                             Placard
                         </a>
                     </div>
@@ -45,14 +45,14 @@
                         </a>
                     </div>
                 </li>
-                {# <li class="nav-item mt-2 mt-lg-0 d-none">
+                <li class="nav-item mt-2 mt-lg-0">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-person-circle fs-5"></i></span>
                         <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_profile') }}">
-                            Compte
+                            Mon compte
                         </a>
                     </div>
-                </li> #}
+                </li>
                 <li class="nav-item mt-2 mt-lg-0 ">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-list fs-5"></i></span>
@@ -68,7 +68,7 @@
 <nav class="navbar pt-1 pb-3 border-bottom d-flex justify-content-center d-lg-none">
     <div class="container">
         <div class="w-100">
-            <form class="mx-2" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_circle_search')}}">
+            <form class="mx-2" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_items_search')}}">
                 <div class="input-group">
                     <input class="form-control" type="text" style="" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
@@ -87,7 +87,7 @@
                     Votre email est en attente de validation.
                 </span>
                 {% if is_granted('requestVerificationEmail') %}
-                    Pour recevoir un nouveau lien : <a class="link-dark" href={{path('app_resend_verification_email')}}>cliquer ici</a>.
+                    Pour recevoir un nouveau lien : <a class="link-dark" href={{path('app_resend_verification_email')}}>cliquez ici</a>.
                 {% endif %}
             </div>
         </div>
@@ -112,7 +112,16 @@
       <div class="modal-body px-0">
         <div class="px-2">
             <div class="d-grid gap-2 ">
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_item_create') }}"><i class="bi bi-plus-square me-2"></i>Proposer un nouvel objet</a>
+            </div>
+            <div class="d-grid gap-2 ">
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_items_search', parameters = {q: ''}) }}"><i class="bi bi-search me-2"></i>Rechercher un objet</a>
+            </div>
+            <div class="d-grid gap-2 ">
                 <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_user_favorite_items') }}"><i class="bi bi-heart me-2"></i>Favoris</a>
+            </div>
+            <div class="d-grid gap-2 d-none">
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_items_mine') }}"><i class="bi bi-bookshelf me-2"></i>Mon Placard</a>
             </div>
         </div>
         {# section separator #}
@@ -120,27 +129,16 @@
         {# Section primary actions #}
         <div class="px-2">
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_item_create') }}"><i class="bi bi-plus-circle me-2"></i>Proposer un objet</a>
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_items_mine') }}"><i class="bi bi-bookshelf me-2"></i>Mon placard</a>
             </div>
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle_join') }}"><i class="bi bi-arrow-right-square me-2"></i>Rejoindre une boîte</a>
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle') }}"><i class="bi bi-archive me-2"></i>Mes Boîtes</a>
             </div>
             <div class="d-grid gap-2 ">
                 <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle_create') }}"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
             </div>
-        </div>
-        {# section separator #}
-        <hr class="border border-1 opacity-100">
-        {# Section modules #}
-        <div class="px-2">
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle') }}"><i class="bi bi-archive me-2"></i>Boîtes</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_items') }}"><i class="bi bi-bookshelf me-2"></i>Placard</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_user_profile') }}"><i class="bi bi-person-circle me-2"></i>Compte</a>
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle_join') }}"><i class="bi bi-arrow-right-square me-2"></i>Rejoindre une boîte</a>
             </div>
         </div>
         {# section separator #}
@@ -156,14 +154,12 @@
         </div>
         {# section separator #}
         <hr class="border border-1 border-dark opacity-50">
-        {# deconnexion #}
-        {% if app.user %}
-            <div class="px-2">
-                <div class="d-grid gap-2 ">
-                    <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</a>
-                </div>
+        {# Section modules #}
+        <div class="px-2 mt-auto">
+            <div class="d-grid gap-2 ">
+                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_user_profile') }}"><i class="bi bi-person-circle me-2"></i>Mon compte</a>
             </div>
-        {% endif %}
+        </div>
         {# ADMIN #}
         {% if is_granted("ROLE_ADMIN") %}
             <hr class="border border-1 opacity-100">

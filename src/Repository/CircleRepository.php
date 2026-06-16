@@ -22,8 +22,8 @@ class CircleRepository extends ServiceEntityRepository
     //    public function findByUserAndCircleId($userId, $circleId): array
     //    {
     //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.user_id = :user')
-    //            ->andWhere('c.circle_id = :circle')
+    //            ->andWhere('c.user = :user')
+    //            ->andWhere('c.circle = :circle')
     //            ->setParameter('user', $userId)
     //            ->setParameter('circle', $circleId)
     //            ->getQuery()
