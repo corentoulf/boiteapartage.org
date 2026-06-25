@@ -7,6 +7,7 @@ use App\Entity\Item;
 use App\Entity\ItemCategory;
 use App\Entity\ItemCircle;
 use App\Entity\ItemType;
+use App\Entity\Loan;
 use App\Entity\User;
 use App\Entity\UserCircle;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -55,6 +56,7 @@ class AdminDashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Types d\'objet', 'fas fa-list', ItemType::class),
             MenuItem::linkToCrud('Objets', 'fas fa-list', Item::class),
             MenuItem::linkToCrud('Objets X Boîtes', 'fas fa-list', ItemCircle::class),
+            MenuItem::linkToCrud('Emprunts', 'fas fa-arrow-right-arrow-left', Loan::class),
             MenuItem::section('Utilisateurs'),
             MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class),
             MenuItem::linkToCrud('Boîtes', 'fas fa-user', Circle::class),

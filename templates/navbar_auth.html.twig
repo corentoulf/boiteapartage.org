@@ -1,79 +1,48 @@
-<nav class="navbar navbar-expand-lg justify-content-between border-lg-bottom py-1">
+<nav class="navbar navbar-expand-lg justify-content-between py-1 bg-primary">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="{{path('app_auth_home')}}">
-            <img class="" src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="35" height="35">
-            <span class="navbar-brand fw-bold ms-0 ms-2">Boîte à Partage</span>
+            <img class="d-none" src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="35" height="35">
+            <span class="navbar-brand fs-4 ff-serif ms-0 ms-2 text-bg-primary">boîte à partage<span class="ms-2 text-highlight">●</span></span>
         </a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
+        <button class="navbar-toggler border-0" data-bs-theme="dark" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarMenuAuth">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                <li class="nav-item mt-2 mt-lg-0 ">
-                    <a class="btn btn-primary" href="{{ path('app_item_create') }}"><i class="bi bi-plus-square me-2 fw-bold"></i>Proposer un objet</a>
-                </li>
-                <li class="nav-item mt-2 mt-lg-0 ">
+                <li class="nav-item mt-2 mt-lg-0 text-bg-primary">
                     <form class="mx-3 d-none d-lg-flex" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_items_search')}}">
                         <div class="input-group">
-                            <input class="form-control" type="text" style="" placeholder="Recherche " aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+                            <input class="form-control" type="text" style="" placeholder="Rechercher un objet..." aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
+                            <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i></button>
                         </div>
                     </form>
                     
                 </li>
-                <li class="nav-item mt-2 mt-lg-0 d-none">
-                    <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
-                        <span class=""><i class="bi bi-archive fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_circle') }}">
-                            Boîtes
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item mt-2 mt-lg-0 d-none">
-                    <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
-                        <span class=""><i class="bi bi-bookshelf fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_items_mine') }}">
-                            Placard
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item mt-2 mt-lg-0">
+                <li class="d-none nav-item mt-2 mt-lg-0 text-bg-primary">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-heart fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_favorite_items') }}">
+                        <a class="small stretched-link fw-light text-bg-primary link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_favorite_items') }}">
                             Favoris
                         </a>
                     </div>
                 </li>
-                <li class="nav-item mt-2 mt-lg-0">
+                <li class="d-none nav-item mt-2 mt-lg-0 text-bg-primary">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-person-circle fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_profile') }}">
+                        <a class="small stretched-link fw-light text-bg-primary link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="{{ path('app_user_profile') }}">
                             Mon compte
                         </a>
                     </div>
                 </li>
-                <li class="nav-item mt-2 mt-lg-0 ">
+                <li class="nav-item mt-2 mt-lg-0 text-bg-primary">
                     <div class="d-flex flex-column justify-content-center align-items-center mx-2 position-relative">
                         <span class=""><i class="bi bi-list fs-5"></i></span>
-                        <a class="small stretched-link fw-light text-dark link-dark link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
+                        <a class="small stretched-link fw-light text-bg-primary link-underline link-underline-opacity-0 link-offset-2 link-underline-opacity-75-hover" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-label="Toggle navigation">
                             Menu
                         </a>
                     </div>
                 </li>
             </ul>
-        </div>
-    </div>
-</nav>
-<nav class="navbar pt-1 pb-3 border-bottom d-flex justify-content-center d-lg-none">
-    <div class="container">
-        <div class="w-100">
-            <form class="mx-2" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_items_search')}}">
-                <div class="input-group">
-                    <input class="form-control" type="text" style="" placeholder="Rechercher dans les boîtes" aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
-                </div>
-            </form>
         </div>
     </div>
 </nav>
@@ -100,28 +69,22 @@
 <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen modal-halfscreen-lg-up">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-primary">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
                 <a class="navbar-brand d-flex align-items-center " href="{{path('app_auth_home')}}">
-                    <img class="" src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="35" height="35">
-                    <span class="navbar-brand fw-bold ms-0 ms-2">Boîte à Partage</span>
+                    <img class="d-none" src="{{asset('img/logo-bleu-petard.svg')}}" alt="La Boîte à Partage" width="35" height="35">
+                    <span class="navbar-brand fs-4 ff-serif ms-0 ms-2 text-bg-primary">boîte à partage<span class="ms-2 text-highlight">●</span></span>
                 </a>
             </h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-theme="dark" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body px-0">
-        <div class="px-2">
+        <div class="px-2 ">
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_item_create') }}"><i class="bi bi-plus-square me-2"></i>Proposer un nouvel objet</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_items_search', parameters = {q: ''}) }}"><i class="bi bi-search me-2"></i>Rechercher un objet</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_user_favorite_items') }}"><i class="bi bi-heart me-2"></i>Favoris</a>
-            </div>
-            <div class="d-grid gap-2 d-none">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_items_mine') }}"><i class="bi bi-bookshelf me-2"></i>Mon Placard</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_item_create') }}"><i class="bi bi-plus-square me-2"></i>Proposer un nouvel objet</a>
+                <a class="d-none ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_items_search', parameters = {q: ''}) }}"><i class="bi bi-search me-2"></i>Rechercher un objet</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_items_mine') }}"><i class="bi bi-bookshelf me-2"></i>Mon Placard</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_user_favorite_items') }}"><i class="bi bi-heart me-2"></i>Objets Favoris</a>
             </div>
         </div>
         {# section separator #}
@@ -129,16 +92,9 @@
         {# Section primary actions #}
         <div class="px-2">
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_items_mine') }}"><i class="bi bi-bookshelf me-2"></i>Mon placard</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle') }}"><i class="bi bi-archive me-2"></i>Mes Boîtes</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle_create') }}"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_circle_join') }}"><i class="bi bi-arrow-right-square me-2"></i>Rejoindre une boîte</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_circle') }}"><i class="bi bi-archive me-2"></i>Mes Boîtes</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_circle_create') }}"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_circle_join') }}"><i class="bi bi-arrow-right-square me-2"></i>Rejoindre une boîte</a>
             </div>
         </div>
         {# section separator #}
@@ -146,10 +102,8 @@
         {# Section others #}
         <div class="px-2">
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href=""><i class="bi bi-question-circle me-2"></i>Comment ça marche ?</a>
-            </div>
-            <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href=""><i class="bi bi-chat-left-quote me-2"></i>Questions fréquentes</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href=""><i class="bi bi-question-circle me-2"></i>Comment ça marche ?</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href=""><i class="bi bi-chat-left-quote me-2"></i>Questions fréquentes</a>
             </div>
         </div>
         {# section separator #}
@@ -157,7 +111,7 @@
         {# Section modules #}
         <div class="px-2 mt-auto">
             <div class="d-grid gap-2 ">
-                <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_user_profile') }}"><i class="bi bi-person-circle me-2"></i>Mon compte</a>
+                <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_user_profile') }}"><i class="bi bi-person-circle me-2"></i>Mon compte</a>
             </div>
         </div>
         {# ADMIN #}
@@ -165,7 +119,7 @@
             <hr class="border border-1 opacity-100">
             <div class="px-2">
                 <div class="d-grid gap-2 ">
-                    <a class="btn btn-outline-highlight-subtle text-start" href="{{ path('app_admin') }}"><i class="bi bi-database-fill-gear me-2"></i>Admin</a>
+                    <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ path('app_admin') }}"><i class="bi bi-database-fill-gear me-2"></i>Admin</a>
                 </div>
                 {% if is_granted("ROLE_ALLOWED_TO_SWITCH") %}
                     <div class="d-grid gap-2 mt-2">
@@ -189,7 +143,7 @@
                 {% endif %}
                 {% if is_granted('IS_IMPERSONATOR') %}
                     <div class="d-grid gap-2 ">
-                        <a class="btn btn-outline-highlight-subtle text-start" href="{{ impersonation_exit_path(path('app_auth_home')) }}"><i class="bi bi-person-x me-2"></i>Exit impersonation</a>
+                        <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ impersonation_exit_path(path('app_auth_home')) }}"><i class="bi bi-person-x me-2"></i>Exit impersonation</a>
                     </div>
                 {% endif %}
             </div>
@@ -198,7 +152,7 @@
             <hr class="border border-1 opacity-100">
             <div class="px-2">
                 <div class="d-grid gap-2 ">
-                    <a class="btn btn-outline-highlight-subtle text-start" href="{{ impersonation_exit_path(path('app_auth_home')) }}"><i class="bi bi-person-x me-2"></i>Exit impersonation</a>
+                    <a class="ps-2 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 text-start" href="{{ impersonation_exit_path(path('app_auth_home')) }}"><i class="bi bi-person-x me-2"></i>Exit impersonation</a>
                 </div>
             </div>
         {% endif %}

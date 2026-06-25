@@ -66,7 +66,7 @@ class AppCircleController extends AbstractController
             $em->persist($circle);
 
             $userCircle = new UserCircle();
-            $userCircle->setUserId($user);
+            $userCircle->setUser($user);
             $userCircle->setCircle($circle);
             $userCircle->setCreatedAt(new DateTime('now'));
             $em->persist($userCircle);
@@ -109,7 +109,7 @@ class AppCircleController extends AbstractController
         $user = $this->getUser();
         // creates a userCircle object and initializes user
         $userCircle = new UserCircle();
-        $userCircle->setUserId($user);
+        $userCircle->setUser($user);
 
 
         $form = $this->createFormBuilder($userCircle)
@@ -183,7 +183,7 @@ class AppCircleController extends AbstractController
             if(null == $existingUserInCircle){
                 // creates a userCircle object and initializes user
                 $userCircle = new UserCircle();
-                $userCircle->setUserId($user);
+                $userCircle->setUser($user);
                 $userCircle->setCircle($circle);
                 $userCircle->setCreatedAt(new DateTime('now'));
                 $em->persist($userCircle);

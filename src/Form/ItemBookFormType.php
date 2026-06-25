@@ -86,7 +86,8 @@ class ItemBookFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'hidden' => true,
-                    'accept' => "image/*"
+                    'accept' => "image/*",
+                    'capture' => 'camera'
                 ],
                 'label_attr' => [
                     'hidden' => false,

@@ -16,6 +16,10 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'home' => [
+        'path' => './assets/js/home.js',
+        'entrypoint' => true,
+    ],
     'itemSearch' => [
         'path' => './assets/js/itemSearch.js',
         'entrypoint' => true,

@@ -23,14 +23,15 @@
         <p>Vous avez effectué une demande d'emprunt le <b>{{loans[0].createdAt|date("d/m/Y")}}</b>.</p>
 
         <div class="d-flex flex-row justify-content-end">
-          <button
+          <a
             type="button"
             name=""
             id=""
+            href="{{path('app_show_incoming_loan', {id: loans[0].id})}}"
             class="btn btn-outline-dark"
           >
             Suivre ma demande <i class="bi bi-arrow-right fw-bold"></i>
-          </button>
+          </a>
         </div>
       </div>
     </div>

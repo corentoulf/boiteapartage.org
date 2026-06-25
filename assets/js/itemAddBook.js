@@ -30,6 +30,7 @@ function searchBookOnApi(mode, terms) {
                 })
                 .catch(function (error) {
                     // handle error
+                    displayResults(mode, results, totalItems);
                     console.log(error);
                 })
                 .finally(function () {

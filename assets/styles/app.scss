@@ -11,6 +11,9 @@
 // $red: #FF8D8D;
 // $yellow: #ffef61;
 $pale-red: #ff9292;
+$mint-green: #00C896;
+$bluegrey: #b4c8d4;
+$cream: #F7F4EF;
 // $orange: #FFBE3D;
 // //#fbffa2   #f6ff45;
 
@@ -19,8 +22,11 @@ $pale-red: #ff9292;
 // $bg: $blue;
 
 //main color-class
-$primary: #1e2eba;//#0b7395;
-$secondary: #16228c;
+$primary: #0D1B2A;//#0b7395; //blue peps de base #1e2eba
+$primary: rgb(20 36 53) ;
+$primary-light: #1b2f45;
+$primary-extra-light: #293c50;
+$secondary: $bluegrey;
 $info: #326574;
 // $success: #2ca182;
 // $warning: #ffd166;
@@ -28,10 +34,10 @@ $info: #326574;
 
 // $grey: #8491a1;
 // $dark-grey: #606b79;
-$highlight: $pale-red;
+$highlight: $mint-green;
+$highlight-dark: #009570;
 // //#23665b;
 // $highlight: #ffdcd6;
-
 
 
 
@@ -41,9 +47,13 @@ $highlight: $pale-red;
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 
 
 $font-family-base: "Lexend";
+$font-family-display: "DM Serif Display";
 
 /* Roundness */
 $enable-rounded: true;
@@ -84,6 +94,10 @@ $btn-hover-border-tint-amount:    10%;
 //Colors map
 $custom-colors: (
   "highlight": $highlight,
+  "highlight-dark": $highlight-dark,
+  "primary-light": $primary-light,
+  "primary-extra-light": $primary-extra-light,
+  "cream": $cream
 );
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -130,7 +144,21 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "../../vendor/twbs/bootstrap/scss/utilities/_api.scss";
 
 // 8. Add additional custom code here
+$utilities: map-merge(
+  $utilities,
+  (
+    "line-height": (
+      property: line-height,
+      class: lh,
+      values: (
+        xs: 0.9,
+      )
+    ),
+    
+  )
+);
 
+@import "../../vendor/twbs/bootstrap/scss/utilities/api";
 
 // body{
 //   // background-color: #ffd27247;
@@ -150,6 +178,13 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   // --bs-btn-active-color: var(--bs-btn-hover-color);
   // --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
   // --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
+}
+
+.badge-highlight-subtle{
+  border: 1px solid $highlight-dark;
+  background: #{transparentize($highlight, 0.85)};
+  color: $highlight;
+  letter-spacing: 0.1rem;;
 }
 
 .btn-secondary-subtle {
@@ -250,13 +285,13 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 //   box-shadow:  0rem .5rem 0 0rem $black
 // }
 
-.card-book:hover{
+.card-clickable:hover{
   // border: 1px solid $success;
-  cursor: pointer;
+  // cursor: pointer;
   border-color: $secondary;
   // color: $white;
 }
-.card-book.active{
+.card-clickable.active{
   border-color: $secondary;
 }
 
@@ -427,7 +462,7 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 
 .required::after{
   content: "*";
-  color: $pale-red
+  color: $highlight
 }
 .img-card-item{
   min-width: -webkit-fill-available;
@@ -459,4 +494,13 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
     width: 50% !important;
     left: 50% !important;
   }
+}
+
+
+.ff-serif{
+  font-family: $font-family-display;
+}
+
+.bi-fw-bold{
+  -webkit-text-stroke: 0.05rem;
 }

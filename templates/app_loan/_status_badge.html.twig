@@ -1,0 +1,14 @@
+{# templates/loan/_status_badge.html.twig #}
+
+{% set config = {
+    requested:   {label: 'En attente',  class: 'text-bg-warning'},
+    accepted:  {label: 'Acceptée',    class: 'text-bg-success'},
+    rejected:   {label: 'Refusée',     class: 'text-bg-danger'},
+    ongoing: {label: 'En cours',     class: 'text-bg-secondary'},
+    cancelled: {label: 'Annulée',     class: 'text-bg-secondary'},
+    returned:  {label: 'Terminée',    class: 'text-bg-secondary'},
+}%}
+
+{% set current = config[status] ?? {label: status, class: 'text-bg-secondary'} %}
+
+<span class="badge rounded-pill {{ current.class }}">{{ current.label }}</span>

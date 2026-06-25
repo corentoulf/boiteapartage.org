@@ -50,6 +50,21 @@ class Loan
     #[ORM\JoinColumn(nullable: false)]
     private ?Item $item = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $accepted_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $rejected_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $lent_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $returned_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $cancelled_at = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -181,6 +196,66 @@ class Loan
     public function setItem(?Item $item): static
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    public function getAcceptedAt(): ?\DateTime
+    {
+        return $this->accepted_at;
+    }
+
+    public function setAcceptedAt(?\DateTime $accepted_at): static
+    {
+        $this->accepted_at = $accepted_at;
+
+        return $this;
+    }
+
+    public function getRejectedAt(): ?\DateTime
+    {
+        return $this->rejected_at;
+    }
+
+    public function setRejectedAt(?\DateTime $rejected_at): static
+    {
+        $this->rejected_at = $rejected_at;
+
+        return $this;
+    }
+
+    public function getLentAt(): ?\DateTime
+    {
+        return $this->lent_at;
+    }
+
+    public function setLentAt(?\DateTime $lent_at): static
+    {
+        $this->lent_at = $lent_at;
+
+        return $this;
+    }
+
+    public function getReturnedAt(): ?\DateTime
+    {
+        return $this->returned_at;
+    }
+
+    public function setReturnedAt(?\DateTime $returned_at): static
+    {
+        $this->returned_at = $returned_at;
+
+        return $this;
+    }
+
+    public function getCancelledAt(): ?\DateTime
+    {
+        return $this->cancelled_at;
+    }
+
+    public function setCancelledAt(?\DateTime $cancelled_at): static
+    {
+        $this->cancelled_at = $cancelled_at;
 
         return $this;
     }

@@ -246,7 +246,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->userCircles->contains($userCircle)) {
             $this->userCircles->add($userCircle);
-            $userCircle->setUserId($this);
+            $userCircle->setUser($this);
         }
 
         return $this;
@@ -255,8 +255,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeUserCircle(UserCircle $userCircle): static
     {
         // set the owning side to null (unless already changed)
-        if ($this->userCircles->removeElement($userCircle) && $userCircle->getUserId() === $this) {
-            $userCircle->setUserId(null);
+        if ($this->userCircles->removeElement($userCircle) && $userCircle->getUser() === $this) {
+            $userCircle->setUser(null);
         }
 
         return $this;
@@ -362,7 +362,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->verificationRequests->contains($verificationRequest)) {
             $this->verificationRequests->add($verificationRequest);
-            $verificationRequest->setUserId($this);
+            $verificationRequest->setUser($this);
         }
 
         return $this;
@@ -371,8 +371,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeVerificationRequest(VerificationRequest $verificationRequest): static
     {
         // set the owning side to null (unless already changed)
-        if ($this->verificationRequests->removeElement($verificationRequest) && $verificationRequest->getUserId() === $this) {
-            $verificationRequest->setUserId(null);
+        if ($this->verificationRequests->removeElement($verificationRequest) && $verificationRequest->getUser() === $this) {
+            $verificationRequest->setUser(null);
         }
 
         return $this;
@@ -390,7 +390,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->userFavoriteItems->contains($userFavoriteItem)) {
             $this->userFavoriteItems->add($userFavoriteItem);
-            $userFavoriteItem->setUserId($this);
+            $userFavoriteItem->setUser($this);
         }
 
         return $this;
@@ -399,8 +399,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeUserFavoriteItem(UserFavoriteItem $userFavoriteItem): static
     {
         // set the owning side to null (unless already changed)
-        if ($this->userFavoriteItems->removeElement($userFavoriteItem) && $userFavoriteItem->getUserId() === $this) {
-            $userFavoriteItem->setUserId(null);
+        if ($this->userFavoriteItems->removeElement($userFavoriteItem) && $userFavoriteItem->getUser() === $this) {
+            $userFavoriteItem->setUser(null);
         }
 
         return $this;

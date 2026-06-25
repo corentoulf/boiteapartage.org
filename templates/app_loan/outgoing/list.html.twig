@@ -1,0 +1,22 @@
+{% extends 'base_auth.html.twig' %}
+
+{% block title %}Prêts{% endblock %}
+
+{% block body %}
+<div class="container min-vh-100">
+  <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+        <pre>
+            {{ dump(loans) }}
+        </pre>
+  </div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'itemIndex']) }}
+    {% endblock %}
+{% endblock %}

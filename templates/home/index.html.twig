@@ -3,249 +3,288 @@
 {# {% block title %}Hello HomeController!{% endblock %} #}
 
 {% block body %}
-<div style="
-  background: url({{asset('img/background-book.png')}}) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: center center;
-  min-height: 50vh !important;
-  " class="container-fluid d-none d-sm-block">
-  <div class="container d-none d-sm-flex flex-column align-items-start justify-content-center" style="min-height: 50vh !important;">
-    <div class="card col-12 col-sm-8 col-md-6 col-lg-4  m-sm-6 p-2 p-sm-4">
-      <div class="card-body">
-        <div class="card-title fs-3 fw-medium">Envie de nouvelles lectures ?</div>
-        <div class="d-grid">
-          <a class="btn btn-primary mt-4" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Emprûnter un livre</span></a>
-          <a class="border-0 btn btn-outline-light mt-2 text-dark-emphasis" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Découvrir comment ça marche</span></a>
+<section class="bg-primary">
+  <div class="container px-4 py-5 py-md-6">
+    <div class="row">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="pb-4"><span class="badge rounded-pill badge-highlight-subtle px-3 fw-semibold text-uppercase"><i class="me-1 bi bi-stars"></i>Partage avec tes connaissances</span></div>
+        <div class="text-white display-4 ff-serif" style="letter-spacing: -0.07rem;">
+          <p class="lh-xs">Tes objets s'ennuient.</p>
+          <p class="text-highlight fst-italic lh-xs">Tes collègues</p>
+          <p class="lh-xs">en ont besoin.</p>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div style="
-  background: url({{asset('img/background-book.png')}}) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: center center;
-  min-height: 30vh !important;
-  " class="container-fluid d-block d-sm-none">
-</div>
-<div class="container d-flex d-sm-none flex-column align-items-start justify-content-center" style="margin-top:-50px;">
-  <div class="card col col-sm-8 col-md-6 col-lg-4  m-1 m-sm-6 p-2 p-sm-4">
-    <div class="card-body">
-      <div class="card-title fs-3 fw-medium">Envie de nouvelles lectures ?</div>
-      <div class="d-grid">
-        <a class="btn btn-primary mt-4" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Emprûnter un livre</span></a>
-        <a class="border-0 btn btn-outline-light mt-2 text-dark-emphasis" href="{{path('app_register', {'registrationPurpose': 'default'})}}">Découvrir comment ça marche</span></a>
-      </div>
-    </div>
-  </div>
-</div>
-{# Boîtes créées / Objets partagés #}
-<section>
-</section>
-<section class="d-none">
-  <div class="py-3 py-lg-5" >
-    <div class="container py-2 text-center d-lg-none">
-      <image class="img-fluid" width="100" src="{{asset('img/logo-bleu-petard.svg')}}" style="max-height:50px;">
-    </div>
-    <div class="container py-2 py-lg-6">
-      <div class="d-none d-lg-flex display-4 justify-content-center py-2 pt-lg-2 pb-lg-3">
-        <div ><span class="act-underline-highlight-warning">Partager.</span></div>
-        <div class="px-5"><span class="act-underline-highlight-info">Explorer.</span></div>
-        <div ><span class="act-underline-highlight-success">Découvrir.</span></div>
-      </div>
-      <div class="d-lg-none display-4 pt-2 pb-1 row text-center">
-        <span class="act-underline-highlight-warning">Partager. Explorer. Découvrir.</span>
-      </div>
-      <div class="d-flex justify-content-center py-2">
-        <h4 class="px-2 py-1 text-secondary text-center">
-          <i class="d-none bi bi-arrow-repeat me-2"></i>Faire circuler nos biens, pour plus de sobriété.
-        </h4>
-      </div>
-      <div class="text-center text-info mt-2 mt-lg-5">
-        <div class="col-12 col-lg-4 offset-lg-4 px-4 d-grid mt-4 mt-lg-0">
-          <a class="btn btn-primary" href="{{path('app_register', {'registrationPurpose': 'default'})}}"><i class="bi bi-rocket-takeoff me-2"></i>Créer une boîte</span></a>
-        </div>
-        <div class="row py-3 d-none">
-          <div class="col-12 col-lg-3 offset-lg-3 px-4 d-grid gap-2">
-            <a class="btn btn-outline-dark border-0" href="{{ path('app_manifeste') }}"><i class="bi bi-file-text me-2"></i>Lire notre manifeste</span></a>
+        <p class="text-secondary lh-lg mt-2">
+          Tu as une visseuse, une tente, le dernier livre de cuisine de ton chef préféré. Ton collègue est justement intéressé par cet objet — mais il ne savait pas que tu l'avais. La boîte à partage connecte les gens qui se connaissent déjà.
+        </p>
+        <div class="d-flex feex-column align-items-center justify-content-start gap-3 mt-5">
+          <div class="d-grid gap-2">
+            <a href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}" class="btn btn-lg fs-6 btn-highlight">
+              <i class="bi bi-stopwatch me-2"></i>Créer une boîte en 2 min<i class="d-none bi bi-arrow-right ms-2"></i>
+            </a>
           </div>
-        </div>
-        {# <div class="row mt-5">
-          <div class="col-8 offset-2">
-            <a href="#timeline" class="link-dark display-2"><i class="bi bi-chevron-compact-down me-1"></i></a>
-          </div>
-        </div> #}
-      </div>
-    </div>
-  </div>
-</section>
-{# Timeline : how the system works #}
-<!-- Timeline 4 - Bootstrap Brain Component -->
-<section class="bsb-timeline-4 py-3 py-md-5 py-xl-8 d-none">
-  <div class="container">
-    <div class="row justify-content-center">
-      {# Big screen timeline #}
-      <ul class="timeline d-none d-lg-block" id="timeline">
-        <li class="timeline-item left">
-          <div class="timeline-body">
-            <div class="timeline-content timeline-indicator">
-              <div class="card border-0">
-                <div class="card-body d-flex justify-content-center flex-column p-lg-4">
-                  <div class="d-flex align-items-center mb-3">
-                    <div class="display-6 me-3">
-                      <i class="bi bi-play-circle"></i> 
-                    </div>
-                    <div>
-                      <h2 class="card-title mb-2">Lancez le mouvement</h2>
-                      <h6 class="card-subtitle text-secondary">Et insufflez un vent de sobriété autour de vous</h6>
-                    </div>
-                  </div>
-                  <p class="card-text m-0 mb-3">
-                    <a class="" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}">Démarrez une boîte à partage</a> dans votre immeuble, votre quartier ou votre entreprise et partagez vos biens avec <b>votre entourage</b>.
-                  </p>
-                  <p>Créer une boîte c'est créer un cercle qui réunit des personnes désireuses de mettre en commun leurs objets plutôt que d'en accumuler de nouveaux.</p>
-                  <a class="btn btn-primary me-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item right">
-          <div class="timeline-body">
-            <div class="timeline-content timeline-indicator">
-              <div class="card border-0">
-                <div class="card-body plg-4">
-                  <div class="d-flex align-items-center mb-3">
-                    <div class="display-6 me-3">
-                      <i class="bi bi-list-task"></i> 
-                    </div>
-                    <div>
-                      <h2 class="card-title mb-2">Complétez votre placard</h2>
-                      <h6 class="card-subtitle text-secondary">Inspirez vos proches à emprunter plutôt qu'à acheter</h6>
-                    </div>
-                  </div>
-                  <p class="card-text m-0">Renseignez tous les objets que vous pensez pouvoir <b>être utile aux autres</b> sur votre compte. Que ce soit pour bricoler, jardiner, jouer, faire de la cuisine ou pour toute autre activité que vous pratiquez.</br>
-                  Il n'y a pas d'objet inutile (sauf si vous possédez un <a href="https://www.youtube.com/watch?v=5lutHF5HhVA" target="_rel">Juicero</a> bien sûr...).</p>
-                  <div class="justify-content-center d-flex">
-                    <image class="img-fluid  mt-4 p-2 shadow-sm" width="600" src="{{asset('img/placard.png')}}">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item left">
-          <div class="timeline-body">
-            <div class="timeline-content timeline-indicator">
-              <div class="card border-0">
-                <div class="card-body plg-4">
-                  <div class="d-flex align-items-center mb-3">
-                    <div class="display-6 me-3">
-                      <i class="bi bi-megaphone "></i> 
-                    </div>
-                    <div>
-                      <h2 class="card-title mb-2">Diffusez la boîte</h2>
-                      <h6 class="card-subtitle text-secondary">Invitez-les à faire comme vous</h6>
-                    </div>
-                  </div>
-                  <p class="card-text m-0 mb-2">Parce que la <b>confiance est plus forte</b> lorsqu'on est invité et encore plus lorsque c'est par son entourage proche, les boîtes fonctionnent sur invitation.</br>
-                  Une fois la boîte créée, partagez-là facilement aux personnes concernées (à vos collègues d'entreprise, à vos voisins, aux membres de votre association, etc..)</p>
-                  <p  class="mb-3">Vous avez été invité à rejoindre une boîte ou vous avez vu un prospectus dans votre immeuble ou votre entreprise ?</p>
-                  <a class="btn btn-primary" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item right">
-          <div class="timeline-body">
-            <div class="timeline-content timeline-indicator">
-              <div class="card border-0">
-                <div class="card-body plg-4">
-                  <div class="d-flex align-items-center mb-3">
-                    <div class="display-6 me-3">
-                      <i class="bi bi-arrow-repeat"></i> 
-                    </div>
-                    <div>
-                      <h2 class="card-title mb-2">Prêtez, empruntez</h2>
-                      <h6 class="card-subtitle text-secondary">Se dépanner, s'inspirer, expérimenter</h6>
-                    </div>
-                  </div>
-                  <p class="card-text m-0">Une fois que votre boîte à partage est bien remplie, cherchez facilement un objet, inspirez-vous et contactez facilement son propriétaire.</p>
-                  <div class="justify-content-center d-none">
-                    <image class="img-fluid  mt-4 p-2 shadow-sm" width="600" src="{{asset('img/placard.png')}}">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      {# Small screens regular div #}
-      <div class="d-none">
-        <div class="card border-0 mb-3">
-          <div class="card-body d-flex justify-content-center flex-column">
-            <div class="d-flex align-items-center mb-3">
-              <div class="display-6 me-3">
-                <i class="bi bi-play-circle"></i> 
-              </div>
-              <div>
-                <h2 class="card-title mb-2">Lancez le mouvement</h2>
-                <h6 class="card-subtitle text-secondary">Et insufflez un vent de sobriété autour de vous</h6>
-              </div>
-            </div>
-            <p class="card-text m-0 mb-3">
-              <a class="" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}">Démarrez une boîte à partage</a> dans votre immeuble, votre quartier ou votre entreprise et partagez vos biens avec <b>votre entourage</b>.
-            </p>
-            <p>Créer une boîte c'est créer un cercle qui réunit des personnes désireuses de mettre en commun leurs objets plutôt que d'en accumuler de nouveaux.</p>
-            <a class="btn btn-primary mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}"  type="button"><i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
-          </div>
-        </div>
-        <div class="card border-0 mb-3">
-          <div class="card-body plg-4">
-            <div class="d-flex align-items-center mb-3">
-              <div class="display-6 me-3">
-                <i class="bi bi-list-task"></i> 
-              </div>
-              <div>
-                <h2 class="card-title mb-2">Complétez votre placard</h2>
-                <h6 class="card-subtitle text-secondary">Inspirez vos proches à emprunter plutôt qu'à acheter</h6>
-              </div>
-            </div>
-            <p class="card-text m-0">Renseignez tous les objets que vous pensez pouvoir <b>être utile aux autres</b> sur votre compte. Que ce soit pour bricoler, jardiner, jouer, faire de la cuisine ou pour toute autre activité que vous pratiquez.</br>
-            Il n'y a pas d'objet inutile (sauf si vous possédez un <a href="https://www.youtube.com/watch?v=5lutHF5HhVA" target="_rel">Juicero</a> bien sûr...).</p>
-            <div class="justify-content-center d-flex">
-              <image class="img-fluid  mt-4 p-2 shadow-sm" width="600" src="{{asset('img/placard.png')}}">
-            </div>
-          </div>
-        </div>
-        <div class="card border-0">
-          <div class="card-body d-flex justify-content-center flex-column">
-            <div class="d-flex align-items-center mb-3">
-              <div class="display-6 me-3">
-                <i class="bi bi-megaphone "></i> 
-              </div>
-              <div>
-                <h2 class="card-title mb-2">Diffusez la boîte</h2>
-                <h6 class="card-subtitle text-secondary">Invitez-les à faire comme vous</h6>
-              </div>
-            </div>
-            <p class="card-text m-0 mb-2">Parce que la <b>confiance est plus forte</b> lorsqu'on est invité et encore plus lorsque c'est par son entourage proche, les boîtes fonctionnent sur invitation.</br>
-            Une fois la boîte créée, partagez-là facilement aux personnes concernées (à vos collègues d'entreprise, à vos voisins, aux membres de votre association, etc..)</p>
-            <p  class="">Vous avez été invité à rejoindre une boîte ou vous avez vu un prospectus dans votre immeuble ou votre entreprise ?</p>
-            <a class="btn btn-primary mt-2 mx-auto" href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}"  type="button"><i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre la boîte</a>
-
+          <div class="d-grid gap-2">
+            <a href="#comment-ca-marche" class="btn btn-lg fs-6  btn-outline-secondary">
+              Voir comment ça marche
+            </a>
           </div>
         </div>  
+      </div>  
+      <div class="d-none d-lg-flex col-lg-3 offset-2 justify-content-center align-items-end">
+          <div class="card rounded-5 text-bg-primary-light border-primary-extra-light">
+            <div class="card-body">
+              <div class="p-2">
+                <div class="badge border border-dark-subtle fw-normal p-3 text-bg-primary-extra-light text-start w-100 mb-3" style="cursor:text;">Rechercher un objet...</div>
+                <small id="helpId" class="form-text text-secondary">Ma résidence — Les acacias</small>
+              </div>
+              {# fake results #}
+              <div class="card mb-2 text-bg-primary-extra-light">
+                <div class="d-flex flex-row justify-content-start align-items-center">
+                  <span class="badge text-bg-secondary p-2 m-2"><i class="bi bi-wrench fs-6"></i></span>
+                  <div class="d-flex flex-column justify-content-center align-items-start ms-2 small">
+                    <h5 class="card-title small m-0">Perçeuse Makita</h5>
+                    <p class="card-text m-0"><small class="text-secondary">Marc • Bât B</small></p>
+                  </div>
+                  <span class="text-success ms-auto display-5"><i class="bi bi-dot"></i></span>
+                </div>
+              </div>
+              <div class="card mb-2 text-bg-primary-extra-light">
+                <div class="d-flex flex-row justify-content-start align-items-center">
+                  <span class="badge text-bg-secondary p-2 m-2"><i class="bi bi-book fs-6"></i></span>
+                  <div class="d-flex flex-column justify-content-center align-items-start ms-2 small">
+                    <h5 class="card-title small m-0">Petit Pays — Gaël Faye</h5>
+                    <p class="card-text m-0"><small class="text-secondary">Justine • Bât A</small></p>
+                  </div>
+                  <span class="text-warning ms-auto display-5"><i class="bi bi-dot"></i></span>
+                </div>
+              </div>
+              <div class="card mb-2 text-bg-primary-extra-light">
+                <div class="d-flex flex-row justify-content-start align-items-center">
+                  <span class="badge text-bg-secondary p-2 m-2"><i class="bi bi-dice-3 fs-6"></i></span>
+                  <div class="d-flex flex-column justify-content-center align-items-start ms-2 small">
+                    <h5 class="card-title small m-0">Jeu des 7 familles</h5>
+                    <p class="card-text m-0"><small class="text-secondary">Malik • Bât C</small></p>
+                  </div>
+                  <span class="text-success ms-auto display-5"><i class="bi bi-dot"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid text-bg-highlight">
+    <div class="col-12 d-flex flex-row small px-6 py-2 mt-4 justify-content-start justify-content-md-center align-items-center gap-5 text-uppercase overflow-x-scroll">
+      <div class="text-center">Entre collègues</div>
+      <span class="text-black-50">•</span>
+      <div class="text-center">Associations sportives</div>
+      <span class="text-black-50">•</span>
+      <div class="text-center">écoles</div>
+      <span class="text-black-50">•</span>
+      <div class="text-center">résidence</div>
+      <span class="text-black-50">•</span>
+      <div class="text-center">quartier</div>
+    </div>
+  </div>
+</section>
+<section class="bg-cream" id="comment-ca-marche">
+  <div class="container px-4 py-5 py-md-6">
+    <h3 class="text-uppercase text-highlight-dark fs-6 mt-4" style="letter-spacing: 0.1rem;">Comment ça marche</h3>
+    <p class="fs-1 ff-serif">4 étapes, et c'est parti.</p>
+    {# Cards explaining how it works #}
+    <div class="row pt-4">
+      <div class="col-12 col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 p-2">
+          <div class="card-body">
+            <h4 class="display-6 ff-serif fw-medium m-0 text-black-50">01</h4>
+            <span class="badge text-bg-secondary p-3 my-3"><i class="bi bi-box fs-4"></i></span>
+            <h5 class="card-title h6">Crée ta boîte</h5>
+            <p class="card-text fw-light">Pour ta résidence, ton bureau ou ton asso. Donne-lui un nom, et un flyer avec QR code est généré automatiquement.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 p-2">
+          <div class="card-body">
+            <h4 class="display-6 ff-serif fw-medium m-0 text-black-50">02</h4>
+            <span class="badge text-bg-secondary p-3 my-3"><i class="bi bi-qr-code fs-4"></i></span>
+            <h5 class="card-title h6">Invite les membres</h5>
+            <p class="card-text fw-light">Colle le flyer dans le hall ou partage-le sur ton groupe de messagerie. Les membres scannent le QR code et rejoignent en quelques secondes.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 p-2">
+          <div class="card-body">
+            <h4 class="display-6 ff-serif fw-medium m-0 text-black-50">03</h4>
+            <span class="badge text-bg-secondary p-3 my-3"><i class="bi bi-images fs-4"></i></span>
+            <h5 class="card-title h6">Remplis ton placard</h5>
+            <p class="card-text fw-light">Ajoute les objets que tu prêtes volontiers. Perceuse, vélo, tente, livres, robot de cuisine… tu décides.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3 mb-3">
+        <div class="card h-100 p-2">
+          <div class="card-body">
+            <h4 class="display-6 ff-serif fw-medium m-0 text-black-50">04</h4>
+            <span class="badge text-bg-secondary p-3 my-3"><i class="bi bi-arrow-left-right fs-4"></i></span>
+            <h5 class="card-title h6">Prête et emprunte</h5>
+            <p class="card-text fw-light">Fais une demande, contacte et fixe un rendez-vous. Suis la remise des objets sur l'application pour ne rien oublier.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+<section class="bg-white" id="pour-qui">
+  <div class="container px-4 py-5 py-md-6">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <h3 class="text-uppercase text-highlight-dark fs-6 mt-4" style="letter-spacing: 0.1rem;">Pour qui ?</h3>
+        <p class="fs-1 ff-serif lh-1" style="letter-spacing: -0.07rem;">Ce qu'on partage,</br>c'est aussi</br> la confiance.</p>
+        <p class="text-black-50 mt-2">
+          Sur <em class="ff-serif">boîte à partage</em>, on ne prête pas à n'importe qui. C'est toujours une personne qu'on croise à la machine à café, dans le hall ou sur le terrain. C'est ça, la différence.
+        </p>
+        <div class="mt-3">
+          <a href="#" data-circle-type="residence" class="cta-circle-type btn rounded-5 btn-dark me-3 mt-2" >Résidence</a>
+          <a href="#" data-circle-type="entreprise" class="cta-circle-type btn rounded-5 btn-outline-dark me-3 mt-2" >Entreprise</a>
+          <a href="#" data-circle-type="association" class="cta-circle-type btn rounded-5 btn-outline-dark me-3 mt-2" >Association</a>
+          <a href="#" data-circle-type="quartier" class="cta-circle-type btn rounded-5  btn-outline-dark me-3 mt-2" >Quartier</a>
+        </div>
+        <a href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}" id="cta-create-circle-target" type="button" class="btn btn-dark mt-4">Créer une boîte pour ma résidence<i class="bi bi-arrow-right ms-2"></i></a>
+      </div>
+      <div class="d-none d-lg-block col-7">
+          <div class="col-8 offset-2 bg-cream rounded-3 border">
+            <div class="d-flex flex-row border-bottom justify-content-center align-items-stretch">
+              <div class="align-items-start border-end d-flex flex-column justify-content-between p-4 w-100">
+                <div>
+                  <h6 class="fs-6 fw-medium m-0">Perceuse</h6>
+                  <div class="small mt-1 text-black-50">Marc • Bât B</div>
+                </div>
+                <span class="badge text-bg-success text-uppercase fw-bold mt-3">Disponible</span>
+              </div>
+              <div class="align-items-start d-flex flex-column justify-content-between p-4 w-100">
+                <div>
+                  <h6 class="fs-6 fw-medium m-0">Petit Pays — Gaël Faye</h6>
+                  <div class="small mt-1 text-black-50">Justine • Bât A</div>
+                </div>
+                <span class="badge bg-warning-subtle text-dark-emphasis text-uppercase fw-bold mt-3">Emprunté</span>
+              </div>
+            </div>
+            <div class="d-flex flex-row border-bottom justify-content-center align-items-center">
+              <div class="align-items-start border-end d-flex flex-column justify-content-between p-4 w-100">
+                <div>
+                  <h6 class="fs-6 fw-medium m-0">Perceuse</h6>
+                  <div class="small mt-1 text-black-50">Marc • Bât B</div>
+                </div>
+                <span class="badge text-bg-success text-uppercase fw-bold mt-3">Disponible</span>
+              </div>
+              <div class="align-items-start d-flex flex-column justify-content-between p-4 w-100">
+                <div>
+                  <h6 class="fs-6 fw-medium m-0">Petit Pays — Gaël Faye</h6>
+                  <div class="small mt-1 text-black-50">Justine • Bât A</div>
+                </div>
+                <span class="badge bg-warning-subtle text-dark-emphasis text-uppercase fw-bold mt-3">Emprunté</span>
+              </div>
+            </div>
+            <div class="d-flex flex-row border-bottom justify-content-center align-items-center">
+              <div class="align-items-start border-end d-flex flex-column justify-content-between p-4 w-100">
+                <div>
+                  <h6 class="fs-6 fw-medium m-0">Perceuse</h6>
+                  <div class="small mt-1 text-black-50">Marc • Bât B</div>
+                </div>
+                <span class="badge text-bg-success text-uppercase fw-bold mt-3">Disponible</span>
+              </div>
+              <div class="align-items-start d-flex flex-column justify-content-between p-4 w-100">
+                <div>
+                  <h6 class="fs-6 fw-medium m-0">Petit Pays — Gaël Faye</h6>
+                  <div class="small mt-1 text-black-50">Justine • Bât A</div>
+                </div>
+                <span class="badge bg-warning-subtle text-dark-emphasis text-uppercase fw-bold mt-3">Emprunté</span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-primary" id="lancer-ta-boite">
+  <div class="container px-4 py-5 py-md-6">
+    <div class="row">
+      <div class="col-12 col-md-5">
+        <h3 class="text-uppercase text-highlight fs-6 mt-4" style="letter-spacing: 0.1rem;">Lancer ta boîte</h3>
+        <p class="fs-1 ff-serif lh-1 text-bg-primary" style="letter-spacing: -0.07rem;">Un flyer suffit</br>pour tout démarrer.</p>
+        <p class="text-light mt-4">
+          L'application génère un flyer prêt à imprimer avec le QR code de ta boîte. Colle-le dans le hall, et les membres rejoignent en un scan. Zéro friction.
+        </p>
+      </div>
+      <div class="col-12 col-md-7 d-flex justify-content-center align-items-end mt-4">
+          <div class="card border-0 col-10 col-md-6">
+            <div class="card-body">
+              <h4 class="card-title ff-serif fs-6">boîte à partage<span class="ms-2 text-highlight">●</span></h4>
+              <p class="card-text fs-4 ff-serif lh-sm mt-4 mb-0">Rejoins la boîte</br>des<em class="text-highlight text-italic"> Acacias</em></p>
+              <p class="small text-light-emphasis mt-1">Emprunte un livre, un outil, un robot de cuisine à tes voisins — en moins de 5 min.</p>
+              <div class="d-flex flex-column gap-2 border rounded-5 p-4 text-bg-primary-light">
+                <div class="text-uppercase text-secondary text-center small">Comment rejoindre ?</div>
+                <div class="display-3 text-center py-3"><i class="bi bi-qr-code-scan"></i></div>
+                <div class="d-flex justify-content-start align-items-center small">
+                  <div 
+                    class="d-flex justify-content-center align-items-center rounded-circle  border-0 text-bg-highlight fw-medium me-2" 
+                    style="width:1.25rem; height:1.25rem;letter-spacing:0;">
+                    1
+                  </div>
+                  <div class="text-secondary">
+                    Scanne le QR code avec ton téléphone
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center small">
+                  <div 
+                    class="d-flex justify-content-center align-items-center rounded-circle border-0 text-bg-highlight  fw-medium me-2" 
+                    style="width:1.25rem; height:1.25rem;letter-spacing:0;">
+                    2
+                  </div>
+                  <div class="text-secondary">
+                    Crée ton compte en 2 min
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center small">
+                  <div 
+                    class="d-flex justify-content-center align-items-center rounded-circle border-0 text-bg-highlight   fw-medium me-2" 
+                    style="width:1.25rem; height:1.25rem;letter-spacing:0;">
+                    3
+                  </div>
+                  <div class="text-secondary">
+                    Commence à emprunter ou prêter
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-center bg-highlight-dark small text-light">
+              <i class="bi bi-arrow-right me-2"></i>En savoir plus sur <b>boiteapartage.fr</b>
+            </div>
+          </div>
+          
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bg-highlight" id="pret-a-lancer">
+  <div class="container px-4 py-5 py-md-6">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="ff-serif" style="letter-spacing: -0.07rem;">Prêt à ouvrir ta boîte ?</h1>
+        <p class="text-body-secondary">C'est gratuit — et ça le restera toujours. Lance ta première boîte en moins de 2 min</p>
+        <div class"mt-4">
+          <a href="{{path('app_register', {'registrationPurpose': 'createCircle'})}}" class="btn btn-primary-light px-4 py-2 mt-2">Créer ma boîte gratuitement<i class="bi bi-arrow-right ms-2"></i></a>
+          <a href="{{path('app_register', {'registrationPurpose': 'joinCircle'})}}" class="btn btn-outline-primary-light ms-2 px-4 py-2 mt-2">Rejoindre une boîte</i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+{% block javascripts %}
+    {% block importmap %}
+     {{ importmap(['app', 'home']) }}
+    {% endblock %}
 {% endblock %}

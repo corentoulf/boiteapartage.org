@@ -8,7 +8,6 @@ use App\Entity\ItemCircle;
 use App\Entity\ItemType;
 use App\Entity\Loan;
 use App\Entity\UserFavoriteItem;
-use App\Form\ItemFormType;
 use App\Form\ItemBookFormType;
 use App\Form\ItemDefaultFormType;
 use App\Form\LoanRequestFormType;
@@ -21,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Workflow\WorkflowInterface;
 
@@ -40,7 +38,7 @@ class AppItemController extends AbstractController
             ['id' => 'DESC']
         );
         $itemCategories = $em->getRepository(ItemCategory::class)->findAllSortByLabel();
-        return $this->render('app_item/index.html.twig', [
+        return $this->render('app_item/list_mine.html.twig', [
             'controller_name' => 'AppObjectController',
             'items' => $userItems,
             'itemCategories' => $itemCategories
@@ -249,6 +247,12 @@ class AppItemController extends AbstractController
                 'L\'objet n\'a pas été trouvé'
             );
         }
+        //prevent users from updating item they don't own
+        if ($item->getOwner() !== $this->getUser()) {
+            throw $this->createAccessDeniedException(
+                'Vous n\'avez pas les droits pour supprimer cet objet.'
+            );
+        }
         $em->remove($item);
         $em->flush();
         $this->addFlash('success', 'L\'objet a bien été supprimé');
@@ -269,7 +273,7 @@ class AppItemController extends AbstractController
         $favoriteItem = new UserFavoriteItem();
         $favoriteItem->setItemId($item);
         $favoriteItem->setCreatedAt(new DateTime('now'));
-        $favoriteItem->setUserId($user);
+        $favoriteItem->setUser($user);
         $em->persist($favoriteItem);
         $em->flush();
         return $this->json([]);
@@ -305,7 +309,7 @@ class AppItemController extends AbstractController
         ]);
     }
 
-    #[Route('/app/objets/{id}/emprunter', name: 'app_loan_request', requirements: ['id' => '\d+'])]
+    #[Route('/app/objets/{id}', name: 'app_item_request_loan', requirements: ['id' => '\d+'])]
     public function requestLoan(Request $request, EntityManagerInterface $em, int $id): Response
     {
         $user = $this->getUser();
@@ -323,7 +327,7 @@ class AppItemController extends AbstractController
         //check that user doesn't already have a pending request for this item (requested, accepted)
         $loans = $em->getRepository(Loan::class)->findPendingByItemBorrower($item, $user);
         if(count($loans) > 0) {
-            return $this->render('app_item/loan/pending.html.twig', [
+            return $this->render('app_item/show/pending_loan.html.twig', [
             'controller_name' => 'AppUserProfileController',
             // 'item' => $item,
             'item' => $item,
@@ -345,10 +349,10 @@ class AppItemController extends AbstractController
             $loan->setBorrower($user);
             $em->persist($loan);
             $em->flush();
-            return $this->redirectToRoute('app_loan_request', ['id'=> $item->getId()]);
+            return $this->redirectToRoute('app_item_request_loan', ['id'=> $item->getId()]);
         }
         
-        return $this->render('app_item/loan/index.html.twig', [
+        return $this->render('app_item/show/index.html.twig', [
             'controller_name' => 'AppUserProfileController',
             // 'item' => $item,
             'item' => $item,

@@ -14,7 +14,7 @@ framework:
                 - requested
                 - accepted
                 - rejected
-                - lent
+                - ongoing
                 - returned
                 - cancelled
             transitions:
@@ -26,10 +26,10 @@ framework:
                     to:   rejected
                 lend:
                     from: accepted
-                    to:   lent
+                    to:   ongoing
                 return:
-                    from: lent
+                    from: ongoing
                     to: returned
                 cancel:
-                    from: requested, accepted
+                    from: [requested,  accepted]
                     to: cancelled
