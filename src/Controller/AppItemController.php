@@ -22,6 +22,7 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\DependencyInjection\Attribute\Target;
 use Symfony\Component\Workflow\WorkflowInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class AppItemController extends AbstractController
 {
@@ -167,6 +168,44 @@ class AppItemController extends AbstractController
                     'itemCategory' => $ic,
                 ]);
         }
+    }
+
+    #[Route('/app/chercher-un-livre/{mode}', name: 'app_fetch_book_api', options: ['expose' => true], defaults: ['mode' => 'terms'])]
+    public function fetchBookApi(Request $request, HttpClientInterface $client, $mode): Response
+    {
+        $terms = $request->query->get('terms');
+        //prevent empty call
+        if(null === $terms) {
+            $response = new Response();
+            $response->setContent(json_encode([
+                'data' => null,
+                'statusCode' => 400,
+                'message' => 'Provide terms and mode!'
+            ]));
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+        $url = 'https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&key=' . $this->getParameter('app.google_books_api');
+        if($mode === 'isbn') {
+            $url .= '&q=isbn:'.$terms;
+        } else {
+            $url .= '&q='.$terms;
+        }
+        $response = $client->request(
+            'GET',
+            $url
+        );
+
+        $statusCode = $response->getStatusCode();
+        // $contentType = 'application/json'
+        $content = $response->getContent();
+        // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
+        $response = new Response();
+        $response->setContent(json_encode([
+            'data' => $content,
+            'statusCode' => 200,
+        ]));
+        return $response;
     }
 
     #[Route('/app/objets/{id}/modifier', name: 'app_item_update', requirements: ['id' => '\d+'])]

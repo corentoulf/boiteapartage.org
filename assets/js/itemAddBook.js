@@ -1,4 +1,7 @@
 import axios from 'axios';
+import routes from './fos_routes.js';
+import Router from '@toyokumo/fos-router';
+Router.setRoutingData(routes);
 import _ from 'lodash';
 import { Modal } from 'bootstrap';
 import { Html5Qrcode } from "html5-qrcode"; //https://github.com/mebjas/html5-qrcode
@@ -19,9 +22,16 @@ function searchBookOnApi(mode, terms) {
     if (typeof (terms) !== undefined && terms !== "" && terms !== null) {
         //detect ISBN regex terms.match(/\d{10}$|^\d{13}$/)
         if (mode == 'isbn') {
+            let url = Router.generate('app_fetch_book_api', {
+                mode:'isbn',
+                terms:encodeURI(terms)
+            })
             $            //search ISBN then terms
-            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=isbn:' + encodeURI(terms)+'&key=AIzaSyCnF1iYhsAGADyg5Jz3be90UDlvj1Ffwvo')
+            axios.get(url)
                 .then(function (responseIsbn) {
+                    console.log(responseIsbn.data)
+                    responseIsbn.data = JSON.parse(responseIsbn.data.data)
+
                     if (responseIsbn.data.totalItems > 0) {
                         totalItems = responseIsbn.data.totalItems;
                         results = _.uniqBy(responseIsbn.data.items, 'id');
@@ -39,9 +49,14 @@ function searchBookOnApi(mode, terms) {
         }
         else {
             //search terms only
-            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q=' + encodeURI(terms)+'&key=AIzaSyCnF1iYhsAGADyg5Jz3be90UDlvj1Ffwvo')
+            let url = Router.generate('app_fetch_book_api', {
+                'mode':'terms',
+                'terms':encodeURI(terms)
+            })
+            axios.get(url)
                 .then(function (responseTerms) {
                     // handle success
+                    responseTerms = JSON.parse(responseTerms.data)
                     if (responseTerms.data.totalItems > 0) {
                         totalItems = responseTerms.data.totalItems
                         results = _.uniqBy(responseTerms.data.items, 'id')
