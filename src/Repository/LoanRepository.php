@@ -35,6 +35,22 @@ class LoanRepository extends ServiceEntityRepository
        ;
    }
 
+   /**
+    * @return Loan[] Returns an array of Loan objects
+    */
+   public function findLoanBorrowedWithoutHistory($borrower): array
+   {
+       return $this->createQueryBuilder('l')
+           ->andWhere('l.borrower = :b')
+           ->andWhere('l.status NOT IN (:statuses)')
+           ->setParameter('b', $borrower)
+           ->setParameter('statuses', ['cancelled', 'returned', 'rejected'])
+           ->orderBy('l.id', 'DESC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
 //    public function findOneBySomeField($value): ?Loan
 //    {
 //        return $this->createQueryBuilder('l')

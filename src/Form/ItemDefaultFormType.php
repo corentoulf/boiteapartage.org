@@ -14,6 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+
 
 class ItemDefaultFormType extends AbstractType
 {
@@ -52,14 +55,22 @@ class ItemDefaultFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'hidden' => true,
-                    'accept' => "image/*"
+                    'accept' => "image/*",
+                    'capture' => 'camera',
                 ],
                 'label_attr' => [
                     'hidden' => false,
+                    'class' => 'required'
                 ],
                 'row_attr' => [
                     'class' => 'mb-0'
                 ],
+                'constraints' => [
+                    new Assert\File(
+                        maxSize: '5M',
+                        maxSizeMessage: 'Merci de mettre un fichier moins volumineux (<5MB)',
+                    )
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $options['update_mode'] === true ? "Mettre à jour" : "Ajouter"

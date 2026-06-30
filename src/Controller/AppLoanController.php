@@ -25,8 +25,7 @@ class AppLoanController extends AbstractController
     public function listIncomingLoan(EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
-        // $userFavoriteItems = $user->getUserFavoriteItems();
-        $loans = $em->getRepository(Loan::class)->findBy(['borrower' => $user]);
+        $loans = $em->getRepository(Loan::class)->findLoanBorrowedWithoutHistory(['borrower' => $user]);
         $loansGroupedByStatus = [
             "requested" => [],
             "accepted" => [],
@@ -41,7 +40,6 @@ class AppLoanController extends AbstractController
             else {
                 $loansGroupedByStatus[$loanStatus][] = $loan;
             }
-            
         }
 
         return $this->render('app_loan/incoming/list.html.twig', [

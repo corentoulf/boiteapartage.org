@@ -23,7 +23,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true
             ])
             ->add('lastName', TextType::class, [
-                'required' => true
+                'required' => false
             ])
             ->add('phone')
             ->add('email', TextType::class, [

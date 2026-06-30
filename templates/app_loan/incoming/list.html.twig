@@ -3,49 +3,29 @@
 {% block title %}Mes emprunts{% endblock %}
 
 {% block body %}
-<div class="container min-vh-100 p-0">
+<div class="container min-vh-100">
   <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
-    <h1>Mes emprunts</h1>
+    {{ include('_component/_header_title.html.twig', {targetLabel: "Accueil", targetPath:path(name = 'app_auth_home'), pageTitle:"Mes emprunts"}) }}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    <div class="card p-2 mt-4">
+    <div class="card bg-cream border-0 p-2 mt-4">
         <div class="card-body">
-            <h6 class="text-uppercase">En attente de réponse du propriétaire</h6>
+            <h6 class="text-uppercase text-secondary-emphasis">En attente de réponse du propriétaire</h6>
             {% if loansGrouped.requested|default(null) %}
                 {% for loan in loansGrouped.requested %}
                     <div class="card card-clickable mt-3">
                         <div class="card-body p-3">
                             {# Objet concerné #}
                             {% set item = loan.item %}
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:64px;height:64px;flex-shrink:0;">
-                                    {% if item.imageName or item.property3 %}
-                                        <img src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : item.property3 ?? defaultImgUrl}}" alt="" class="rounded" style="width:100%;height:100%;object-fit:cover;">
-                                    {% else %}
-                                        <i class="bi bi-box-seam text-secondary fs-4"></i>
-                                    {% endif %}
-                                </div>
-                                <div>
-                                    <p class="fw-medium mb-1">{{ loan.item.property1 }}</p>
-                                    <p class="text-secondary small mb-0">
-                                        <i class="bi bi-person"></i> Prêté(e) par {{ loan.lender.firstName }}
-                                    </p>
-                                </div>
-                                <div class="ms-auto">
-                                    {{ include('app_loan/_status_badge.html.twig', {status: loan.status}) }}
-                                </div>
-                                <div class="px-2">
-                                    <a href="{{ path('app_show_incoming_loan', parameters = {id: loan.id}) }}" class="stretched-link"><i class="bi bi-chevron-right"></i></a>
-                                </div>
-                            </div>
+                            {{ include('app_loan/_item_in_list.html.twig') }}
                         </div>
                     </div>
                 {% endfor %}
             {% else %}
                 <span class="text-body-secondary">Aucun emprunt en attente de réponse.</span>
             {% endif %}
-            <h6 class="text-uppercase mt-4">Acceptés, en attente de remise</h6>
+            <h6 class="text-uppercase text-secondary-emphasis mt-5">Acceptés, en attente de remise</h6>
             {% if loansGrouped.accepted|default(null) %}
                 {% for loan in loansGrouped.accepted %}
                     <div class="card card-clickable mt-3">
@@ -79,7 +59,7 @@
             {% else %}
                 <span class="text-body-secondary">Aucun emprunt en attente de remise.</span>
             {% endif %}
-            <h6 class="text-uppercase mt-4">En cours</h6>
+            <h6 class="text-uppercase text-secondary-emphasis mt-5">En cours</h6>
             {% if loansGrouped.ongoing|default(null) %}
                 {% for loan in loansGrouped.ongoing %}
                     <div class="card card-clickable mt-3">
@@ -113,7 +93,7 @@
             {% else %}
                 <span class="text-body-secondary">Aucun emprunt en cours.</span>
             {% endif %}
-            <h6 class="text-uppercase mt-4">Historique</h6>
+            <h6 class="text-uppercase text-secondary-emphasis mt-5">Historique</h6>
             {% if loansGrouped.past|default(null) %}
                 {% for loan in loansGrouped.past %}
                     <div class="card card-clickable mt-3">

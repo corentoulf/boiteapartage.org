@@ -20,7 +20,7 @@ class UpdateUserInfoFormType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                'label'=> 'Prénom *',
+                'label'=> 'Prénom',
                 'required' => true
             ])
             ->add('lastName', TextType::class, [
@@ -32,7 +32,7 @@ class UpdateUserInfoFormType extends AbstractType
                 'required' => false
             ])
             ->add('email', EmailType::class, [
-                'label'=> 'Email *',
+                'label'=> 'Email',
                 'required' => true
             ])
         ;

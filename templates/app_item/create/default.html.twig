@@ -7,73 +7,68 @@
 {% set title = 'Ajouter au placard' %}
 {% if itemCategory.code == 'bricolage' %}
     {% set title %}
-        Ajouter au rayon <span class="text-highlight">bricolage</span>
+        Ajouter au rayon bricolage</span>
     {% endset %}
 {% elseif itemCategory.code == 'cuisine' %}
     {% set title %}
-        Ajouter au rayon <span class="text-highlight">cuisine</span>
+        Ajouter au rayon cuisine</span>
     {% endset %}
 {% elseif itemCategory.code == 'loisirs' %}
     {% set title %}
-        Ajouter au rayon <span class="text-highlight">loisirs</span>
+        Ajouter au rayon loisirs</span>
     {% endset %}
 {% elseif itemCategory.code == 'jardinage' %}
     {% set title %}
-        Ajouter au rayon <span class="text-highlight">jardin</span>
+        Ajouter au rayon jardin</span>
     {% endset %}
-{% elseif itemCategory.code == 'appareils' %}
+{% elseif itemCategory.code == 'maison' %}
     {% set title %}
-        Ajouter un <span class="text-highlight">appareil</span>
+        Ajouter au rayon maison</span>
     {% endset %}
 {% endif %}
 
-<div class="container">
+<div class="container min-vh-100">
     <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
-        {% for flash_error in app.flashes('verify_email_error') %}
-            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-        {% endfor %}
-        <div class="align-items-center d-flex flex-row justify-content-between mb-3">
-            <h1 class="fw-bold fs-3" id="title">
-                {{title}}
-            </h1>
-        </div>
+        {{ include('_component/_header_title.html.twig', {targetLabel: "Choix de la catégorie", targetPath:path(name = 'app_item_create'), pageTitle:title}) }}
         {# message d'alerte sur le côté global d'un objet dispo dans tous les cercles #}
-        <div class="alert alert-warning  d-none" role="alert">
+        <div class="alert alert-warning d-none" role="alert">
             <div class="d-flex justify-content-start">
                 <span class="me-3"><i class="bi bi-info-circle"></i></span>
                 <span>Veuillez noter que par défaut, si vous avez rejoint plusieurs boîtes, <strong>tous les éléments</strong> de votre placard seront partagés dans <strong>toutes vos boîtes</strong>.</span>
             </div>
         </div>
-        {{ form_errors(form) }}
-        {{ form_start(form) }}
+        <div class="card bg-cream border-0 p-4 mt-4">
+            <div id="" class="fw-bold fs-5 mb-4">Complétez le formulaire pour ajouter l'objet</div>
+            {{ form_errors(form) }}
+            {{ form_start(form) }}
             {{ form_row(form.itemType)}}
             {{ form_row(form.property_1)}}
             {{ form_row(form.property_2)}}
             {{ form_row(form.imageFile)}}
-                <div id="imageCoverContainer" class="">
-                    <a href="#" id="openFileInputBtn" class="btn btn-dark">
-                        <i class="bi bi-camera-fill me-2"></i>Ajouter une photo
-                    </a>
-                    <div class="d-flex flex-column align-items-start mb-3">
-                        <div class="col-8 col-md-4">
-                            <img id="imgBookCover" class="img-fluid" style="display:none;"/>
-                        </div>
-                        <div 
-                            id="retakePhotoBtn" class="mt-2" style="display:none;">
-                            <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
-                        </div>
+            <div id="imageCoverContainer" class="">
+                <a href="#" id="openFileInputBtn" class="btn btn-secondary">
+                    <i class="bi bi-camera-fill me-2"></i>Ajouter une photo
+                </a>
+                <div class="d-flex flex-column align-items-start">
+                    <div class="col-8 col-md-4">
+                        <img id="imgBookCover" class="img-fluid" style="display:none;"/>
                     </div>
-                </div>
-            <div class="row ">
-                <div class="col d-flex justify-content-end">
-                    {{ form_row(form.submitAndAdd) }}
-                    <div class="ms-2">
-                        {{ form_row(form.submit) }}
+                    <div 
+                        id="retakePhotoBtn" class="mt-2" style="display:none;">
+                        <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col d-flex justify-content-end">
+                {{ form_row(form.submitAndAdd) }}
+                <div class="ms-2">
+                    {{ form_row(form.submit) }}
+                </div>
+            </div>
+        </div>
         {{ form_end(form) }}
-   
     </div>
 </div>
 

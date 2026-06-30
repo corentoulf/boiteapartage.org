@@ -9,13 +9,14 @@
 {% endblock %}
 
 {% block body %}
+{% set title = "S'inscrire" %}
+{% if registrationPurpose == 'createCircle' %}{% set title = "Créer une boîte à partage" %}
+{% elseif registrationPurpose == 'joinCircle' %}{% set title = "Rejoindre une boîte à partage" %}
+{% elseif registrationPurpose == 'joinCircleId' %}{% set title = "Rejoindre la boîte " ~ registrationCircleId.name %}
+{% endif %}
 
-
-<div class="container">
-    <div class="p-2 p-lg-5 my-4 col-md-8 offset-md-2">
-        {% for flash_error in app.flashes('verify_email_error') %}
-            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-        {% endfor %}
+<div class="container min-vh-100 p-0">
+  <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
         {% if app.user %}
             <div class="mb-3">
                 Vous êtes déjà connecté en tant que <span class="fw-semibold">{{ app.user.userIdentifier }}</span>
@@ -24,26 +25,20 @@
                 <a class="btn btn-primary" href="{{ path('app_auth_home') }}"><i class="bi bi-box-arrow-up-right me-1"></i>Aller sur l'application</a>
             </div>
         {% else %}
-            
+            {{ include('_component/_header_title.html.twig', {targetLabel: "Accueil", targetPath:path(name = 'app_home'), pageTitle:title}) }}
             {% if registrationPurpose == 'createCircle' %}
-                <h1 class="fw-bold mb-3">Créer une boîte à partage</h1>
-       
                 <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour vous inscrire et créer votre boîte à partage.</p>
             {% elseif registrationPurpose == 'joinCircle' %}
-                <h1 class="fw-bold mb-3">Rejoindre une boîte à partage</h1>
                 <p class="fs-6 fw-bold py-3">Vous avez reçu un identifiant de boîte à partage que vous aimeriez rejoindre ? Complétez le formulaire ci-dessous pour vous inscrire et rejoignez la boîte en quelques clics.</p>
             {% elseif registrationPurpose == 'joinCircleId' %}
-                <h1 class="fw-bold mb-3">Rejoindre la boîte à partage "{{registrationCircleId.name}}"</h1>
                 <p class="fs-6 fw-bold py-3">Complétez le formulaire ci-dessous pour vous inscrire et rejoindre la boîte.</p>
             {% else %}
-                <h1 class="fw-bold mb-3 pb-3">Inscription</h1>
                 <p class="fs-6 fw-bold py-3 d-none">Complétez le formulaire ci-dessous pour vous inscrire et démarrer une boîte à partage.</p>
             {% endif %}
         
-        {{ form_errors(registrationForm) }}
-
-        {{ form_start(registrationForm) }}
-            <div class="row">
+            {{ form_errors(registrationForm) }}
+            {{ form_start(registrationForm) }}
+            <div class="row mt-4">
                 <div class="col-12 col-md-6">
                     {{ form_row(registrationForm.firstName, {
                         label: 'Prénom'
@@ -76,10 +71,13 @@
             {{ form_row(registrationForm.agreeTerms, {
                 label: 'Accepter les conditions d\'utilisation',
             }) }}
+            <div class="d-flex justify-content-end fst-italic small">
+                <span class="required"></span>Champs obligatoires
+            </div>
             <div class="d-grid gap-2 mt-4">
                 <button type="submit" class="btn btn-primary">S'inscrire</button>
             </div>
-        {{ form_end(registrationForm) }}
+            {{ form_end(registrationForm) }}
         {% endif %}
         {% if app.user == false %}
         <div class="col text-center mt-4"><a class="fw-light link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ path('app_login') }}"></i>Vous avez déjà un compte ? </a></div>

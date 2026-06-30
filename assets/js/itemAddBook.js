@@ -20,7 +20,7 @@ function searchBookOnApi(mode, terms) {
         //detect ISBN regex terms.match(/\d{10}$|^\d{13}$/)
         if (mode == 'isbn') {
             $            //search ISBN then terms
-            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=isbn:' + encodeURI(terms))
+            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=5&orderBy=relevance&q=isbn:' + encodeURI(terms)+'&key=AIzaSyCnF1iYhsAGADyg5Jz3be90UDlvj1Ffwvo')
                 .then(function (responseIsbn) {
                     if (responseIsbn.data.totalItems > 0) {
                         totalItems = responseIsbn.data.totalItems;
@@ -39,7 +39,7 @@ function searchBookOnApi(mode, terms) {
         }
         else {
             //search terms only
-            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q=' + encodeURI(terms))
+            axios.get('https://www.googleapis.com/books/v1/volumes?maxResults=20&orderBy=relevance&q=' + encodeURI(terms)+'&key=AIzaSyCnF1iYhsAGADyg5Jz3be90UDlvj1Ffwvo')
                 .then(function (responseTerms) {
                     // handle success
                     if (responseTerms.data.totalItems > 0) {
@@ -76,17 +76,19 @@ function displayResults(mode, results, totalItems) {
                 let refLink = book.selfLink || null;
                 $('#scanResultContainer').empty();
                 let $bookResult = `
-                <a href="#" data-bs-dismiss="modal" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-left"></i>Recommencer</a>
+                <a href="#" data-bs-dismiss="modal" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Recommencer</a>
                 <div class="row d-flex justify-content-center mt-3">
-                    <div class="col-12 col-md-8 col-lg-3">
-                        <div class="card" style="">
-                            <div style="height:300px">
-                                <img id="modalImgBookCover" src="${imgLink}" class="card-img-top p-4 mx-auto d-block" alt="book cover preview" data-cover-found="${book.volumeInfo.imageLinks ? true : false}" style="height:100%; width:auto"></img>
-                            </div>
-                            <div class="card-body border-top">
-                                <h5 class="card-title">${title}</h5>
-                                <p class="card-text">${author}</p>
-                                <div class="d-grid">
+                    <div class="col-12 col-lg-8">
+                        <div class="card bg-cream border-0">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start gap-3">
+                                    <img id="modalImgBookCover" src="${imgLink}" alt="book cover preview" data-cover-found="${book.volumeInfo.imageLinks ? true : false}" style="height:100px; width:auto"></img>
+                                    <div class="">
+                                        <h5 class="card-title">${title}</h5>
+                                        <p class="card-text">${author}</p>
+                                    </div>
+                                </div>
+                                <div class="d-grid mt-3">
                                     <a 
                                         id="selectScanResultBook" 
                                         href="#" 
@@ -120,7 +122,7 @@ function displayResults(mode, results, totalItems) {
                             Aucun résultat
                         </div>
                         <div class="mt-1">
-                            Veuillez recommencer ou ajouter le livre à la main.
+                            Veuillez recommencer ou ajouter le livre manuellement.
                         </div>
                     </div>
                 </div>

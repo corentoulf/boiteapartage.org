@@ -1,18 +1,23 @@
-<div class="container-fluid bg-light mt-auto ">
-    <div class="p-5 row text-center ">
-        {# <div class="col-12"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" id="installApp" href="#">Installer l'application</a></div> #}
-        {% if app.user %}
-            <div class="col-12"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_user_profile')}}">Mon Compte</a></div>
-        {% endif %}
-        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_inspirations')}}">Inspirations</a></div>
-        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_manifeste')}}">Manifeste</a></div>
-        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="https://github.com/corentoulf/boiteapartage.org" target="_blank">Sources</a></div>
-        <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="https://linkedin.com/in/corentinthiercelin" target="_blank" >Contact</a></div>
-        {% if is_granted("ROLE_ADMIN") %}
-            <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ path('app_admin') }}">Admin</a></div>
-        {% endif %}
-        {% if app.user %}
-            <div class="col-12 mt-4"><a class="text-dark opacity-75 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{ path('app_logout') }}">Déconnexion</a></div>
-        {% endif %}
+<div class="container-fluid text-bg-dark mt-auto ">
+    <div class="row d-flex flex-column flex-md-row py-5">
+        <div class="d-flex col align-items-center justify-content-center justify-content-md-start ps-md-6">
+            <div class="fs-5 ff-serif ms-0 ms-2 text-light">boîte à partage<span class="ms-2 text-highlight">●</span></div>
+        </div>
+        <div class="d-flex flex-column flex-md-row col align-items-center justify-content-center justify-content-md-start px-4 gap-3 my-5 my-md-0">
+            <div class=""><a class="text-secondary opacity-75 text-decoration-none" href="{{path('app_inspirations')}}">Inspirations</a></div>
+            <div class=""><a class="text-secondary opacity-75 text-decoration-none" href="{{path('app_manifeste')}}">Manifeste</a></div>
+            <div class=""><a class="text-secondary opacity-75 text-decoration-none" href="https://github.com/corentoulf/boiteapartage.org" target="_blank">Sources</a></div>
+            <div class=""><a class="text-secondary opacity-75 text-decoration-none" href="https://linkedin.com/in/corentinthiercelin" target="_blank" >Contact</a></div>
+            {% if is_granted("ROLE_ADMIN") %}
+                <div class=""><a class="text-secondary opacity-75 text-decoration-none" href="{{ path('app_admin') }}">Admin</a></div>
+            {% endif %}
+            {% if app.user %}
+                <div class=""><a class="text-secondary opacity-75 text-decoration-none" href="{{ path('app_logout') }}">Déconnexion</a></div>
+            {% endif %}
+        </div>
+        <div class="d-flex col align-items-center justify-content-center justify-content-md-end pe-md-6">
+            <div class="fs-6 text-secondary opacity-75">© {{ "now"|date("Y") }} boîte à partage</div>
+            
+        </div>
     </div>
 </div>

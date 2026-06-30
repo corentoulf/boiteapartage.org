@@ -6,71 +6,69 @@
 
 <div class="container min-vh-100">
     <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
-        {% for flash_error in app.flashes('verify_email_error') %}
-            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-        {% endfor %}
-        <div class="align-items-center d-flex flex-row justify-content-between">
-            <h1 class="fw-bold fs-3" id="title">Ajouter à la <span class="text-highlight">bibliothèque</span></h1>
-        </div>
-
-        {# step 1 : scan ou recherche #}
+        {{ include('_component/_header_title.html.twig', {targetLabel: "Choix de la catégorie", targetPath:path(name = 'app_item_create'), pageTitle:"Ajouter à la bibliothèque"}) }}
         <div id="infoAndScanContainer">
-            <div class="mt-3">
-                Pour ajouter un livre en un clic, vous pouvez <b>scanner son code-barres</b>. Sinon, complétez le formulaire ci-dessous.
-            </div>
-            <div class="card card-btn-primary justify-content-center mt-3">
-                <div class="card-body">
-                    <h5 class="card-title text-center"><i class="bi bi-upc-scan fs-1"></i></h5>
-                    <p class="card-text text-center m-0">Scanner le code-barres</p>
-                    <a id="openScanner" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal" href="#" class="stretched-link"></a>
+            <div class="card bg-cream border-0 p-4 mt-4" >
+                {# option 1 : scan ou recherche #}
+                <div >
+                    <div id="" class="fw-bold fs-5">Ajout rapide</div>
+                    <div class="mt-2">
+                        Pour ajouter un livre en un clic, <b>scannez le code-barres</b> du livre en cliquant sur le bouton ci-dessous.
+                    </div>
+                    <div class="d-grid mt-3">
+                        <btn id="openScanner" data-bs-toggle="modal" data-bs-target="#barcodeScannerModal" class="btn btn-secondary text-center"><i class="bi bi-upc-scan me-2"></i>Scanner le code-barres</btn>
+                    </div>
                 </div>
             </div>
-            <div class="row mt-2 justify-content-center align-items-center">
-                <div class="col"><hr></div>
+            <div class="row my-4 justify-content-center align-items-center">
+                <div class="col ps-5"><hr></div>
                     ou
-                <div class="col"><hr></div>
+                <div class="col pe-5"><hr></div>
             </div>
         </div>
-
-        {# step 2 : ajout manuel ou pré-remplissage depuis scan #}
-        <div id="bookFormContainer" class="">
-            <div class="mt-3">
-                <a id="restartCompleteForm" style="display:none;" href="#" data-bs-dismiss="modal" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-left"></i>Recommencer</a>
-            </div>
-            <div id="bookFormTitle" class="fw-medium fs-5 mt-3">Ajouter un livre manuellement</div>
-            <div class="mt-2" id="bookForm">
-                {{ form_errors(form) }}
-                {{ form_start(form) }}
-                
-                {{ form_row(form.itemType)}}
-                {{ form_row(form.property_1)}}
-                {{ form_row(form.property_2)}}
-                {{ form_row(form.property_3)}}
-                {{ form_row(form.property_4)}}     
-                {{ form_row(form.imageFile)}}
-                <div id="imageCoverContainer" class="">
-                    <div id="photoCaptureTip" class="form-text mb-2 help-text">Conseil : posez le livre sur une table pour prendre la couverture dans son intégralité.</div>
-                    <a href="#" id="openFileInputBtn" class="btn btn-dark"><i class="bi bi-camera-fill me-2"></i>Ajouter une photo</a>
-                    <div class="d-flex flex-column align-items-start mb-3">
-                        <div class="col-8 col-md-4">
-                            <img id="imgBookCover" class="img-fluid" style="display:none;"/>
+        <div class="card bg-cream border-0 p-4 mt-4">
+            {# option 2 : ajout manuel ou pré-remplissage depuis scan #}
+            <div id="bookFormContainer" class="">
+                <div class="mb-3">
+                    <a id="restartCompleteForm" style="display:none;" href="#" data-bs-dismiss="modal" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Recommencer</a>
+                </div>
+                <div id="bookFormTitle" class="fw-bold fs-5">Ajout manuel</div>
+                <div class="mt-2" id="bookForm">
+                    {{ form_errors(form) }}
+                    {{ form_start(form) }}
+                    
+                    {{ form_row(form.itemType)}}
+                    {{ form_row(form.property_1)}}
+                    {{ form_row(form.property_2)}}
+                    {{ form_row(form.property_3)}}
+                    {{ form_row(form.property_4)}}     
+                    {{ form_row(form.imageFile)}}
+                    <div id="imageCoverContainer" class="">
+                        <div id="photoCaptureTip" class="form-text mb-2 help-text">Conseil : posez le livre sur une table pour prendre la couverture dans son intégralité.</div>
+                        <div class="d-grid">
+                            <a href="#" id="openFileInputBtn" class="btn btn-secondary"><i class="bi bi-camera-fill me-2"></i>Ajouter une photo</a>
                         </div>
-                        <div id="retakePhotoBtn" class="mt-2" style="display:none;">
-                            <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="col-8 col-md-4">
+                                <img id="imgBookCover" class="img-fluid" style="display:none; height:150px;"/>
+                            </div>
+                            <div id="retakePhotoBtn" class="mt-2" style="display:none;">
+                                <a href="#" class="link-dark link-offset-2 link-opacity-75 link-underline-opacity-25 link-underline-opacity-75-hover"><i class="me-2 bi bi-arrow-counterclockwise"></i>Remplacer la photo</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-5">
-                    <div class="col d-flex justify-content-end">
-                        {{ form_row(form.submitAndAdd) }}
-                        <div class="ms-2">
-                            {{ form_row(form.submit) }}
-                        </div>
-                    </div>
-                </div>
-                {{ form_end(form) }}
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col d-flex justify-content-end">
+                {{ form_row(form.submitAndAdd) }}
+                <div class="ms-2">
+                    {{ form_row(form.submit) }}
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
     </div>
 </div>
 
@@ -78,7 +76,7 @@
 
 <!-- Modal SCAN -->
 <div class="modal" id="barcodeScannerModal" tabindex="-1" aria-labelledby="barcodeScannerModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
+  <div class="modal-dialog modal-fullscreen-md-down">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="barcodeScannerModalLabel">Visez le code-barre du livre</h1>

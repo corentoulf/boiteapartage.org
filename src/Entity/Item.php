@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Attribute as Vich;
+use Vich\UploaderBundle\Validator\Constraints as VichAssert;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[Vich\Uploadable]
@@ -51,6 +52,9 @@ class Item
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
     #[Vich\UploadableField(mapping: 'items', fileNameProperty: 'imageName', size: 'imageSize', mimeType: "imageMimeType")]
+    // #[VichAssert\FileRequired(
+    //     target: 'image', 
+    //     message: 'Merci d\'ajouter une photo.',)]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
@@ -82,7 +86,7 @@ class Item
     {
         $this->imageFile = $imageFile;
 
-        if ($imageFile instanceof \Symfony\Component\HttpFoundation\File\File) {
+        if ($imageFile instanceof File) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updated_at = new \DateTimeImmutable();

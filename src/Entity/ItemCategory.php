@@ -27,6 +27,9 @@ class ItemCategory
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $code = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $icon = null;
+
 
     public function __construct()
     {
@@ -91,6 +94,18 @@ class ItemCategory
     public function setCode(?string $code): static
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(?string $icon): static
+    {
+        $this->icon = $icon;
 
         return $this;
     }

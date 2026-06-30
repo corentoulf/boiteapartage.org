@@ -8,20 +8,13 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Country;
-use Symfony\Component\Validator\Constraints\IsTrue;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 class ItemBookFormType extends AbstractType
 {
@@ -37,7 +30,7 @@ class ItemBookFormType extends AbstractType
                         ->orderBy('it.label', 'ASC');
                 },
                 'data' => $options['preferedItemType'],
-                'label' => "Sous-catégorie",
+                'label' => "Type d'ouvrage",
                 'choice_label' => 'label',
                 'required' => true,
                 'attr' => [
@@ -91,10 +84,17 @@ class ItemBookFormType extends AbstractType
                 ],
                 'label_attr' => [
                     'hidden' => false,
+                    'class' => 'required'
                 ],
                 'row_attr' => [
                     'class' => 'mb-0'
                 ],
+                'constraints' => [
+                    new Assert\File(
+                        maxSize: '5M',
+                        maxSizeMessage: 'Merci de mettre un fichier moins volumineux (<5MB)',
+                    )
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $options['update_mode'] === true ? "Mettre à jour" : "Ajouter"

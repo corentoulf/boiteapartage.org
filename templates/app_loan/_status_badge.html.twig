@@ -1,12 +1,12 @@
 {# templates/loan/_status_badge.html.twig #}
 
 {% set config = {
-    requested:   {label: 'En attente',  class: 'text-bg-warning'},
-    accepted:  {label: 'Acceptée',    class: 'text-bg-success'},
-    rejected:   {label: 'Refusée',     class: 'text-bg-danger'},
-    ongoing: {label: 'En cours',     class: 'text-bg-secondary'},
-    cancelled: {label: 'Annulée',     class: 'text-bg-secondary'},
-    returned:  {label: 'Terminée',    class: 'text-bg-secondary'},
+    requested:   {label: 'En attente',  class: 'bg-warning-subtle text-light-emphasis'},
+    accepted:  {label: 'Acceptée',    class: 'bg-success-subtle '},
+    rejected:   {label: 'Refusée',     class: 'bg-danger-subtle text-light-emphasis'},
+    ongoing: {label: 'En cours',     class: 'bg-secondary text-light-emphasis'},
+    cancelled: {label: 'Annulée',     class: 'bg-secondary text-light-emphasis'},
+    returned:  {label: 'Terminée',    class: 'bg-secondary text-light-emphasis'},
 }%}
 
 {% set current = config[status] ?? {label: status, class: 'text-bg-secondary'} %}

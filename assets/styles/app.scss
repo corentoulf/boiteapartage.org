@@ -23,7 +23,7 @@ $cream: #F7F4EF;
 
 //main color-class
 $primary: #0D1B2A;//#0b7395; //blue peps de base #1e2eba
-$primary: rgb(20 36 53) ;
+$primary: rgb(27, 43, 61) ;
 $primary-light: #1b2f45;
 $primary-extra-light: #293c50;
 $secondary: $bluegrey;
@@ -300,9 +300,8 @@ $utilities: map-merge(
 }
 
 .card-btn-primary:hover{
-  background-color: $primary;
-  color: $white;
-  // color: $white;
+  background-color: $primary-extra-light;
+  color: var(--bs-light);
 }
 
 .card-btn-info:hover{

@@ -44,7 +44,7 @@ $('#filterItemsCategorySelect').on('change', function() {
     }
 });
 
-// filter on searc inputs change
+// filter on search inputs change
 $('#filterItemsGlobalInput').on('change', function() {
     var searchString = $(this).val();
     console.log('searchoing' + typeof(searchString))

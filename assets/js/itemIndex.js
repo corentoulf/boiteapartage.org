@@ -36,18 +36,29 @@ $('#filterItemsCategorySelect').on('change', function() {
     }
 });
 
-// filter on searc inputs change
+// filter on search inputs change
 $('#filterItemsGlobalInput').on('change', function() {
     var searchString = $(this).val();
-    console.log('searchoing' + typeof(searchString))
-    itemList.search(searchString);
-    $('#itemFoundCount').text(itemList.matchingItems.length)
+    console.log(searchString, typeof(searchString))
+    if(searchString.trim() == "" || searchString == null){
+        $('#itemSearchResult').css('display', 'none')
+    }
+    else {
+        itemList.search(searchString);
+        itemList.matchingItems.length == 0 ? 
+            $('#itemFoundCount').text('Aucun résultat')
+            : $('#itemFoundCount').text(itemList.matchingItems.length + ' résultat(s)')
+        $('#itemSearchResult').css('display', 'flex')
+    }
 });
 
-// $('ul.list').on('change', function(e){
-//     console.log(this)
-// })
-
+//clear filters
+$('#itemSearchResetFilters').on('click', function(e) {
+    e.preventDefault();
+    $('#filterItemsInput').val('').trigger('change');
+    $('#filterItemsCategorySelect').val('').trigger('change');
+    $('#itemSearchResult').css('display', 'none')
+});
 
 // MODALS
 const deleteObjectModal = $('#deleteObjectModal')

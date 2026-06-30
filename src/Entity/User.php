@@ -326,6 +326,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getShortName(): ?string
+    {
+        $shortname = $this->first_name;
+        if($this->last_name){
+            $shortname .= ' ' . substr($this->last_name, 0, 1) . '.';
+        }
+        return $shortname;
+    }
+
     public function isAcceptPhoneContact(): ?bool
     {
         return $this->acceptPhoneContact;
