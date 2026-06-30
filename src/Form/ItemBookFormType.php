@@ -79,8 +79,6 @@ class ItemBookFormType extends AbstractType
                 'required' => false,
                 'attr' => [
                     'hidden' => true,
-                    'accept' => "image/*",
-                    'capture' => 'camera'
                 ],
                 'label_attr' => [
                     'hidden' => false,
@@ -93,6 +91,7 @@ class ItemBookFormType extends AbstractType
                     new Assert\File(
                         maxSize: '5M',
                         maxSizeMessage: 'Merci de mettre un fichier moins volumineux (<5MB)',
+                        extensions: ['jpg', 'jpeg','png','tiff']
                     )
                 ]
             ])
