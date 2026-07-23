@@ -1,5 +1,5 @@
 {% set cardClass = cardHighlightedWithShadow ? 'border-0 border-light-subtle card d-flex flex-row g-0 mw-100 shadow' : 'card d-flex flex-row border-dark-subtle g-0 mw-100'%}
-{% set showFavoriteIcon =  userFavoriteItems ?? false %}
+{% set showFavoriteIcon =  userFavoriteItems|default(false) %}
 {% set noBorder =  noBorder ?? false %}
 
 

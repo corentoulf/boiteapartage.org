@@ -24,7 +24,7 @@ framework:
                 reject:
                     from: requested
                     to:   rejected
-                lend:
+                handover:
                     from: accepted
                     to:   ongoing
                 return:

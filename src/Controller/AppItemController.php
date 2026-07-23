@@ -55,7 +55,7 @@ class AppItemController extends AbstractController
     }
 
     #[Route('/app/mes-objets/ajout/{code}', name: 'app_item_create_by_category')]
-    public function createBookItem(Request $request, EntityManagerInterface $em, ItemCategory $ic): Response
+    public function createItemByCategory(Request $request, EntityManagerInterface $em, ItemCategory $ic): Response
     {
         $item = new Item();
         $user = $this->getUser();
@@ -180,7 +180,7 @@ class AppItemController extends AbstractController
             $response->setContent(json_encode([
                 'data' => null,
                 'statusCode' => 400,
-                'message' => 'Provide terms and mode!'
+                'message' => 'You should provide terms and mode!'
             ]));
             $response->headers->set('Content-Type', 'application/json');
             return $response;
@@ -197,13 +197,23 @@ class AppItemController extends AbstractController
         );
 
         $statusCode = $response->getStatusCode();
+
+        if($statusCode >= 400) {
+            $response = new Response();
+        $response->setContent(json_encode([
+            'data' => null,
+            'statusCode' => $statusCode,
+            'message'=> 'problème de récupération du livre'
+        ]));
+        return $response;
+        }
         // $contentType = 'application/json'
         $content = $response->getContent();
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
         $response = new Response();
         $response->setContent(json_encode([
-            'data' => $content,
-            'statusCode' => 200,
+            'data' => json_decode($content),
+            'statusCode' => $statusCode,
         ]));
         return $response;
     }
@@ -377,8 +387,6 @@ class AppItemController extends AbstractController
 
         $loan = new Loan();
         $loan->setItem($item);
-        $loan->setRequestedStartDate(new DateTime('now'));
-        $loan->setRequestedEndDate(new DateTime('now')->add(DateInterval::createFromDateString('7 day')));
         $this->workflow->getMarking($loan);
         $form = $this->createForm(LoanRequestFormType::class, $loan, []);
         $form->handleRequest($request);

@@ -14,11 +14,13 @@ class LoanVoter extends Voter
     const CANCEL = 'cancel';
     const LEND = 'lend';
     const ACCEPT_OR_REJECT = "accept_or_reject";
+    const CONFIRM_HANDOVER = "confirm_handover";
+    const CONFIRM_RETURN = "confirm_return";
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         // if the voter doesn't support this attribute, return false
-        if (!in_array($attribute, [self::BORROW, self::CANCEL, self::LEND, self::ACCEPT_OR_REJECT])) {
+        if (!in_array($attribute, [self::BORROW, self::CANCEL, self::LEND, self::ACCEPT_OR_REJECT, self::CONFIRM_HANDOVER, self::CONFIRM_RETURN])) {
             return false;
         }
 
@@ -49,6 +51,8 @@ class LoanVoter extends Voter
             self::CANCEL => $this->canCancel($loan, $user),
             self::LEND => $this->canLend($loan, $user),
             self::ACCEPT_OR_REJECT => $this->canAcceptOrReject($loan, $user),
+            self::CONFIRM_HANDOVER => $this->canConfirmHandover($loan, $user),
+            self::CONFIRM_RETURN => $this->canConfirmReturn($loan, $user),
             default => throw new \LogicException('This code should not be reached!')
         };
     }
@@ -70,5 +74,15 @@ class LoanVoter extends Voter
     private function canAcceptOrReject(Loan $loan, User $user): bool
     {
         return $loan->getLender() === $user && $loan->getStatus() === 'requested';
+    }
+
+    private function canConfirmHandover(Loan $loan, User $user): bool
+    {
+        return $loan->getLender() === $user && $loan->getStatus() === 'accepted';
+    }
+
+    private function canConfirmReturn(Loan $loan, User $user): bool
+    {
+        return $loan->getLender() === $user && $loan->getStatus() === 'ongoing';
     }
 }

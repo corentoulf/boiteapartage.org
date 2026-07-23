@@ -29,8 +29,7 @@ function searchBookOnApi(mode, terms) {
             $            //search ISBN then terms
             axios.get(url)
                 .then(function (responseIsbn) {
-                    console.log(responseIsbn.data)
-                    responseIsbn.data = JSON.parse(responseIsbn.data.data)
+                    responseIsbn.data = responseIsbn.data.data
 
                     if (responseIsbn.data.totalItems > 0) {
                         totalItems = responseIsbn.data.totalItems;

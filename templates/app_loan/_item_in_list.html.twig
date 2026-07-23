@@ -1,23 +1,29 @@
 {# templates/loan/_item_in_list.html.twig #}
+{% set isLender = app.user == loan.lender %}
+{% set isBorrower = app.user == loan.borrower %}
 
 <div class="d-flex align-items-center gap-3">
     <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:64px;height:64px;flex-shrink:0;">
         {% if item.imageName or item.property3 %}
             <img src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : item.property3 ?? defaultImgUrl}}" alt="" class="rounded" style="width:100%;height:100%;object-fit:cover;">
         {% else %}
-            <i class="bi bi-box-seam text-secondary fs-4"></i>
+            <i class="bi {{item.itemType.category.icon}} text-secondary fs-4"></i>
         {% endif %}
     </div>
     <div>
         <p class="fw-medium mb-1">{{ loan.item.property1 }}</p>
         <p class="text-black-50 small mb-0">
-            Prêté(e) par {{ loan.borrower.shortName }}
+            {{ isLender ? 'Demande de ' ~ loan.borrower.shortName }}
+            {{ isBorrower ? 'Prêté(e) par ' ~ loan.lender.shortName }}
         </p>
     </div>
-    <div class="ms-auto">
+    <div class="ms-auto d-none d-md-block">
         {{ include('app_loan/_status_badge.html.twig', {status: loan.status}) }}
     </div>
-    <div class="px-2">
-        <a href="{{ path('app_show_incoming_loan', parameters = {id: loan.id}) }}" class="stretched-link"><i class="bi bi-chevron-right"></i></a>
+    <div class="px-2 ms-auto ms-md-0">
+        <a href="
+            {{ isLender ? path('app_show_outgoing_loan', parameters = {id: loan.id}) }}
+            {{ isBorrower ? path('app_show_incoming_loan', parameters = {id: loan.id}) }}
+        " class="stretched-link"><i class="bi bi-chevron-right"></i></a>
     </div>
 </div>

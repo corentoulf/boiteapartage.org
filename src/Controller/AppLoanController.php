@@ -53,10 +53,26 @@ class AppLoanController extends AbstractController
     {
         $user = $this->getUser();
         // $userFavoriteItems = $user->getUserFavoriteItems();
-        $loans = $em->getRepository(Loan::class)->findBy(['lender' => $user]);
+        $loans = $em->getRepository(Loan::class)->findLoanLendedWithoutHistory(['lender' => $user]);
+        $loansGroupedByStatus = [
+            "requested" => [],
+            "accepted" => [],
+            "ongoing" => [],
+            "past" => [],
+        ];
+        foreach ($loans as $loan) {
+            $loanStatus = $loan->getStatus();
+            if (!isset($loansGroupedByStatus[$loanStatus])) {
+                $loansGroupedByStatus["past"][] = $loan;
+            }
+            else {
+                $loansGroupedByStatus[$loanStatus][] = $loan;
+            }
+        }
         return $this->render('app_loan/outgoing/list.html.twig', [
             'controller_name' => 'AppLoanController',
             'loans' => $loans,
+            'loansGrouped' => $loansGroupedByStatus
         ]);
     }
 
@@ -119,7 +135,7 @@ class AppLoanController extends AbstractController
     }
 
     #[Route('/app/emprunts/{id}/accepter', name: 'app_accept_outgoing_loan')]
-    public function acceptOutgoinLoan(Request $request, EntityManagerInterface $em,  int $id): Response
+    public function acceptOutgoingLoan(Request $request, EntityManagerInterface $em,  int $id): Response
     {
         $user = $this->getUser();
         $loan = $em->getRepository(Loan::class)->find($id);
@@ -139,7 +155,7 @@ class AppLoanController extends AbstractController
         return $this->redirectToRoute('app_show_outgoing_loan', ['id' => $loan->getId()]);
     }
     #[Route('/app/emprunts/{id}/refuser', name: 'app_reject_outgoing_loan')]
-    public function rejectOutgoinLoan(Request $request, EntityManagerInterface $em,  int $id): Response
+    public function rejectOutgoingLoan(Request $request, EntityManagerInterface $em,  int $id): Response
     {
         $user = $this->getUser();
         $loan = $em->getRepository(Loan::class)->find($id);
@@ -158,4 +174,47 @@ class AppLoanController extends AbstractController
         }
         return $this->redirectToRoute('app_show_outgoing_loan', ['id' => $loan->getId()]);
     }
+
+    #[Route('/app/emprunts/{id}/confirmer-la-remise', name: 'app_confirm_outgoing_loan_handover')]
+    public function confirmOutgoingHandoverLoan(Request $request, EntityManagerInterface $em,  int $id): Response
+    {
+        $user = $this->getUser();
+        $loan = $em->getRepository(Loan::class)->find($id);
+        $this->denyAccessUnlessGranted(LoanVoter::CONFIRM_HANDOVER, $loan);
+        if (!$this->isCsrfTokenValid('confirm_handover_loan_' . $loan->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Token CSRF invalide.');
+        }
+        try {
+            // update the currentState on the post
+            $this->workflow->apply($loan, 'handover');
+            $loan->setLentAt(new \DateTime('now'));
+            $em->persist($loan);
+            $em->flush();
+        } catch (LogicException $exception) {
+            $this->addFlash('danger', $exception->getMessage());
+        }
+        return $this->redirectToRoute('app_show_outgoing_loan', ['id' => $loan->getId()]);
+    }
+
+    #[Route('/app/emprunts/{id}/confirmer-le-retour', name: 'app_confirm_outgoing_loan_return')]
+    public function confirmOutgoingReturnLoan(Request $request, EntityManagerInterface $em,  int $id): Response
+    {
+        $user = $this->getUser();
+        $loan = $em->getRepository(Loan::class)->find($id);
+        $this->denyAccessUnlessGranted(LoanVoter::CONFIRM_RETURN, $loan);
+        if (!$this->isCsrfTokenValid('confirm_return_loan_' . $loan->getId(), $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException('Token CSRF invalide.');
+        }
+        try {
+            // update the currentState on the post
+            $this->workflow->apply($loan, 'return');
+            $loan->setReturnedAt(new \DateTime('now'));
+            $em->persist($loan);
+            $em->flush();
+        } catch (LogicException $exception) {
+            $this->addFlash('danger', $exception->getMessage());
+        }
+        return $this->redirectToRoute('app_show_outgoing_loan', ['id' => $loan->getId()]);
+    }
+    
 }

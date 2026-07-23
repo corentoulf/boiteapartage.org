@@ -17,20 +17,14 @@ class LoanRequestFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('requested_start_date', DateType::class, [
-                'label' => 'Date d\'emprunt souhaitée',
-                'required' => true
-            ])
-            ->add('requested_end_date', DateType::class, [
-                'label' => 'Date de retour souhaitée',
-                'required' => true
-            ])
             ->add('request_message', TextareaType::class, [
-                'label' => 'Ajouter un message à l’attention du propriétaire',
-                'help' => 'Expliquez votre besoin, cela favorise les échanges :)',
+                'required' => true,
+                'label' => 'Formulez votre demande',
+                'help' => 'Expliquez votre besoin, la période souhaitée, etc..',
                 'sanitize_html' => true,
                 'attr' => [
-                    'placeholder' => 'Bonjour, cet ouvrage m’intéresse particulièrement...'
+                    'rows'=> 4,
+                    'placeholder' => 'Bonjour, je dois monter un meuble ce weekend...'
                 ]
             ])
             ->add('submit', SubmitType::class, [

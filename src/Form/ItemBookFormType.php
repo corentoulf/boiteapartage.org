@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -108,7 +110,20 @@ class ItemBookFormType extends AbstractType
             
 
         ;
+        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
+            $form = $event->getForm();
+
+            $imageFile = $form->get('imageFile')->getData();
+            $link = $form->get('property_3')->getData();
+
+            if (empty($imageFile) && empty($link)) {
+                $form->addError(new \Symfony\Component\Form\FormError(
+                    "Merci d'ajouter une photo du livre."
+                ));
+            }
+        });
     }
+    
 
     public function configureOptions(OptionsResolver $resolver): void
     {

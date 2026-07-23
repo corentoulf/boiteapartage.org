@@ -9,7 +9,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarMenuAuth">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                <li class="nav-item mt-2 mt-lg-0 text-bg-primary">
+                <li class="nav-item mt-2 mt-lg-0 text-bg-primary d-none">
                     <form class="mx-3 d-none d-lg-flex" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_items_search')}}">
                         <div class="input-group">
                             <input class="form-control" type="text" style="" placeholder="Rechercher un objet..." aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">

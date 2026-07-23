@@ -1,0 +1,337 @@
+{# templates/loan/_show_loan.html.twig #}
+{% set isLender = app.user == loan.lender %}
+{% set isBorrower = app.user == loan.borrower %}
+
+<div class="card bg-cream border-0 mt-4">
+    <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h5 mb-0">
+                {{ isLender ? 'Demande de prêt'}}
+                {{ isBorrower ? 'Demande d\'emprunt'}}
+            </h1>
+            {{ include('app_loan/_status_badge.html.twig', {status: loan.status}) }}
+        </div>
+        {# Objet concerné #}
+        <div class="card {{ isBorrower ? 'card-clickable' }} {{ isLender ? 'border-0' }}">
+            <div class="card-body p-3">
+                <div class="d-flex align-items-center justify-content-between gap-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:64px;height:64px;flex-shrink:0;">
+                            {% if item.imageName or item.property3 %}
+                                <img src="{{item.imageName ? vich_uploader_asset(item, 'imageFile') : item.property3}}" alt="" class="rounded" style="width:100%;height:100%;object-fit:cover;">
+                            {% else %}
+                                <i class="bi {{item.itemType.category.icon}} text-secondary fs-4"></i>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <p class="fw-medium mb-1">{{ item.property1 }}</p>
+                            <p class="text-black-50 small mb-0">
+                                {{(item.itemType.category.label ~ ' > ' ~ item.itemType.label)}}
+                            </p>
+                        </div>
+                    </div>
+                    {% if isBorrower %}
+                        <div class="">
+                            <a href="{{ path('app_item_request_loan', {id:item.id}) }}" class="stretched-link" type="button">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+
+        {# Détails de la demande #}
+        <p class="small fw-medium mt-3 mb-2">Détails de la demande</p>
+        <div class="row g-2 mb-3">
+            {% if isLender %}
+            <div class="col-12 col-md-4">
+                <div class="bg-body rounded p-2">
+                    <p class="text-secondary-emphasis mb-1" style="font-size:11px;">Demandé(e) par</p>
+                    <p class="fw-medium mb-0 small">{{ loan.borrower.shortName }}</p>
+                </div>
+            </div>
+            {% endif %}
+            {% if isBorrower %}
+            <div class="col-12 col-md-4">
+                <div class="bg-body rounded p-2">
+                    <p class="text-secondary-emphasis mb-1" style="font-size:11px;">Prêté(e) par</p>
+                    <p class="fw-medium mb-0 small">{{ loan.lender.shortName }}</p>
+                </div>
+            </div>
+            {% endif %}
+            <div class="col-12 col-md-4">
+                <div class="bg-body rounded p-2">
+                    <p class="text-secondary-emphasis mb-1" style="font-size:11px;">Boîte en commun</p>
+                    <p class="fw-medium mb-0 small">Les acacias</p>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="bg-body rounded p-2">
+                    <p class="text-secondary-emphasis mb-1" style="font-size:11px;">Demande envoyée le</p>
+                    <p class="fw-medium mb-0 small">{{ loan.createdAt|date('d/m/Y') }}</p>
+                </div>
+            </div>
+        </div>
+        {# coordonnées du demandeur si accepted #}
+        {% if loan.status in ['accepted','ongoing'] and isLender %}
+        <p class="small fw-medium mt-3 mb-2">Coordonnées du demandeur</p>
+        <div class="row g-2 mb-3">
+            {# email #}
+            <div class="col-12 col-md-8">
+                <div class="bg-body rounded p-2">
+                    <p class="text-secondary-emphasis mb-1" style="font-size:11px;">Email</p>
+                    <p class="fw-medium mb-0 small">
+                        {% if loan.borrower.acceptEmailContact %}
+                            <a class="text-decoration-none" href="tel:{{loan.borrower.email}}">{{loan.borrower.email}}</a>
+                        {% else %}
+                            Non communiqué
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            {# phone #}
+            <div class="col-12 col-md-4">
+                <div class="bg-body rounded p-2">
+                    <p class="text-secondary-emphasis mb-1" style="font-size:11px;">Téléhpone</p>
+                    <p class="fw-medium mb-0 small">
+                        {% if loan.borrower.acceptPhoneContact %}
+                            <a class="text-decoration-none" href="tel:{{loan.borrower.phone}}">{{loan.borrower.phone}}</a>
+                        {% else %}
+                            Non communiqué
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            {% if loan.status == 'returned' %}
+            <div class="col-12 col-md-4">
+                <div class="bg-body rounded p-2">
+                    <p class="text-secondary-emphasis mb-1" style="font-size:11px;">Objet retourné le</p>
+                    <p class="fw-medium mb-0 small">{{ loan.returnedAt|date('d/m/Y') }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        {# Message du demandeur #}
+        {% if loan.requestMessage %}
+            <p class="text small fw-medium mb-2">
+                {{isLender ? 'Message du demandeur'}}
+                {{isBorrower ? 'Votre message'}}
+            </p>
+            <div class="bg-body rounded p-3 mb-3 small">
+                <i class="bi bi-quote me-2"></i>{{ loan.requestMessage|sanitize_html }}
+            </div>
+        {% endif %}
+
+        {# Message de réponse du prêteur, si refus/acceptation #}
+        {% if loan.responseMessage %}
+            <p class="text-secondary small fw-medium mb-2">Réponse du propriétaire</p>
+            <div class="bg-body text-secondary-emphasis rounded p-3 mb-3 small">
+                {{ loan.responseMessage|sanitize_html }}
+            </div>
+        {% endif %}
+
+        {# Historique / timeline #}
+        <p class="small fw-medium mb-2">Historique</p>
+        <ul class="list-unstyled mb-0">
+            {# First step : requested #}
+            <li class="d-flex gap-2">
+                <div class="d-flex flex-column">
+                    <i class="bi bi-circle-fill text-body-tertiary mb-0 pb-0"></i>
+                    <div class="border-1 border-black border-left m-0 ms-2 p-0" style="height: stretch;"></div>
+                </div>
+                <div class="mb-2">
+                    <p class="mb-0 small fw-medium">Demande envoyée</p>
+                    <p class="text-secondary-emphasis mb-0 small">{{ loan.createdAt|date('d/m/Y à H:i') }}</p>
+                </div>
+            </li>
+            {# Second step : pending accept/contact #}
+            {% if loan.status == 'requested' %}
+                <li class="d-flex gap-2">
+                    <i class="bi bi-circle text-secondary" ></i>
+                    <p class="mb-0 small">
+                        En attente de confirmation de la disponibilité
+                    </p>
+                </li>
+                {# <div class="alert alert-info small mt-4 fw-medium" role="alert">
+                    {{isLender ? 'Les coordonnées de ' ~ loan.borrower.shortName ~ ' vous seront communiquées après avoir accepté la demande.'}}
+                    {{isBorrower ? 'Vos coordonnées et préférences de contact seront communiquées au propriétéaire de l\'objet une fois qu\'il aura accepté votre demande.'}}
+                </div> #}
+            {# Second step : pending handover #}
+            {% elseif loan.status == 'accepted' %}
+                <li class="d-flex gap-2">
+                    <div class="d-flex flex-column">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <div class="border-1 border-black border-left m-0 ms-2 p-0" style="height: stretch;"></div>
+                    </div>
+                    <div class="mb-2">
+                        <p class="mb-0 small fw-medium">Prise de contact</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.acceptedAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+                <li class="d-flex gap-2">
+                    <i class="bi bi-circle text-secondary" ></i>
+                    <p class="mb-0 small">
+                        {{isLender ? 'En attente de remise de l\'objet'}}
+                        {{isBorrower ? 'En attente de remise de l\'objet'}}
+                    </p>
+                </li>
+                {% if isBorrower %}
+                    <div class="alert alert-info small mt-4 fw-medium" role="alert">
+                        Le propriétaire de l'objet devrait vous contacter sous peu.
+                    </div>
+                {% endif %}
+                
+            {# Third step : pending return #}
+            {% elseif loan.status == 'ongoing' %}
+                <li class="d-flex gap-2">
+                    <div class="d-flex flex-column">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <div class="border-1 border-black border-left m-0 ms-2 p-0" style="height: stretch;"></div>
+                    </div>
+                    <div class="mb-2">
+                        <p class="mb-0 small fw-medium">Disponibilité confirmée</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.acceptedAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+                <li class="d-flex gap-2">
+                    <div class="d-flex flex-column">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <div class="border-1 border-black border-left m-0 ms-2 p-0" style="height: stretch;"></div>
+                    </div>
+                    <div class="mb-2">
+                        <p class="mb-0 small fw-medium">Objet remis</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.lentAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+                <li class="d-flex gap-2">
+                    <i class="bi bi-circle text-secondary" ></i>
+                    <p class="mb-0 small">
+                        {{isLender ? 'En attente de retour de l\'objet'}}
+                        {{isBorrower ? 'En attente de retour de l\'objet'}}
+                    </p>
+                </li>
+            {% elseif loan.status == 'returned' %}
+                <li class="d-flex gap-2">
+                    <div class="d-flex flex-column">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <div class="border-1 border-black border-left m-0 ms-2 p-0" style="height: stretch;"></div>
+                    </div>
+                    <div class="mb-2">
+                        <p class="mb-0 small fw-medium">Disponibilité confirmée</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.acceptedAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+                <li class="d-flex gap-2">
+                    <div class="d-flex flex-column">
+                        <i class="bi bi-check-circle-fill text-success"></i>
+                        <div class="border-1 border-black border-left m-0 ms-2 p-0" style="height: stretch;"></div>
+                    </div>
+                    <div class="mb-2">
+                        <p class="mb-0 small fw-medium">Objet remis</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.lentAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+                <li class="d-flex gap-2">
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                    <div class="">
+                        <p class="mb-0 small fw-medium">Objet retourné</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.returnedAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+            {% elseif loan.status == 'rejected' %}
+                <li class="d-flex gap-2">
+                    <i class="bi bi-x-circle-fill text-danger" ></i>
+                    <div class="mb-2">
+                        <p class="mb-0 small fw-medium">Demande refusée</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.rejectedAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+            {% elseif loan.status == 'cancelled' %}
+                <li class="d-flex gap-2">
+                    <i class="bi bi-x-circle-fill text-secondary" ></i>
+                    <div class="mb-2">
+                        <p class="mb-0 small fw-medium">Demande annulée par vous</p>
+                        <p class="text-secondary-emphasis mb-0 small">{{ loan.cancelledAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                </li>
+            {% endif %}
+
+        </ul>
+        {# Action d'annulation, uniquement si la demande est encore en attente #}
+        {% if is_granted('cancel', loan) %}
+        <form method="post" action="{{ path('app_cancel_incoming_loan', {id: loan.id}) }}"
+            class="mt-4"
+            onsubmit="return confirm('Confirmez-vous l\'annulation de cette demande ?');">
+
+            <input type="hidden" name="_token" value="{{ csrf_token('cancel_loan_' ~ loan.id) }}">
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-x-circle me-2"></i> Annuler la demande
+                </button>
+            </div>
+        </form>
+        {% endif %}
+        {# Action de prendre contact #}
+        {% if is_granted('accept_or_reject', loan) %}
+        <form method="post" action="{{ path('app_accept_outgoing_loan', {id: loan.id}) }}" class="mt-4">
+            <input type="hidden" name="_token" value="{{ csrf_token('accept_loan_' ~ loan.id) }}">
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-circle me-2" ></i>Confirmer la disponibilité
+                </button>
+            </div>
+        </form>
+        {# TODO : ajouter l'option "objet indisponible" qui refuse l'offre et met l'objet en status indispo  #}
+        {% endif %}
+        {# Action d'accepter/refuser, avec un message #}
+        {# {% if is_granted('accept_or_reject', loan) %}
+            <div class="row mt-2 mt-md-3">
+                <div class="col-12 col-md-6">
+                    <form method="post" action="{{ path('app_reject_outgoing_loan', {id: loan.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('reject_loan_' ~ loan.id) }}">
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="bi bi-x-circle me-2"></i> Refuser la demande
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 col-md-6 mt-3 mt-md-0">
+                    <form method="post" action="{{ path('app_accept_outgoing_loan', {id: loan.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('accept_loan_' ~ loan.id) }}">
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle me-2"></i> Accepter la demande
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endif %} #}
+        {# Action de confirmer la remise #}
+        {% if is_granted('confirm_handover', loan) %}
+            <form method="post" action="{{ path('app_confirm_outgoing_loan_handover', {id: loan.id}) }}" class="mt-4">
+                <input type="hidden" name="_token" value="{{ csrf_token('confirm_handover_loan_' ~ loan.id) }}">
+                <div class="d-grid ">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle me-1"></i> Confirmer la remise de l'objet
+                    </button>
+                </div>
+            </form>
+        {% endif %}
+        {# Action de confirmer le retour de l'objet #}
+        {% if is_granted('confirm_return', loan) %}
+            <form method="post" action="{{ path('app_confirm_outgoing_loan_return', {id: loan.id}) }}" class="mt-4">
+                <input type="hidden" name="_token" value="{{ csrf_token('confirm_return_loan_' ~ loan.id) }}">
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        Confirmer le retour de l'objet
+                    </button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+</div>

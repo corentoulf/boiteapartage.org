@@ -3,69 +3,68 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-
 <div class="container min-vh-100">
-  <div class="container">
-      {# CTA : Ajout au placard ; TODO: custom depending on what we want the user to do (eg : create a circle or join one#}
-      <div class="d-flex flex-row justify-content-center mt-4 px-lg-5" style="">
-        <div class="card card-bg-img-pizza-roll col-12 m-sm-4 p-2">
-          <div class="card-body text-center">
-            <div class="card-title fs-3 fw-bold " >
-              C'est le moment de partager
-            </div>
-            <a class="btn btn-primary btn-lg mt-3" href="{{path('app_item_create')}}"><i class="bi bi-plus-square me-2"></i>Proposer un objet</span></a>
-          </div>
-        </div>
-      </div>
-      {# Inspiration part #}
-      <div class="py-4 py-lg-3 px-lg-6 mt-2">
-        <div class="d-flex align-items-center justify-content-between">
-          <h1 class="display-5 fw-bold">Explorer</h1>
-        </div>
-        <div class="mt-3">
-          {% include '_component/category_explorer.html.twig' %}
-        </div>
-
-          {# Circles part #}
-          <div class="col-12 col-lg-6 pt-5 ">
-            <div class="px-lg-6">
-              <h1 class="fs-3 fw-bold mb-3">Vos Boîtes</h1>
-              {{ include('app_circle/circle_list_component.html.twig') }}
-              <div class="mt-3 ms-1 ms-lg-4">
-                <a href="{{path('app_circle_create')}}" class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" type="button">
-                  <i class="bi bi-plus-square me-2"></i>Créer une boîte</a>
-                <a href="{{path('app_circle_join')}}" class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" type="button">
-                  <i class="bi bi-box-arrow-in-up-right me-2"></i>Rejoindre une boîte</a>
+  <div class="col-md-8 offset-md-2 px-2 py-3 p-lg-5">
+    <div class="card bg-cream border-0 p-2 mt-4">
+        <div class="card-body">
+          <h1 class="fs-4">Bonjour {{app.user.firstName}} 👋</h1>
+          {# Rechercher un objet #}
+          <form class="d-flex mt-4" role="search" aria-label="search" id="homeSearchForm" method="GET" action="{{path('app_items_search')}}">
+              <div class="input-group">
+                  <input class="form-control" type="text" style="" placeholder="Rechercher un objet dans mes boîtes..." aria-label="input search" id="searchTermsInput" name="q" value="{{app.request.get('q')}}">
+                  <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
               </div>
-            </div>
-          </div>
-          {# Object part #}
-          <div class="col-12 col-lg-6 py-5 ">
-            <div class="px-lg-6">
-              <h1 class="fs-3 fw-bold mb-3">Votre Placard</h1>
-              
-              <div class="p-2">
-                {% if userItems|length < 5 %}
-                  <div class="alert alert-warning">
-                    Ajoutez au moins <b>5 objets</b> pour interagir avec vos boîtes à partage.
+          </form>
+          {# CTA LAPTOP : Ajout au placard ; TODO: custom depending on what we want the user to do (eg : create a circle or join one#}
+          <div class="mt-4 d-none d-md-block">
+            <div class="card col-12 border-0">
+              <div class="card-body">
+                <div class="d-flex flex-row align-items-center justify-content-between gap-2">
+                  <div class="badge text-bg-secondary p-2 fs-3">
+                    <i class="bi bi-box"></i>
                   </div>
-                {% endif %}
-                {% if userItems|length > 0 %}
-                  <div class="mb-2">Derniers objets ajoutés :</div>
-                {% endif %}
-                {% include 'app_item/item_list_component.html.twig' with {'limit': 5} %}
-                <div class="mt-3 ms-1 ms-lg-4">
-                  <a class="link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des objets</a>
-                  {# <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_item_create_book')}}" ><i class="bi bi-plus-square me-2"></i>Ajouter des livres</a> #}
-                  {% if userItems|length > 0 %}
-                    <a class="ms-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{{path('app_items_search')}}"><i class="bi bi-eye me-2"></i>Voir tout</a>
-                  {% endif %}
+                  <div class="d-flex flex-column justify-content-center align-items-start small">
+                    <div class="fw-bold " >
+                      Partagez un objet dans vos boîtes 
+                    </div>
+                    <div>
+                      Plus vous ajoutez d'objets, plus l'échange est riche
+                    </div>
+                  </div>
+                  <div class="ms-auto">
+                    <a class="btn btn-sm btn-outline-primary" href="{{path('app_item_create')}}">Ajouter un objet</span></a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          {# CTA MOBILE : Ajout au placard ; TODO: custom depending on what we want the user to do (eg : create a circle or join one#}
+          <div class="mt-4 d-block d-md-none">
+            <div class="card col-12 border-0">
+              <div class="card-body">
+                <div class=" d-flex flex-row align-items-center">
+                  <div class="badge text-bg-secondary p-2 fs-3">
+                    <i class="bi bi-box"></i>
+                  </div>
+                  <div class="fw-bold ms-2" >
+                    Partagez un objet dans vos boîtes 
+                  </div>
+                </div>
+                <div class="d-grid mt-2">
+                  <a class="btn btn-outline-primary" href="{{path('app_item_create')}}"><i class="bi bi-plus me-1"></i>Ajouter un objet</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {#  explorateur catégorie #}
+          <div class="mt-4">
+            <h6 class="text-uppercase text-secondary-emphasis mb-3">Explorer par catégorie</h6>
+            {% include '_component/category_explorer_icon.html.twig' %}
+          </div>
         </div>
       </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}{% block javascripts %}

@@ -284,11 +284,12 @@ $utilities: map-merge(
 // .ct-underline-highlight-dark {
 //   box-shadow:  0rem .5rem 0 0rem $black
 // }
-
+.card-clickable{
+  border: 1px solid #{lighten($secondary, 15%)};
+}
 .card-clickable:hover{
-  // border: 1px solid $success;
+  border: 1px solid $secondary;
   // cursor: pointer;
-  border-color: $secondary;
   // color: $white;
 }
 .card-clickable.active{
